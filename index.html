@@ -138,7 +138,45 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
 .footer-note strong{color:var(--purple)}
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
 @media(max-width:1200px){.scorecards{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){.sidebar{display:none}.main{margin-left:0}.grid-2,.grid-3,.grid-4,.grid-13,.grid-31{grid-template-columns:1fr}}
+@media(max-width:900px){
+  .sidebar{display:none}
+  .main{margin-left:0}
+  .grid-2,.grid-3,.grid-4,.grid-13,.grid-31{grid-template-columns:1fr}
+  .ai-platform-grid{grid-template-columns:1fr}
+  .scorecards{grid-template-columns:repeat(2,1fr);gap:0.75rem}
+  .topbar{height:auto;padding:0.75rem 1rem;flex-direction:column;align-items:flex-start;gap:0.5rem}
+  .topbar-right{flex-wrap:wrap;gap:0.5rem}
+  .topbar-left h1{font-size:1.1rem;line-height:1.2}
+  .topbar-left p{font-size:0.68rem}
+  .date-badge,.update-badge{font-size:0.7rem;padding:0.3rem 0.65rem}
+  .scorecard{padding:0.9rem 0.9rem 0.75rem}
+  .scorecard-value{font-size:1.5rem}
+  .scorecard-icon{font-size:1.1rem;margin-bottom:0.4rem}
+  .scorecard-label{font-size:0.65rem}
+  .scorecard-change{font-size:0.68rem}
+  .content{padding:0.85rem}
+  .card-body{padding:0.85rem 1rem}
+  .card-header{padding:0.85rem 1rem 0.6rem}
+  .card-header h3{font-size:0.82rem}
+  .card-header p{font-size:0.68rem}
+  .platform-grid{grid-template-columns:1fr}
+  .market-table th,.market-table td{font-size:0.7rem;padding:0.45rem 0}
+  .section-header h2{font-size:1.1rem}
+  .section-header p{font-size:0.7rem}
+  .chart-bars{height:75px}
+  .grid-4{grid-template-columns:1fr 1fr}
+  .listing-card{padding:0.85rem}
+  .listing-card h3{font-size:0.85rem}
+  .listing-stat{font-size:0.75rem}
+  .review-big .num{font-size:3rem}
+}
+@media(max-width:480px){
+  .scorecards{grid-template-columns:1fr 1fr}
+  .grid-4{grid-template-columns:1fr}
+  .topbar-left h1{font-size:0.95rem}
+  .scorecard-value{font-size:1.3rem}
+  .market-table{display:none}
+}
 </style>
 </head>
 <body>
@@ -223,7 +261,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
         <span class="scorecard-icon">📝</span>
         <div class="scorecard-value">28</div>
         <div class="scorecard-label">Posts Delivered</div>
-        <div class="scorecard-change up">&#8593; 5 platforms managed</div>
+        <div class="scorecard-change up">&#8593; 6 platforms managed</div>
       </div>
     </div>
 
@@ -259,7 +297,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
       </div>
       <div class="ai-card lose">
         <div class="ai-card-header">
-          <h4 style="color:#dc2626">&#128269; Perplexity</h4>
+          <h4 style="color:#dc2626">&#129302; Claude AI</h4>
           <span class="ai-result-badge lose">&#9888; #2 Ranked</span>
         </div>
         <p><strong>Query:</strong> "Best cannabis dispensary near Roselle NJ"<br><br><strong>Result:</strong> Budzooka ranked #1 with 5.0 stars and 4,627 reviews. Joyleaf listed #2 with 4.9 stars and 2,309 reviews.<br><br><strong>Gap to close:</strong> Budzooka has 2,318 more reviews than Joyleaf. At 200+ reviews per month managed by FLP, closing this gap is achievable within 12 months.<br><br><strong>Action:</strong> Accelerate review volume strategy.</p>
@@ -278,8 +316,8 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
             <p style="color:#166534">ChatGPT, Gemini, and Manus all recommend Joyleaf first for best dispensary near Roselle NJ. The schema markup, Google review responses, and local content FLP manages are directly driving these AI citations.</p>
           </div>
           <div class="insight-box red" style="margin-top:0">
-            <p style="color:#dc2626">&#9888; Perplexity Gap: Review Volume</p>
-            <p style="color:#991b1b">Budzooka ranks #1 on Perplexity because of 4,627 reviews versus Joyleaf's 2,309. Review count is the deciding factor. At 200+ responses per month, FLP is actively building this number.</p>
+            <p style="color:#dc2626">&#9888; Claude AI: Review Volume Signal</p>
+            <p style="color:#991b1b">Budzooka ranks #1 on Claude AI because of 4,627 reviews versus Joyleaf's 2,309. Review count is the deciding factor. At 200+ responses per month, FLP is actively building this number.</p>
           </div>
           <div class="insight-box purple" style="margin-top:0">
             <p style="color:#7B2D8B">&#128200; What Moves AI Rankings</p>
@@ -303,7 +341,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
       </div>
       <div class="card-body">
         <table class="comp-table">
-          <thead><tr><th>Dispensary</th><th>Location</th><th>Rating</th><th>Review Count</th><th>ChatGPT Rank</th><th>Gemini Rank</th><th>Perplexity Rank</th><th>Distance</th></tr></thead>
+          <thead><tr><th>Dispensary</th><th>Location</th><th>Rating</th><th>Review Count</th><th>ChatGPT Rank</th><th>Gemini Rank</th><th>Claude Rank</th><th>Distance</th></tr></thead>
           <tbody>
             <tr class="joyleaf-row">
               <td><strong>&#127807; Joyleaf</strong></td>
@@ -368,8 +406,8 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
           </tbody>
         </table>
         <div class="insight-box gold" style="margin-top:1rem">
-          <p style="color:#92400e">&#128200; The Perplexity Strategy: Close the Review Gap</p>
-          <p style="color:#78350f">Budzooka has 2,318 more reviews than Joyleaf. At 200 new reviews per month managed by FLP, Joyleaf can close this gap and overtake Budzooka on Perplexity within 12 months. This is the single most impactful action to take right now for AI search dominance.</p>
+          <p style="color:#92400e">&#128200; The Claude AI Strategy: Close the Review Gap</p>
+          <p style="color:#78350f">Budzooka has 2,318 more reviews than Joyleaf. At 200 new reviews per month managed by FLP, Joyleaf can close this gap and overtake Budzooka on Claude AI and ChatGPT within 12 months. This is the single most impactful action to take right now for AI search dominance.</p>
         </div>
       </div>
     </div>
@@ -613,7 +651,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
           </div>
           <div class="insight-box purple">
             <p style="color:#7B2D8B">The Budzooka Gap Strategy</p>
-            <p style="color:#555">Budzooka has 4,627 reviews. Joyleaf has 2,309. That 2,318 review gap is why Budzooka ranks #1 on Perplexity. At 200+ responses per month FLP is actively closing this gap. Estimated time to overtake on Perplexity: 12 months at current velocity.</p>
+            <p style="color:#555">Budzooka has 4,627 reviews. Joyleaf has 2,309. That 2,318 review gap is why Budzooka ranks #1 on Claude AI. At 200+ responses per month FLP is actively closing this gap. Estimated time to overtake on Claude AI: 12 months at current velocity.</p>
           </div>
         </div>
       </div>
@@ -656,7 +694,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
     </div>
 
     <div class="footer-note">
-      <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Updated monthly &middot; AI audit conducted manually across ChatGPT, Gemini, Perplexity, and Manus</p>
+      <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Updated monthly &middot; AI audit conducted manually across ChatGPT, Gemini, Claude AI, and Manus</p>
       <p style="margin-top:0.4rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly, Weedmaps, Yelp, YouTube Studio, LinkedIn &middot; Google Analytics integration pending property access</p>
     </div>
 
