@@ -1,0 +1,885 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Joyleaf Marketing Dashboard | FLP Marketing Group</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+<script src="config.js"></script>
+<script src="data.js"></script>
+<style>
+:root{
+  --purple:#7B2D8B;--purple-dark:#5a1f68;--purple-deep:#2d0f3d;
+  --purple-light:#f5f0fc;--cream:#F5F0E8;--gold:#D4A843;
+  --white:#ffffff;--text:#0a0a0a;--text-soft:#666;
+  --green:#16a34a;--green-light:#dcfce7;--red:#dc2626;
+  --red-light:#fee2e2;--border:#ede8f5;--bg:#f8f5fc;
+  --card-shadow:0 2px 12px rgba(123,45,139,0.06);
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
+
+/* SIDEBAR */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--purple-deep);display:flex;flex-direction:column;z-index:100}
+.sidebar-logo{padding:1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:0.6rem}
+.sidebar-logo-wordmark{color:white;font-family:"Bebas Neue",sans-serif;font-size:1.3rem;letter-spacing:0.05em;line-height:1}
+.sidebar-logo-sub{color:rgba(255,255,255,0.4);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase}
+.sidebar-section{padding:1.25rem 1rem 0.4rem;color:rgba(255,255,255,0.25);font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700}
+.sidebar-nav{list-style:none;padding:0 0.6rem}
+.sidebar-nav li a{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.7rem;border-radius:8px;color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.8rem;font-weight:500;transition:all 0.15s;margin-bottom:0.1rem}
+.sidebar-nav li a:hover{background:rgba(255,255,255,0.07);color:white}
+.sidebar-nav li a.active{background:var(--purple);color:white}
+.sidebar-nav li a .icon{font-size:0.9rem;width:18px;text-align:center;flex-shrink:0}
+.sidebar-footer{margin-top:auto;padding:1rem;border-top:1px solid rgba(255,255,255,0.08)}
+.sidebar-footer p{color:rgba(255,255,255,0.25);font-size:0.68rem;line-height:1.7}
+.sidebar-footer strong{color:rgba(255,255,255,0.5)}
+
+/* MAIN */
+.main{margin-left:220px;min-height:100vh}
+.topbar{background:white;border-bottom:1px solid var(--border);padding:0 1.75rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--card-shadow)}
+.topbar-left h1{font-family:"Bebas Neue",sans-serif;font-size:1.45rem;letter-spacing:0.04em;color:var(--text)}
+.topbar-left p{font-size:0.72rem;color:var(--text-soft);margin-top:-2px}
+.topbar-right{display:flex;align-items:center;gap:0.75rem}
+.date-badge{background:var(--purple-light);color:var(--purple);padding:0.35rem 0.85rem;border-radius:50px;font-size:0.75rem;font-weight:600;border:1px solid rgba(123,45,139,0.12)}
+.update-badge{display:flex;align-items:center;gap:0.35rem;background:#f0fdf4;color:var(--green);padding:0.35rem 0.85rem;border-radius:50px;font-size:0.75rem;font-weight:700;border:1px solid #bbf7d0}
+.update-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+
+/* CONTENT */
+.content{padding:1.5rem}
+
+/* SCORECARDS */
+.scorecards{display:grid;grid-template-columns:repeat(6,1fr);gap:0.85rem;margin-bottom:1.5rem}
+.scorecard{background:white;border-radius:14px;padding:1.1rem 1rem 0.9rem;border:1px solid var(--border);box-shadow:var(--card-shadow);transition:transform 0.2s,box-shadow 0.2s;animation:fadeUp 0.4s ease both}
+.scorecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(123,45,139,0.1)}
+.sc-icon{font-size:1.2rem;margin-bottom:0.5rem;display:block}
+.sc-value{font-family:"Bebas Neue",sans-serif;font-size:1.9rem;letter-spacing:0.02em;line-height:1;margin-bottom:0.2rem}
+.sc-label{font-size:0.67rem;color:var(--text-soft);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem}
+.sc-change{font-size:0.72rem;font-weight:700}
+.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--gold)}
+
+/* SECTION HEADER */
+.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;margin-top:0.5rem}
+.section-header h2{font-family:"Bebas Neue",sans-serif;font-size:1.25rem;letter-spacing:0.04em}
+.section-header p{font-size:0.72rem;color:var(--text-soft)}
+.tag{display:inline-block;padding:0.22rem 0.6rem;border-radius:50px;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase}
+.tag-purple{background:var(--purple-light);color:var(--purple);border:1px solid rgba(123,45,139,0.12)}
+.tag-green{background:var(--green-light);color:var(--green);border:1px solid #bbf7d0}
+.tag-gold{background:#fefce8;color:#92400e;border:1px solid #fde68a}
+.tag-red{background:var(--red-light);color:var(--red);border:1px solid #fecaca}
+
+/* CARDS */
+.card{background:white;border-radius:14px;border:1px solid var(--border);box-shadow:var(--card-shadow);overflow:hidden;animation:fadeUp 0.5s ease both}
+.card-header{padding:1rem 1.25rem 0.75rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem}
+.card-header h3{font-size:0.85rem;font-weight:700;color:var(--text);line-height:1.3}
+.card-header p{font-size:0.7rem;color:var(--text-soft);margin-top:2px}
+.card-body{padding:1.1rem 1.25rem}
+
+/* GRIDS */
+.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
+.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem}
+.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;margin-bottom:1rem}
+.grid-13{display:grid;grid-template-columns:1fr 2fr;gap:1rem;margin-bottom:1rem}
+.grid-31{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-bottom:1rem}
+.mb{margin-bottom:1rem}
+
+/* STAT ROWS */
+.stat-row{display:flex;align-items:center;justify-content:space-between;padding:0.65rem 0;border-bottom:1px solid var(--border)}
+.stat-row:last-child{border-bottom:none}
+.stat-left{display:flex;align-items:center;gap:0.65rem}
+.stat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.stat-name{font-size:0.82rem;font-weight:500}
+.stat-sub{font-size:0.68rem;color:var(--text-soft)}
+.stat-val{font-family:"DM Mono",monospace;font-size:0.88rem;font-weight:600;text-align:right}
+.stat-chg{font-size:0.7rem;font-weight:700;text-align:right}
+
+/* CHART CONTAINERS */
+.chart-wrap{position:relative;height:160px;margin-bottom:0.75rem}
+.chart-wrap-sm{position:relative;height:120px}
+.chart-wrap-lg{position:relative;height:200px}
+
+/* INSIGHT BOXES */
+.insight{padding:0.7rem 0.85rem;border-radius:10px;margin-top:0.75rem}
+.insight p:first-child{font-size:0.75rem;font-weight:700;margin-bottom:0.2rem}
+.insight p:last-child{font-size:0.72rem;line-height:1.55}
+.insight-purple{background:var(--purple-light);border:1px solid rgba(123,45,139,0.15)}
+.insight-purple p:first-child{color:var(--purple)}
+.insight-purple p:last-child{color:#555}
+.insight-green{background:#f0fdf4;border:1px solid #bbf7d0}
+.insight-green p:first-child{color:var(--green)}
+.insight-green p:last-child{color:#166534}
+.insight-gold{background:#fefce8;border:1px solid #fde68a}
+.insight-gold p:first-child{color:#92400e}
+.insight-gold p:last-child{color:#78350f}
+.insight-red{background:var(--red-light);border:1px solid #fecaca}
+.insight-red p:first-child{color:var(--red)}
+.insight-red p:last-child{color:#7f1d1d}
+
+/* PROGRESS BARS */
+.progress-wrap{margin-bottom:0.65rem}
+.progress-label{display:flex;justify-content:space-between;margin-bottom:0.3rem}
+.progress-label span{font-size:0.72rem;color:var(--text-soft)}
+.progress-label strong{font-size:0.72rem;font-weight:700}
+.progress-bar{height:5px;background:var(--border);border-radius:50px;overflow:hidden}
+.progress-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--purple),var(--gold))}
+
+/* TABLES */
+.data-table{width:100%;border-collapse:collapse}
+.data-table th{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-soft);padding:0 0 0.65rem;text-align:left;border-bottom:1px solid var(--border)}
+.data-table th:not(:first-child){text-align:center}
+.data-table td{padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.8rem;vertical-align:middle}
+.data-table td:not(:first-child){text-align:center}
+.data-table tr:last-child td{border-bottom:none}
+.rank{display:inline-block;padding:0.18rem 0.5rem;border-radius:50px;font-size:0.68rem;font-weight:700;font-family:"DM Mono",monospace;min-width:32px;text-align:center}
+.rank-1{background:var(--green-light);color:var(--green)}
+.rank-2{background:#fef9c3;color:#ca8a04}
+.rank-3{background:var(--purple-light);color:var(--purple)}
+.rank-x{background:#f1f5f9;color:#64748b}
+.rank-b{background:#f0f4ff;color:#1d4ed8}
+
+/* GRADE CARDS */
+.grade-card{text-align:center;border-radius:12px;padding:1.1rem 0.75rem;border:1px solid}
+.grade-letter{font-family:"Bebas Neue",sans-serif;font-size:3rem;line-height:1}
+.grade-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-top:0.25rem}
+.grade-sub{font-size:0.65rem;color:var(--text-soft);margin-top:0.2rem;line-height:1.4}
+.grade-score{font-family:"DM Mono",monospace;font-size:0.8rem;font-weight:700;margin-top:0.4rem}
+
+/* PLATFORM MINI CARDS */
+.platform-mini{background:var(--purple-light);border-radius:10px;padding:0.85rem;border:1px solid rgba(123,45,139,0.12)}
+.platform-mini h4{font-size:0.72rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem}
+.pm-row{display:flex;justify-content:space-between;margin-bottom:0.3rem}
+.pm-row span{font-size:0.73rem;color:var(--text-soft)}
+.pm-row strong{font-size:0.73rem;font-weight:700;font-family:"DM Mono",monospace}
+.pm-change{font-size:0.67rem;font-weight:700;margin-top:0.35rem}
+
+/* REVIEW BARS */
+.review-big{text-align:center;padding:1.25rem 0 0.75rem}
+.review-num{font-family:"Bebas Neue",sans-serif;font-size:3.5rem;color:var(--purple);line-height:1}
+.review-stars{color:var(--gold);font-size:1.1rem;letter-spacing:0.1em;margin:0.35rem 0}
+.review-label{font-size:0.72rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.06em}
+.review-row{display:flex;align-items:center;gap:0.65rem;margin-bottom:0.4rem}
+.review-row .label{font-size:0.7rem;color:var(--text-soft);width:42px;text-align:right;flex-shrink:0}
+.review-bar-wrap{flex:1;height:5px;background:var(--border);border-radius:50px;overflow:hidden}
+.review-bar-fill{height:100%;border-radius:50px;background:var(--gold)}
+.review-row .pct{font-size:0.7rem;font-family:"DM Mono",monospace;font-weight:700;width:28px;flex-shrink:0}
+
+/* LISTING CARDS */
+.listing-card{background:white;border-radius:14px;border:1px solid var(--border);padding:1.1rem;box-shadow:var(--card-shadow);transition:transform 0.2s}
+.listing-card:hover{transform:translateY(-2px)}
+.listing-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.85rem}
+.listing-card-top h3{font-size:0.88rem;font-weight:700}
+.listing-icon{font-size:1.4rem}
+.listing-stat{display:flex;justify-content:space-between;padding:0.45rem 0;border-bottom:1px solid var(--border);font-size:0.78rem}
+.listing-stat:last-of-type{border-bottom:none}
+.listing-stat span{color:var(--text-soft)}
+.listing-stat strong{font-family:"DM Mono",monospace;font-weight:700}
+
+/* FOOTER */
+.footer-note{text-align:center;padding:1.5rem 0 0.75rem;color:var(--text-soft);font-size:0.7rem}
+.footer-note strong{color:var(--purple)}
+
+/* ANIMATIONS */
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.scorecard:nth-child(1){animation-delay:.04s}.scorecard:nth-child(2){animation-delay:.08s}
+.scorecard:nth-child(3){animation-delay:.12s}.scorecard:nth-child(4){animation-delay:.16s}
+.scorecard:nth-child(5){animation-delay:.20s}.scorecard:nth-child(6){animation-delay:.24s}
+
+/* MOBILE */
+@media(max-width:1100px){.scorecards{grid-template-columns:repeat(3,1fr)}}
+@media(max-width:900px){
+  .sidebar{display:none}.main{margin-left:0}
+  .grid-2,.grid-3,.grid-4,.grid-13,.grid-31{grid-template-columns:1fr}
+  .scorecards{grid-template-columns:repeat(2,1fr)}
+  .topbar{height:auto;padding:0.85rem 1rem;flex-direction:column;align-items:flex-start;gap:0.5rem}
+  .topbar-right{flex-wrap:wrap}
+  .topbar-left h1{font-size:1.1rem}
+  .content{padding:0.85rem}
+  .data-table{display:none}
+}
+@media(max-width:480px){
+  .scorecards{grid-template-columns:1fr 1fr}
+  .grid-4{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+<!-- SIDEBAR -->
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div>
+      <div class="sidebar-logo-wordmark">Joyleaf</div>
+      <div class="sidebar-logo-sub">Live Dashboard</div>
+    </div>
+  </div>
+  <div class="sidebar-section">Performance</div>
+  <ul class="sidebar-nav">
+    <li><a href="#top" class="active"><span class="icon">📊</span> Overview</a></li>
+    <li><a href="#seo"><span class="icon">🔍</span> Local SEO</a></li>
+    <li><a href="#seograde"><span class="icon">🏆</span> SEO Health Score</a></li>
+    <li><a href="#social"><span class="icon">📱</span> Social Media</a></li>
+    <li><a href="#reviews"><span class="icon">⭐</span> Reviews</a></li>
+    <li><a href="#content"><span class="icon">📝</span> Content Delivery</a></li>
+  </ul>
+  <div class="sidebar-section">Platforms</div>
+  <ul class="sidebar-nav">
+    <li><a href="#listings"><span class="icon">🗺️</span> Google Business</a></li>
+    <li><a href="#listings"><span class="icon">🌿</span> Leafly</a></li>
+    <li><a href="#listings"><span class="icon">💨</span> Weedmaps</a></li>
+    <li><a href="#listings"><span class="icon">⭐</span> Yelp</a></li>
+  </ul>
+  <div class="sidebar-section">Intelligence</div>
+  <ul class="sidebar-nav">
+    <li><a href="#ai"><span class="icon">🤖</span> AI Search</a></li>
+    <li><a href="#competitors"><span class="icon">⚔️</span> Competitors</a></li>
+    <li><a href="#delivery"><span class="icon">🚗</span> Delivery</a></li>
+    <li><a href="#queries"><span class="icon">💬</span> Search Queries</a></li>
+  </ul>
+  <div class="sidebar-footer">
+    <p>Managed by<br><strong>FLP Marketing Group</strong><br>flpmarketinggroup.com</p>
+  </div>
+</aside>
+
+<!-- MAIN -->
+<div class="main" id="top">
+  <div class="topbar">
+    <div class="topbar-left">
+      <h1>Marketing Performance Dashboard</h1>
+      <p id="topbar-meta">Joyleaf Dispensary &middot; 711 E 1st Ave, Roselle NJ &middot; Managed by FLP Marketing Group</p>
+    </div>
+    <div class="topbar-right">
+      <span class="date-badge" id="period-badge">Loading...</span>
+      <span class="update-badge"><span class="update-dot"></span> Updated Monthly</span>
+    </div>
+  </div>
+
+  <div class="content">
+
+    <!-- SCORECARDS -->
+    <div class="scorecards" id="scorecards-wrap">
+      <div class="scorecard"><span class="sc-icon">🤖</span><div class="sc-value" id="sc-ai">3/4</div><div class="sc-label">AI Platforms Ranking</div><div class="sc-change up" id="sc-ai-sub">↑ ChatGPT, Gemini, Claude</div></div>
+      <div class="scorecard"><span class="sc-icon">🔍</span><div class="sc-value" id="sc-searches">--</div><div class="sc-label">Google Searches</div><div class="sc-change up" id="sc-searches-chg">Loading...</div></div>
+      <div class="scorecard"><span class="sc-icon">❤️</span><div class="sc-value" id="sc-reviews">ALL</div><div class="sc-label">Reviews Managed</div><div class="sc-change up">↑ FLP managed monthly</div></div>
+      <div class="scorecard"><span class="sc-icon">📱</span><div class="sc-value" id="sc-ig-views">--</div><div class="sc-label">Instagram Views</div><div class="sc-change up" id="sc-ig-chg">Loading...</div></div>
+      <div class="scorecard"><span class="sc-icon">📍</span><div class="sc-value" id="sc-directions">--</div><div class="sc-label">Direction Requests</div><div class="sc-change up" id="sc-dir-chg">Loading...</div></div>
+      <div class="scorecard"><span class="sc-icon">📝</span><div class="sc-value" id="sc-posts">--</div><div class="sc-label">Posts Delivered</div><div class="sc-change up" id="sc-posts-sub">Loading...</div></div>
+    </div>
+
+    <!-- LOCAL SEO -->
+    <div id="seo">
+      <div class="section-header"><div><h2>Local SEO Performance</h2><p>Google Business Profile &middot; Snack Pack Rankings &middot; Search Visibility</p></div></div>
+    </div>
+
+    <div class="grid-31 mb">
+      <div class="card">
+        <div class="card-header"><div><h3>Monthly Google Search Volume</h3><p>Total searches finding Joyleaf &mdash; 6-month trend</p></div><span class="tag tag-purple">Google Business</span></div>
+        <div class="card-body">
+          <div class="chart-wrap"><canvas id="chart-searches"></canvas></div>
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.25rem">
+            <div><span style="font-family:DM Mono,monospace;font-size:1.4rem;font-weight:600;color:var(--purple)" id="searches-big">--</span><span style="font-size:0.75rem;color:var(--text-soft);margin-left:0.4rem">searches this month</span></div>
+            <span class="up" style="font-size:0.82rem;font-weight:700" id="searches-chg-big">--</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><h3>Google Actions</h3><p>What people do after finding Joyleaf</p></div></div>
+        <div class="card-body" id="google-actions-wrap"></div>
+      </div>
+    </div>
+
+    <!-- SNACK PACK GRID -->
+    <div class="card mb">
+      <div class="card-header"><div><h3>Google Snack Pack Rankings Grid</h3><p>Green = top 3 (winning). Yellow = 4-7 (visible). Gray = 8+ (not winning). Updated monthly via Local Falcon.</p></div><span class="tag tag-purple">10 Markets &middot; 5 Keywords</span></div>
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data-table" id="snack-pack-table">
+          <thead><tr><th>Market</th><th>Dispensary</th><th>Near Me</th><th>Weed</th><th>Cannabis</th><th>Open Now</th></tr></thead>
+          <tbody id="snack-pack-body"></tbody>
+        </table>
+        <div class="insight insight-green" style="margin-top:0.85rem">
+          <p>🎯 Priority Targets: Union (58K residents) and Elizabeth (137K residents)</p>
+          <p>Moving into the top 3 snack pack positions in these two markets is the single highest-ROI SEO objective for the next 90 days.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEO HEALTH SCORE -->
+    <div id="seograde">
+      <div class="section-header"><div><h2>SEO Health Score</h2><p>Monthly graded audit across five performance categories &middot; FLP Proprietary</p></div><span class="tag tag-gold">FLP EXCLUSIVE</span></div>
+    </div>
+
+    <div class="card mb">
+      <div class="card-header">
+        <div><h3 id="seo-overall-label">Overall SEO Grade</h3><p id="seo-overall-sub">Moving toward A &mdash; trajectory is up across all five categories</p></div>
+        <span class="tag tag-purple" id="seo-score-tag">-- / 100</span>
+      </div>
+      <div class="card-body">
+        <div class="grid-3" style="margin-bottom:0.85rem" id="grade-cards-top"></div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.85rem" id="grade-cards-bottom"></div>
+        <div class="chart-wrap-sm"><canvas id="chart-seo-score"></canvas></div>
+        <div class="insight insight-purple" style="margin-top:0.75rem">
+          <p>✨ What This Grade Means</p>
+          <p>No dispensary in Union County is being graded at this level of detail. The single biggest lever to move toward A is closing the review gap with Budzooka. Every 100 new reviews moves Review Authority up approximately 2 points.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- LISTING PLATFORMS -->
+    <div id="listings">
+      <div class="section-header"><div><h2>Listing Platform Performance</h2><p>All four platforms managed and maintained by FLP Marketing Group</p></div></div>
+    </div>
+
+    <div class="grid-4 mb" id="listings-grid"></div>
+
+    <!-- SOCIAL MEDIA -->
+    <div id="social">
+      <div class="section-header"><div><h2>Social Media Performance</h2><p>Instagram &middot; Facebook &middot; YouTube &middot; LinkedIn &middot; X &middot; 6-month trends</p></div></div>
+    </div>
+
+    <div class="grid-2 mb">
+      <div class="card">
+        <div class="card-header"><div><h3>Instagram Performance</h3><p id="ig-period-label">Loading...</p></div><span class="tag tag-green">Verified Data</span></div>
+        <div class="card-body">
+          <div class="chart-wrap"><canvas id="chart-ig-views"></canvas></div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-top:0.75rem" id="ig-stats-grid"></div>
+          <div class="insight insight-green" style="margin-top:0.75rem">
+            <p>⭐ Key Insight: New Customer Acquisition</p>
+            <p id="ig-insight-text">Loading...</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-header"><div><h3>Facebook &middot; YouTube &middot; LinkedIn</h3><p id="social-period-label">Loading...</p></div><span class="tag tag-green">Verified Data</span></div>
+        <div class="card-body">
+          <div style="margin-bottom:0.85rem">
+            <div style="font-size:0.72rem;font-weight:700;color:#1877f2;margin-bottom:0.5rem">👤 Facebook — 6-month views trend</div>
+            <div class="chart-wrap-sm"><canvas id="chart-fb-views"></canvas></div>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:0.5rem" id="fb-stats-grid"></div>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-top:0.5rem" id="yt-li-grid"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- REVIEWS -->
+    <div id="reviews">
+      <div class="section-header"><div><h2>Google Review Management</h2><p>All review responses managed by FLP monthly &mdash; the single biggest local SEO signal for a dispensary</p></div></div>
+    </div>
+
+    <div class="grid-13 mb">
+      <div class="card">
+        <div class="card-header"><div><h3>Review Overview</h3><p>Google Business Profile</p></div><span class="tag tag-purple">FLP Managed</span></div>
+        <div class="card-body">
+          <div class="review-big">
+            <div class="review-num" id="review-rating">--</div>
+            <div class="review-stars">★★★★★</div>
+            <div class="review-label">Overall Rating</div>
+          </div>
+          <div id="review-bars"></div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><h3>Review Gap Analysis</h3><p>Joyleaf vs competitors &mdash; review count is the #1 snack pack ranking factor</p></div></div>
+        <div class="card-body">
+          <div class="chart-wrap-lg"><canvas id="chart-reviews"></canvas></div>
+          <div class="insight insight-red" style="margin-top:0.75rem" id="review-gap-insight"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- AI SEARCH -->
+    <div id="ai">
+      <div class="section-header"><div><h2>AI Search Visibility</h2><p>Monthly audit: how Joyleaf appears when people ask AI for the best dispensary near Roselle NJ</p></div><span class="tag tag-gold">NEW: FLP EXCLUSIVE</span></div>
+    </div>
+
+    <div class="card mb" id="ai-cards-wrap">
+      <div class="card-header"><div><h3 id="ai-audit-label">AI Search Audit</h3><p>Manual audit conducted monthly by FLP across all four major AI platforms</p></div><span class="tag tag-purple" id="ai-platforms-tag">-- / 4 Platforms</span></div>
+      <div class="card-body">
+        <div class="grid-4 mb" id="ai-platform-cards" style="margin-bottom:0.85rem"></div>
+        <div class="insight insight-purple">
+          <p>📌 What Drives AI Rankings</p>
+          <p>Google review volume and recency, schema markup on joyleaf.com, consistent NAP across all listings, and community mentions on Reddit and local forums. FLP manages all of these.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- COMPETITORS -->
+    <div id="competitors">
+      <div class="section-header"><div><h2>Competitor Tracking</h2><p>Joyleaf vs local competitors across all ranking platforms</p></div><span class="tag tag-purple">Updated Monthly</span></div>
+    </div>
+
+    <div class="card mb">
+      <div class="card-header"><div><h3>Competitor Overview</h3><p>Review counts, ratings, and AI platform presence</p></div></div>
+      <div class="card-body" style="overflow-x:auto">
+        <table class="data-table">
+          <thead><tr><th>Dispensary</th><th>Location</th><th>Rating</th><th>Reviews</th><th>ChatGPT</th><th>Gemini</th><th>Claude</th><th>Distance</th></tr></thead>
+          <tbody id="competitor-table-body"></tbody>
+        </table>
+        <div class="chart-wrap" style="margin-top:1rem"><canvas id="chart-competitors"></canvas></div>
+        <div class="insight insight-gold" style="margin-top:0.75rem">
+          <p>📈 The Review Gap Strategy</p>
+          <p id="review-gap-strategy">Loading...</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- SEARCH QUERY INTELLIGENCE -->
+    <div id="queries">
+      <div class="section-header"><div><h2>Search Query Intelligence</h2><p>What people type into Google before finding Joyleaf &middot; Source: Google Search Console</p></div><span class="tag tag-red" id="queries-status-tag">Access Pending</span></div>
+    </div>
+
+    <div class="grid-2 mb">
+      <div class="card">
+        <div class="card-header"><div><h3>Top Performing Queries</h3><p>Searches where Joyleaf gets the most clicks</p></div></div>
+        <div class="card-body" id="top-queries-wrap">
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--green)"></div><div><div class="stat-name">dispensary roselle nj</div><div class="stat-sub">Home market branded term</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--green)"></div><div><div class="stat-name">joyleaf</div><div class="stat-sub">Direct brand search</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">dispensary near me</div><div class="stat-sub">High purchase intent</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">weed near me</div><div class="stat-sub">High volume — #1 per Dispenza data</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--gold)"></div><div><div class="stat-name">cannabis dispensary union county</div><div class="stat-sub">Expansion target</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="insight insight-gold" style="margin-top:0.75rem">
+            <p>🔑 Unlock This Section</p>
+            <p>Grant FLP editor access to Google Search Console to see exact queries and click data. Updates automatically once connected.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><h3>Opportunity Gap Queries</h3><p>Searches where Joyleaf appears but people aren't clicking — highest growth potential</p></div></div>
+        <div class="card-body">
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">dispensary cranford nj</div><div class="stat-sub">High impressions, low CTR</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">dispensary elizabeth nj</div><div class="stat-sub">137K population, low capture</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">cannabis delivery roselle</div><div class="stat-sub">Delivery intent, high value</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">best dispensary new jersey</div><div class="stat-sub">Brand building term</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">weed delivery near me</div><div class="stat-sub">Delivery website opportunity</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="insight insight-purple" style="margin-top:0.75rem">
+            <p>💡 Why This Matters</p>
+            <p>These are searches where Joyleaf already shows up but loses the click to a competitor. Fixing these is faster than chasing new keywords.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- GOOGLE DELIVERY -->
+    <div id="delivery">
+      <div class="section-header"><div><h2>Google Delivery Performance</h2><p>Delivery website tracking &middot; Redirect strategy under evaluation by FLP</p></div><span class="tag tag-gold">Under Review</span></div>
+    </div>
+
+    <div class="grid-2 mb">
+      <div class="card">
+        <div class="card-header"><div><h3>Delivery Website Metrics</h3><p>Google Analytics pending access</p></div></div>
+        <div class="card-body">
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div class="stat-name">Monthly Sessions</div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--green)"></div><div class="stat-name">Weedmaps Delivery Clicks</div></div><div><div class="stat-val" id="del-wm-clicks">--</div><div class="stat-chg up">↑ Active</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--gold)"></div><div class="stat-name">Organic Rankings</div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending Search Console</div></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div class="stat-name">Backlinks</div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Audit pending</div></div></div>
+          <div class="insight insight-gold" style="margin-top:0.75rem">
+            <p>📌 Redirect Strategy</p>
+            <p>FLP recommends a 301 redirect once we confirm no organic rankings or high-value backlinks on the delivery site. Data first, decision second.</p>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-header"><div><h3>Delivery Keyword Targets</h3><p>High-value delivery search terms FLP is targeting</p></div></div>
+        <div class="card-body">
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">cannabis delivery roselle nj</div><div class="stat-sub">Primary delivery term</div></div></div><div><span class="rank rank-b">Building</span></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">weed delivery near me</div><div class="stat-sub">High volume intent</div></div></div><div><span class="rank rank-b">Building</span></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">dispensary delivery union county</div><div class="stat-sub">Regional delivery</div></div></div><div><span class="rank rank-b">Building</span></div></div>
+          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">marijuana delivery elizabeth nj</div><div class="stat-sub">Elizabeth market</div></div></div><div><span class="rank rank-b">Building</span></div></div>
+          <div class="insight insight-purple" style="margin-top:0.75rem">
+            <p>💡 FLP Recommendation</p>
+            <p>Consolidating delivery SEO into joyleaf.com with a dedicated delivery landing page will outperform a separate domain long term.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CONTENT -->
+    <div id="content">
+      <div class="section-header"><div><h2>Content Delivery</h2><p>Posts delivered vs agreed scope</p></div></div>
+    </div>
+
+    <div class="card mb">
+      <div class="card-header"><div><h3 id="content-month-label">Content Delivery</h3><p>Agreed scope vs actual delivery</p></div><span class="tag tag-gold" id="content-tag">Loading...</span></div>
+      <div class="card-body">
+        <div class="grid-3" id="content-bars" style="margin-bottom:0"></div>
+      </div>
+    </div>
+
+    <div class="footer-note">
+      <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Updated monthly &middot; AI audit conducted manually across ChatGPT, Gemini, Claude AI, and Manus</p>
+      <p style="margin-top:0.3rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly Business, Weedmaps, Yelp Business, YouTube Studio, LinkedIn Analytics &middot; Google Analytics &amp; Search Console integration pending property access</p>
+      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">To update this dashboard: edit data.js with the new monthly numbers and push to GitHub. Charts update automatically.</p>
+    </div>
+
+  </div>
+</div>
+
+<script>
+// ============================================================
+// DASHBOARD RENDERER
+// All charts and data are driven by data.js
+// ============================================================
+
+const D = DASHBOARD_DATA;
+const purple = '#7B2D8B';
+const gold = '#D4A843';
+const green = '#16a34a';
+const red = '#dc2626';
+const softBorder = '#ede8f5';
+
+const chartDefaults = {
+  responsive: true,
+  maintainAspectRatio: false,
+  plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a1a1a', titleFont: { family: 'DM Sans', size: 11 }, bodyFont: { family: 'DM Mono', size: 12 }, padding: 10, cornerRadius: 8 } },
+  scales: {
+    x: { grid: { display: false }, ticks: { font: { family: 'DM Mono', size: 10 }, color: '#999' }, border: { display: false } },
+    y: { grid: { color: '#f0eaf8' }, ticks: { font: { family: 'DM Mono', size: 10 }, color: '#999' }, border: { display: false } }
+  }
+};
+
+function fmt(n) {
+  if (n >= 1000) return (n/1000).toFixed(1).replace('.0','') + 'K';
+  return n?.toString() || '--';
+}
+function chg(n) { return n > 0 ? `↑ +${n}% vs prior` : `↓ ${n}% vs prior`; }
+function chgClass(n) { return n > 0 ? 'up' : 'down'; }
+function rankBadge(r) {
+  if (!r || r === 0) return '<span class="rank rank-b">Building</span>';
+  if (r <= 3) return `<span class="rank rank-1">#${r}</span>`;
+  if (r <= 7) return `<span class="rank rank-2">#${r}</span>`;
+  return `<span class="rank rank-x">#${r}</span>`;
+}
+
+// ---- PERIOD ----
+document.getElementById('period-badge').textContent = D.period.label;
+document.getElementById('ig-period-label').textContent = D.period.label;
+document.getElementById('social-period-label').textContent = D.period.label;
+
+// ---- SCORECARDS ----
+document.getElementById('sc-searches').textContent = fmt(D.google.searches);
+document.getElementById('sc-searches-chg').textContent = `↑ +${D.google.searches_change}% vs last month`;
+document.getElementById('sc-ig-views').textContent = fmt(D.instagram.views);
+document.getElementById('sc-ig-chg').textContent = `↑ +${D.instagram.views_change}% vs prior period`;
+document.getElementById('sc-directions').textContent = fmt(D.google.direction_requests);
+document.getElementById('sc-dir-chg').textContent = `↑ +${D.google.direction_change}% vs last month`;
+document.getElementById('sc-posts').textContent = D.content.posts_delivered;
+document.getElementById('sc-posts-sub').textContent = `↑ ${D.content.platforms} platforms managed`;
+
+// ---- GOOGLE SEARCHES CHART ----
+new Chart(document.getElementById('chart-searches'), {
+  type: 'bar',
+  data: {
+    labels: D.google.search_history_labels,
+    datasets: [{
+      data: D.google.search_history,
+      backgroundColor: D.google.search_history.map((v,i) => i === D.google.search_history.length-1 ? gold : purple + '70'),
+      borderRadius: 5, borderSkipped: false
+    }]
+  },
+  options: { ...chartDefaults }
+});
+document.getElementById('searches-big').textContent = fmt(D.google.searches);
+document.getElementById('searches-chg-big').textContent = `↑ +${D.google.searches_change}% MoM`;
+
+// ---- GOOGLE ACTIONS ----
+const googleActions = [
+  { label: 'Direction Requests', val: D.google.direction_requests, chg: D.google.direction_change, color: purple },
+  { label: 'Phone Calls', val: D.google.phone_calls, chg: D.google.phone_change, color: gold },
+  { label: 'Website Clicks', val: D.google.website_clicks, chg: D.google.website_change, color: green },
+  { label: 'Photo Views', val: D.google.photo_views, chg: D.google.photo_change, color: '#e879f9' }
+];
+document.getElementById('google-actions-wrap').innerHTML = googleActions.map(a => `
+  <div class="stat-row">
+    <div class="stat-left"><div class="stat-dot" style="background:${a.color}"></div><div class="stat-name">${a.label}</div></div>
+    <div><div class="stat-val">${fmt(a.val)}</div><div class="stat-chg ${chgClass(a.chg)}">${chg(a.chg)}</div></div>
+  </div>`).join('');
+
+// ---- SNACK PACK TABLE ----
+document.getElementById('snack-pack-body').innerHTML = D.rankings.map(r => `
+  <tr>
+    <td><strong>${r.market}</strong><br><span style="font-size:0.65rem;color:var(--text-soft)">${r.drive} &middot; Pop. ${r.pop}</span></td>
+    <td>${rankBadge(r.dispensary)}</td>
+    <td>${rankBadge(r.near_me)}</td>
+    <td>${rankBadge(r.weed)}</td>
+    <td>${rankBadge(r.cannabis)}</td>
+    <td>${rankBadge(r.open_now)}</td>
+  </tr>`).join('');
+
+// ---- SEO HEALTH GRADES ----
+document.getElementById('seo-overall-label').textContent = `Overall SEO Grade: ${D.seo.overall_grade}`;
+document.getElementById('seo-score-tag').textContent = `${D.seo.overall_score} / 100`;
+const gradeColors = { 'A': {bg:'#f0fdf4',border:'#bbf7d0',text:green}, 'A-': {bg:'#f0fdf4',border:'#bbf7d0',text:green}, 'B+': {bg:'var(--purple-light)',border:'rgba(123,45,139,0.15)',text:purple}, 'B': {bg:'#fefce8',border:'#fde68a',text:'#ca8a04'} };
+const topGrades = [
+  { grade: D.seo.review_authority_grade, score: D.seo.review_authority_score, title: 'Review Authority', sub: `${D.reviews.joyleaf_count.toLocaleString()} reviews · gap vs Budzooka` },
+  { grade: D.seo.gbp_grade, score: D.seo.gbp_score, title: 'GBP Optimization', sub: 'Weekly posts · active reviews · photos' },
+  { grade: D.seo.onpage_grade, score: D.seo.onpage_score, title: 'On-Page SEO', sub: 'Schema live · Search Console pending' }
+];
+document.getElementById('grade-cards-top').innerHTML = topGrades.map(g => {
+  const c = gradeColors[g.grade] || gradeColors['B'];
+  return `<div class="grade-card" style="background:${c.bg};border-color:${c.border}">
+    <div class="grade-letter" style="color:${c.text}">${g.grade}</div>
+    <div class="grade-title" style="color:${c.text}">${g.title}</div>
+    <div class="grade-sub">${g.sub}</div>
+    <div class="grade-score">${g.score} / 100</div>
+  </div>`;
+}).join('');
+const bottomGrades = [
+  { grade: D.seo.citation_grade, score: D.seo.citation_score, title: 'Citation Consistency', sub: 'NAP consistent across 4 platforms' },
+  { grade: D.seo.ai_visibility_grade, score: D.seo.ai_visibility_score, title: 'AI Search Visibility', sub: 'Primary Roselle option on Claude AI & ChatGPT' }
+];
+document.getElementById('grade-cards-bottom').innerHTML = bottomGrades.map(g => {
+  const c = gradeColors[g.grade] || gradeColors['B'];
+  return `<div class="grade-card" style="background:${c.bg};border-color:${c.border}">
+    <div class="grade-letter" style="color:${c.text}">${g.grade}</div>
+    <div class="grade-title" style="color:${c.text}">${g.title}</div>
+    <div class="grade-sub">${g.sub}</div>
+    <div class="grade-score">${g.score} / 100</div>
+  </div>`;
+}).join('');
+
+// SEO score trend chart
+new Chart(document.getElementById('chart-seo-score'), {
+  type: 'line',
+  data: {
+    labels: D.seo.history_labels,
+    datasets: [{
+      data: D.seo.score_history,
+      borderColor: purple, backgroundColor: purple + '15',
+      borderWidth: 2.5, fill: true, tension: 0.4,
+      pointBackgroundColor: purple, pointRadius: 4
+    }]
+  },
+  options: { ...chartDefaults, scales: { ...chartDefaults.scales, y: { ...chartDefaults.scales.y, min: 60, max: 100 } } }
+});
+
+// ---- LISTING PLATFORMS ----
+const listings = [
+  {
+    name: 'Google Business', icon: '🗺️', tag: 'FLP Managed', tagClass: 'tag-purple',
+    stats: [
+      ['Monthly searches', fmt(D.google.searches)],
+      ['Direction requests', fmt(D.google.direction_requests)],
+      ['Phone calls', fmt(D.google.phone_calls)],
+      ['Photo views', fmt(D.google.photo_views)],
+      ['Review responses', 'FLP managed']
+    ],
+    insight: { cls: 'insight-purple', title: '📌 FLP Managed', body: 'Hours, posts, closures, photos, and all review responses handled by FLP' }
+  },
+  {
+    name: 'Leafly', icon: '🌿', tag: '+67% deal orders', tagClass: 'tag-green',
+    stats: [
+      ['Sessions', fmt(D.leafly.sessions)],
+      ['Reviews', D.leafly.reviews],
+      ['Orders', D.leafly.orders],
+      ['Orders with deal', D.leafly.deal_orders],
+      ['GMV this period', '$' + D.leafly.gmv.toLocaleString()]
+    ],
+    insight: { cls: 'insight-green', title: `↑ +${D.leafly.deal_orders_change}% deal orders`, body: `Deal orders up ${D.leafly.deal_orders_change}% vs prior period. Sessions up ${D.leafly.sessions_change}%. GMV up ${D.leafly.gmv_change}%.` }
+  },
+  {
+    name: 'Weedmaps', icon: '💨', tag: 'Two listings', tagClass: 'tag-gold',
+    stats: [
+      ['Dispensary clicks', D.weedmaps.dispensary_clicks],
+      ['Listing visitors', D.weedmaps.listing_visitors],
+      ['Delivery clicks', D.weedmaps.delivery_clicks],
+      ['Contact clicks', D.weedmaps.contact_clicks],
+      ['Monthly spend', '$' + D.weedmaps.monthly_spend]
+    ],
+    insight: { cls: 'insight-gold', title: '📊 Two Active Listings', body: `Dispensary listing $${D.weedmaps.dispensary_spend}/mo. Delivery listing $${D.weedmaps.delivery_spend}/mo. Both managed by FLP.` }
+  },
+  {
+    name: 'Yelp', icon: '⭐', tag: 'FLP Managed', tagClass: 'tag-purple',
+    stats: [
+      ['Impressions', fmt(D.yelp.impressions)],
+      ['Page visits', D.yelp.page_visits],
+      ['Total leads', D.yelp.leads],
+      ['Website visits', D.yelp.website_visits],
+      ['Direction views', D.yelp.direction_views]
+    ],
+    insight: { cls: 'insight-purple', title: '📌 FLP Managed', body: 'Built from scratch. Hours, reviews, and listing optimization all maintained by FLP.' }
+  }
+];
+document.getElementById('listings-grid').innerHTML = listings.map(l => `
+  <div class="listing-card">
+    <div class="listing-card-top"><h3>${l.name}</h3><span class="listing-icon">${l.icon}</span></div>
+    ${l.stats.map(s => `<div class="listing-stat"><span>${s[0]}</span><strong>${s[1]}</strong></div>`).join('')}
+    <div class="insight ${l.insight.cls}" style="margin-top:0.75rem">
+      <p>${l.insight.title}</p><p>${l.insight.body}</p>
+    </div>
+  </div>`).join('');
+
+// ---- INSTAGRAM CHART ----
+new Chart(document.getElementById('chart-ig-views'), {
+  type: 'line',
+  data: {
+    labels: D.instagram.history_labels,
+    datasets: [
+      { label: 'Views', data: D.instagram.views_history, borderColor: purple, backgroundColor: purple+'15', borderWidth: 2.5, fill: true, tension: 0.4, pointBackgroundColor: purple, pointRadius: 3, yAxisID: 'y' },
+      { label: 'Reach', data: D.instagram.reach_history, borderColor: gold, backgroundColor: 'transparent', borderWidth: 2, borderDash: [4,3], tension: 0.4, pointBackgroundColor: gold, pointRadius: 3, yAxisID: 'y1' }
+    ]
+  },
+  options: {
+    ...chartDefaults,
+    plugins: { ...chartDefaults.plugins, legend: { display: true, labels: { font: { family: 'DM Sans', size: 11 }, color: '#666', boxWidth: 12 } } },
+    scales: {
+      x: chartDefaults.scales.x,
+      y: { ...chartDefaults.scales.y, position: 'left' },
+      y1: { ...chartDefaults.scales.y, position: 'right', grid: { display: false } }
+    }
+  }
+});
+const igStats = [
+  { label: 'Views', val: fmt(D.instagram.views), chg: `+${D.instagram.views_change}%`, cls: 'up' },
+  { label: 'Reach', val: fmt(D.instagram.reach), chg: `+${D.instagram.reach_change}%`, cls: 'up' },
+  { label: 'Interactions', val: fmt(D.instagram.interactions), chg: `+${D.instagram.interactions_change}%`, cls: 'up' },
+  { label: 'New Follows', val: D.instagram.new_follows, chg: `+${D.instagram.follows_change}%`, cls: 'up' }
+];
+document.getElementById('ig-stats-grid').innerHTML = igStats.map(s => `
+  <div style="background:var(--purple-light);border-radius:10px;padding:0.75rem;border:1px solid rgba(123,45,139,0.12)">
+    <div style="font-size:0.65rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.35rem">${s.label}</div>
+    <div style="font-family:DM Mono,monospace;font-size:1rem;font-weight:700">${s.val}</div>
+    <div style="font-size:0.68rem;font-weight:700;color:var(--green);margin-top:0.2rem">${s.chg} vs prior</div>
+  </div>`).join('');
+document.getElementById('ig-insight-text').textContent = `Non-follower reach up ${D.instagram.non_follower_change}%. Content is actively reaching new people who have never heard of Joyleaf. This is organic new customer acquisition.`;
+
+// ---- FACEBOOK CHART ----
+new Chart(document.getElementById('chart-fb-views'), {
+  type: 'bar',
+  data: {
+    labels: D.facebook.history_labels,
+    datasets: [{ data: D.facebook.views_history, backgroundColor: '#1877f230', borderColor: '#1877f2', borderWidth: 1.5, borderRadius: 4 }]
+  },
+  options: { ...chartDefaults }
+});
+document.getElementById('fb-stats-grid').innerHTML = [
+  ['Views', fmt(D.facebook.views), `+${D.facebook.views_change}%`],
+  ['Page Visits', D.facebook.page_visits, `+${D.facebook.page_visits_change}%`],
+  ['Interactions', D.facebook.interactions, `+${D.facebook.interactions_change}%`],
+  ['New Follows', `+${D.facebook.new_follows}`, `+${D.facebook.follows_change}%`]
+].map(s => `
+  <div style="background:#f0f4ff;border-radius:8px;padding:0.6rem;border:1px solid #bfdbfe">
+    <div style="font-size:0.62rem;font-weight:700;color:#1877f2;text-transform:uppercase;letter-spacing:0.06em">${s[0]}</div>
+    <div style="font-family:DM Mono,monospace;font-size:0.9rem;font-weight:700;margin-top:0.2rem">${s[1]}</div>
+    <div style="font-size:0.65rem;color:var(--green);font-weight:700">${s[2]}</div>
+  </div>`).join('');
+document.getElementById('yt-li-grid').innerHTML = `
+  <div style="background:#fff8f0;border-radius:10px;padding:0.85rem;border:1px solid #fed7aa">
+    <div style="font-size:0.7rem;font-weight:700;color:#ea580c;margin-bottom:0.5rem">▶ YouTube</div>
+    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Views: <strong>${D.youtube.views}</strong></div>
+    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Subscribers: <strong>${D.youtube.subscribers}</strong></div>
+    <div style="font-size:0.75rem;color:var(--text-soft)">New subs: <strong>+${D.youtube.new_subs}</strong></div>
+    <p style="font-size:0.65rem;color:#92400e;margin-top:0.5rem;font-style:italic">Cannabis restrictions limit algorithmic reach</p>
+  </div>
+  <div style="background:#f0f4ff;border-radius:10px;padding:0.85rem;border:1px solid #bfdbfe">
+    <div style="font-size:0.7rem;font-weight:700;color:#1d4ed8;margin-bottom:0.5rem">👥 LinkedIn</div>
+    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Impressions: <strong>${D.linkedin.impressions}</strong></div>
+    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Reactions: <strong>${D.linkedin.reactions}</strong></div>
+    <div style="font-size:0.75rem;color:var(--text-soft)">Followers: <strong>${D.linkedin.followers}</strong></div>
+    <p style="font-size:0.65rem;color:#1e40af;margin-top:0.5rem;font-style:italic">B2B audience. Cannabis restrictions apply.</p>
+  </div>`;
+
+// ---- REVIEWS ----
+document.getElementById('review-rating').textContent = D.reviews.rating;
+document.getElementById('review-bars').innerHTML = [
+  ['5 star', D.reviews.five_star_pct, gold],
+  ['4 star', D.reviews.four_star_pct, purple],
+  ['3 star', D.reviews.three_star_pct, '#9ca3af'],
+  ['1-2 star', D.reviews.one_two_star_pct, red]
+].map(r => `
+  <div class="review-row">
+    <span class="label">${r[0]}</span>
+    <div class="review-bar-wrap"><div class="review-bar-fill" style="width:${r[1]}%;background:${r[2]}"></div></div>
+    <span class="pct">${r[1]}%</span>
+  </div>`).join('');
+
+// review gap chart
+new Chart(document.getElementById('chart-reviews'), {
+  type: 'bar',
+  data: {
+    labels: ['Joyleaf', 'Budzooka', 'Breakwater', 'Botera', 'Ayr'],
+    datasets: [{
+      data: [D.reviews.joyleaf_count, D.reviews.budzooka_count, D.reviews.breakwater_count, D.reviews.botera_count, D.reviews.ayr_count],
+      backgroundColor: [purple, red+'aa', gold+'aa', '#9ca3afaa', '#9ca3afaa'],
+      borderRadius: 5, borderSkipped: false
+    }]
+  },
+  options: { ...chartDefaults }
+});
+const gap = D.reviews.budzooka_count - D.reviews.joyleaf_count;
+document.getElementById('review-gap-insight').innerHTML = `<p>⚠️ The Budzooka Gap: ${gap.toLocaleString()} Reviews</p><p>This gap is why Budzooka ranks above Joyleaf on some AI platforms. FLP manages all review responses monthly to build velocity. Estimated time to close gap: 12 months at current trajectory.</p>`;
+
+// ---- AI SEARCH ----
+document.getElementById('ai-audit-label').textContent = `AI Search Audit — ${D.ai_search.audit_month}`;
+document.getElementById('ai-platforms-tag').textContent = `${D.ai_search.platforms_ranking} / ${D.ai_search.platforms_total} Platforms`;
+const aiPlatforms = [
+  { name: 'ChatGPT', icon: '🤖', color: '#10a37f', result: D.ai_search.chatgpt_result, rank: D.ai_search.chatgpt_rank },
+  { name: 'Gemini', icon: '✨', color: '#1a73e8', result: D.ai_search.gemini_result, rank: D.ai_search.gemini_rank },
+  { name: 'Claude AI', icon: '🧠', color: purple, result: D.ai_search.claude_result, rank: D.ai_search.claude_rank },
+  { name: 'Manus', icon: '⚡', color: '#f59e0b', result: D.ai_search.manus_result, rank: D.ai_search.manus_rank }
+];
+document.getElementById('ai-platform-cards').innerHTML = aiPlatforms.map(p => `
+  <div style="background:white;border-radius:12px;border:1px solid var(--border);padding:1rem;box-shadow:var(--card-shadow)">
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem">
+      <div style="display:flex;align-items:center;gap:0.4rem">
+        <span style="font-size:1rem">${p.icon}</span>
+        <span style="font-size:0.78rem;font-weight:700;color:${p.color}">${p.name}</span>
+      </div>
+      <span style="font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:50px;background:${p.rank==='Pending'?'#f1f5f9':'var(--green-light)'};color:${p.rank==='Pending'?'#64748b':green}">${p.rank}</span>
+    </div>
+    <p style="font-size:0.72rem;color:var(--text-soft);line-height:1.5">${p.result}</p>
+  </div>`).join('');
+
+// ---- COMPETITORS ----
+const competitors = [
+  { name: 'Joyleaf ⭐', location: 'Roselle, NJ', rating: '4.9', reviews: D.reviews.joyleaf_count.toLocaleString(), chatgpt: 'Mentioned', gemini: 'Mentioned', claude: '#1', distance: 'Home', highlight: true },
+  { name: 'Budzooka', location: 'Union County', rating: '5.0', reviews: D.reviews.budzooka_count.toLocaleString(), chatgpt: '#1', gemini: '#1', claude: 'Mentioned', distance: '5 mi', highlight: false },
+  { name: 'Breakwater', location: 'Roselle Park', rating: '4.8', reviews: D.reviews.breakwater_count.toLocaleString(), chatgpt: 'Mentioned', gemini: 'Mentioned', claude: 'Mentioned', distance: '1 mi', highlight: false },
+  { name: 'Botera', location: 'Union, NJ', rating: '4.7', reviews: D.reviews.botera_count.toLocaleString(), chatgpt: '--', gemini: '--', claude: 'Mentioned', distance: '4 mi', highlight: false },
+  { name: 'Ayr', location: 'Union, NJ', rating: '4.6', reviews: D.reviews.ayr_count.toLocaleString(), chatgpt: '--', gemini: '--', claude: '--', distance: '4 mi', highlight: false }
+];
+document.getElementById('competitor-table-body').innerHTML = competitors.map(c => `
+  <tr style="${c.highlight ? 'background:var(--purple-light)' : ''}">
+    <td><strong>${c.name}</strong></td>
+    <td>${c.location}</td>
+    <td>⭐ ${c.rating}</td>
+    <td style="font-family:DM Mono,monospace;font-weight:600">${c.reviews}</td>
+    <td>${c.chatgpt}</td>
+    <td>${c.gemini}</td>
+    <td>${c.claude}</td>
+    <td>${c.distance}</td>
+  </tr>`).join('');
+
+new Chart(document.getElementById('chart-competitors'), {
+  type: 'bar',
+  data: {
+    labels: ['Joyleaf', 'Budzooka', 'Breakwater', 'Botera', 'Ayr'],
+    datasets: [{ label: 'Review Count', data: [D.reviews.joyleaf_count, D.reviews.budzooka_count, D.reviews.breakwater_count, D.reviews.botera_count, D.reviews.ayr_count], backgroundColor: [purple, red+'99', gold+'99', '#9ca3af88', '#9ca3af88'], borderRadius: 5, borderSkipped: false }]
+  },
+  options: { ...chartDefaults, plugins: { ...chartDefaults.plugins, legend: { display: false } } }
+});
+document.getElementById('review-gap-strategy').textContent = `Budzooka has ${gap.toLocaleString()} more reviews than Joyleaf. FLP manages all review responses monthly to build velocity. Estimated time to close the gap: 12 months at current trajectory. Breakwater has only ${D.reviews.breakwater_count} reviews — Joyleaf already dominates them on volume.`;
+
+// ---- WEEDMAPS DELIVERY ----
+document.getElementById('del-wm-clicks').textContent = D.weedmaps.delivery_clicks;
+
+// ---- CONTENT ----
+document.getElementById('content-month-label').textContent = `${D.period.month} Content Delivery`;
+document.getElementById('content-tag').textContent = D.period.month;
+document.getElementById('content-bars').innerHTML = [
+  { label: `Social posts (agreed: ${D.content.posts_agreed}/mo)`, delivered: D.content.posts_delivered, agreed: D.content.posts_agreed, note: `${Math.round(D.content.posts_delivered/D.content.posts_agreed*100)}% of agreed scope` },
+  { label: `Platforms (agreed: ${D.content.platforms})`, delivered: D.content.platforms, agreed: D.content.platforms, note: 'Instagram, Facebook, YouTube, LinkedIn, X' },
+  { label: 'Google Business posts', delivered: 4, agreed: 4, note: 'Weekly posts, photos, updates' }
+].map(c => `
+  <div>
+    <div class="progress-wrap">
+      <div class="progress-label"><span>${c.label}</span><strong>${c.delivered} delivered</strong></div>
+      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
+    </div>
+    <p style="font-size:0.7rem;color:var(--green);font-weight:700;margin-top:0.3rem">↑ ${c.note}</p>
+  </div>`).join('');
+
+</script>
+</body>
+</html>
