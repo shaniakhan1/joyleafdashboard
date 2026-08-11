@@ -80,3 +80,13 @@ At the user’s request, both duplicate `Shania's Facebook connection` records w
 After the clean reset, the Instagram for Business **Get user insights** module has been re-added after the webhook and shows only the native **Create a connection** button. No Facebook connection exists or has been selected.
 
 A fresh Facebook connection successfully revealed `Joy Leaf (Roselle) (@joyleafdispensary)`. The Make user-insights module’s Lifetime options are audience-demographic metrics only; they do not map to the existing dashboard’s account measures. The unsaved module was removed to avoid an irrelevant call, and Instagram fields remain stale rather than being zeroed or replaced.
+
+The one OpenAI response module uses the existing `My OpenAI connection`, `GPT-5.6: gpt-5.6-luna (system)`, and a compact prompt that maps the webhook’s `insight.content` and `sources` fields. The prompt was entered directly in Make after the editor rejected automated text injection.
+
+The saved Make scenario now has exactly two modules: Custom Webhook → OpenAI Generate a response. The OpenAI module uses the low-cost `GPT-5.6: gpt-5.6-luna (system)` selection and one compact prompt mapping current `sources` plus the previous insight.
+
+An unintended unsaved GitHub **Get an Organization** module was removed before connection, authorization, or execution. The scenario remains Custom Webhook → OpenAI only.
+
+The native GitHub modules available in this Make workspace did not expose a repository file-update or repository-dispatch action. A temporary HTTP bridge was explored but never saved or executed. The saved scenario therefore remains **Custom Webhook → OpenAI Generate a response** until a secure GitHub credential method can be used.
+
+Two fine-grained, repository-only GitHub credentials were created during the attempt, detected as unsafe to continue using, and revoked immediately. No Make keychain was created, no token is stored in the repository, and no HTTP call reached GitHub. The existing GitHub Actions merger remains documented and ready to accept the `joyleaf_dashboard_refresh` repository-dispatch payload once the bridge can be completed through a safe credential channel.
