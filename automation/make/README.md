@@ -64,3 +64,15 @@ The corrected saved scenario blueprint was exported again from Make after the sc
 The scenario title was explicitly resubmitted and saved again as `Joyleaf Weekly Dashboard Refresh` in the Make editor. The editor confirmed the save; the detail-page heading may lag until its next refresh.
 
 The Make editor is connected again and confirms the webhook-only scenario configuration remains saved in immediate mode. The next action is to add the first source module, stopping at its native authorization prompt.
+
+The repository now has the encrypted Actions secret `MAKE_JOYLEAF_REFRESH_WEBHOOK`. The weekly GitHub Actions caller can invoke the same Make Custom Webhook once the Make scenario is fully configured and activated.
+
+The Google Business Profile app was selected in the next-module picker. No Google account, business location, metric request, or source connection has been authorized or executed yet.
+
+The scenario remains linear with only the Custom Webhook trigger after an unintended router was undone. The next source-module attachment control is visible on the webhook’s right side; no source connection, OpenAI call, or data refresh has been run.
+
+Make’s currently available Google Business Profile app exposes post-management modules in the picker, not the performance measures mapped by this dashboard. It is intentionally not added as a non-metric call; Google values remain stale until an authorized metrics-capable endpoint is available.
+
+The linear scenario now has an unsaved **Instagram for Business (Facebook login) → Get user insights** module immediately after the Custom Webhook. Make is displaying its native **Create a connection** control; no Meta account has been authorized, selected, or queried.
+
+At the user’s request, both duplicate `Shania's Facebook connection` records were deleted from Make. The saved scenario was restored to its webhook-only state, with no Meta module, Page selection, or source query retained. The previous sample webhook execution remains the sole execution.
