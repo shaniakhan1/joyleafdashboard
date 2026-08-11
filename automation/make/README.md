@@ -52,3 +52,15 @@ A non-live sample payload was successfully received by the saved webhook, establ
 Make’s schedule settings confirm the scenario is configured to run **Immediately** when the Custom Webhook receives a request. The weekly caller will therefore use the same webhook URL rather than changing this setting to queued weekly processing.
 
 The saved scenario remains stable after schema capture; it has one Custom Webhook trigger, one observed sample execution, and no additional source modules or connections.
+
+Repository checkpoint: the dashboard stale-data safeguards, merger, GitHub workflow, mappings, prompt, fixtures, and Make configuration record were committed to `main` as `110e542` on 2026-08-11. The Make scenario is saved separately as `5917560` and awaits source connections.
+
+A Make blueprint export was initiated from scenario `5917560` after the webhook trigger and schema capture were saved. The exported file is copied into this directory as the current blueprint checkpoint before any source connections are added.
+
+The saved Make scenario title has been corrected to `Joyleaf Weekly Dashboard Refresh`; its scenario ID remains `5917560`.
+
+The corrected saved scenario blueprint was exported again from Make after the scenario name was fixed. The export is being collected for version control as the current webhook-only checkpoint.
+
+The scenario title was explicitly resubmitted and saved again as `Joyleaf Weekly Dashboard Refresh` in the Make editor. The editor confirmed the save; the detail-page heading may lag until its next refresh.
+
+The Make editor is connected again and confirms the webhook-only scenario configuration remains saved in immediate mode. The next action is to add the first source module, stopping at its native authorization prompt.
