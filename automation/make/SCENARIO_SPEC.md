@@ -72,3 +72,8 @@ After Make creates the Custom Webhook, add its URL to the repository’s Actions
 [1] [Make Help Center — Webhooks](https://help.make.com/webhooks)
 [2] [Make Help Center — Scenario blueprints](https://help.make.com/blueprints)
 [3] [GitHub Docs — Repository dispatch event](https://docs.github.com/actions/writing-workflows/choosing-when-your-workflow-runs/events-that-trigger-workflows#repository_dispatch)
+
+
+## Make HTTP bridge checkpoint
+
+The saved HTTP bridge uses a Make **API key** keychain named `Joyleaf GitHub dispatch token`. Its secret value is intentionally not documented or stored in Git; the keychain sends the `Authorization` header as `Bearer <fine-grained token>`. The HTTP module is configured for `POST` to `https://api.github.com/repos/shaniakhan1/joyleafdashboard/dispatches` with an `application/json` body. It has not been executed during configuration.
