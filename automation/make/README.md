@@ -76,3 +76,7 @@ Make’s currently available Google Business Profile app exposes post-management
 The linear scenario now has an unsaved **Instagram for Business (Facebook login) → Get user insights** module immediately after the Custom Webhook. Make is displaying its native **Create a connection** control; no Meta account has been authorized, selected, or queried.
 
 At the user’s request, both duplicate `Shania's Facebook connection` records were deleted from Make. The saved scenario was restored to its webhook-only state, with no Meta module, Page selection, or source query retained. The previous sample webhook execution remains the sole execution.
+
+After the clean reset, the Instagram for Business **Get user insights** module has been re-added after the webhook and shows only the native **Create a connection** button. No Facebook connection exists or has been selected.
+
+A fresh Facebook connection successfully revealed `Joy Leaf (Roselle) (@joyleafdispensary)`. The Make user-insights module’s Lifetime options are audience-demographic metrics only; they do not map to the existing dashboard’s account measures. The unsaved module was removed to avoid an irrelevant call, and Instagram fields remain stale rather than being zeroed or replaced.
