@@ -1,0 +1,56 @@
+name: Joyleaf dashboard refresh
+
+on:
+  schedule:
+    # Monday 13:00 UTC. This is the sole weekly caller of the single Make webhook scenario.
+    - cron: "0 13 * * 1"
+  repository_dispatch:
+    types: [joyleaf_dashboard_refresh]
+
+permissions:
+  contents: write
+
+concurrency:
+  group: joyleaf-dashboard-refresh
+  cancel-in-progress: false
+
+jobs:
+  call_make_weekly:
+    if: github.event_name == 'schedule'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Trigger the one Make scenario
+        env:
+          MAKE_WEBHOOK_URL: ${{ secrets.MAKE_JOYLEAF_REFRESH_WEBHOOK }}
+        run: |
+          test -n "$MAKE_WEBHOOK_URL"
+          curl --fail --silent --show-error --request POST "$MAKE_WEBHOOK_URL" \
+            --header 'Content-Type: application/json' \
+            --data '{"trigger":"weekly","requested_at":"'"$(date -u +%Y-%m-%dT%H:%M:%SZ)"'"}'
+
+  merge_dashboard_data:
+    if: github.event_name == 'repository_dispatch'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the existing dashboard repository
+        uses: actions/checkout@v4
+
+      - name: Write the Make refresh payload
+        env:
+          REFRESH_PAYLOAD: ${{ toJSON(github.event.client_payload) }}
+        run: printf '%s' "$REFRESH_PAYLOAD" > /tmp/joyleaf-refresh-payload.json
+
+      - name: Merge validated metrics and retain stale values
+        run: node .github/scripts/merge_dashboard_data.mjs data.js /tmp/joyleaf-refresh-payload.json data.js
+
+      - name: Commit data changes only when data.js changed
+        run: |
+          if git diff --quiet -- data.js; then
+            echo "No dashboard data changes to commit."
+            exit 0
+          fi
+          git config user.name "joyleaf-dashboard-bot"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add data.js
+          git commit -m "chore(data): refresh Joyleaf dashboard"
+          git push

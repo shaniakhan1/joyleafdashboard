@@ -251,7 +251,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
     </div>
     <div class="topbar-right">
       <span class="date-badge" id="period-badge">Loading...</span>
-      <span class="update-badge"><span class="update-dot"></span> Updated Monthly</span>
+      <span class="update-badge" id="refresh-badge"><span class="update-dot"></span> Loading refresh status...</span>
     </div>
   </div>
 
@@ -265,6 +265,11 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
       <div class="scorecard"><span class="sc-icon">📱</span><div class="sc-value" id="sc-ig-views">--</div><div class="sc-label">Instagram Views</div><div class="sc-change up" id="sc-ig-chg">Loading...</div></div>
       <div class="scorecard"><span class="sc-icon">📍</span><div class="sc-value" id="sc-directions">--</div><div class="sc-label">Direction Requests</div><div class="sc-change up" id="sc-dir-chg">Loading...</div></div>
       <div class="scorecard"><span class="sc-icon">📝</span><div class="sc-value" id="sc-posts">--</div><div class="sc-label">Posts Delivered</div><div class="sc-change up" id="sc-posts-sub">Loading...</div></div>
+    </div>
+
+    <div class="card mb" id="generated-insight-card" style="display:none">
+      <div class="card-header"><div><h3 id="generated-insight-title">Dashboard Insight</h3><p id="generated-insight-meta">Evidence-bound automation insight</p></div><span class="tag tag-purple" id="generated-insight-status">Loading</span></div>
+      <div class="card-body"><div class="insight insight-purple" id="generated-insight-body"></div></div>
     </div>
 
     <!-- LOCAL SEO -->
@@ -508,9 +513,9 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
     </div>
 
     <div class="footer-note">
-      <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Updated monthly &middot; AI audit conducted manually across ChatGPT, Gemini, Claude AI, and Manus</p>
-      <p style="margin-top:0.3rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly Business, Weedmaps, Yelp Business, YouTube Studio, LinkedIn Analytics &middot; Google Analytics &amp; Search Console integration pending property access</p>
-      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">To update this dashboard: edit data.js with the new monthly numbers and push to GitHub. Charts update automatically.</p>
+      <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Existing dashboard delivery remains unchanged</p>
+      <p style="margin-top:0.3rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly Business, Weedmaps, Yelp Business, YouTube Studio, LinkedIn Analytics &middot; Unavailable or failed sources retain their last known values and are marked stale.</p>
+      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">The one Make scenario refreshes approved data sources and commits only data.js through GitHub. Charts update automatically.</p>
     </div>
 
   </div>
@@ -528,6 +533,18 @@ const gold = '#D4A843';
 const green = '#16a34a';
 const red = '#dc2626';
 const softBorder = '#ede8f5';
+const automation = D.automation || {};
+const sourceStatuses = automation.source_status || {};
+
+function escapeHtml(value) {
+  return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+}
+function titleCase(value) {
+  return String(value || '').replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
+}
+function sourceFreshness(source) {
+  return sourceStatuses[source]?.status || 'stale';
+}
 
 const chartDefaults = {
   responsive: true,
@@ -556,6 +573,34 @@ function rankBadge(r) {
 document.getElementById('period-badge').textContent = D.period.label;
 document.getElementById('ig-period-label').textContent = D.period.label;
 document.getElementById('social-period-label').textContent = D.period.label;
+
+const freshSourceCount = Object.values(sourceStatuses).filter(s => s.status === 'fresh' || s.status === 'partial').length;
+const staleSourceCount = Object.values(sourceStatuses).filter(s => s.status === 'stale').length;
+const refreshBadge = document.getElementById('refresh-badge');
+if (automation.last_success && staleSourceCount === 0) {
+  refreshBadge.textContent = `Updated ${freshSourceCount} source${freshSourceCount === 1 ? '' : 's'} · ${new Date(automation.last_success).toLocaleDateString()}`;
+} else if (automation.last_attempt) {
+  refreshBadge.textContent = `${staleSourceCount} source${staleSourceCount === 1 ? '' : 's'} stale · values retained`;
+  refreshBadge.style.background = '#fefce8';
+  refreshBadge.style.color = '#92400e';
+  refreshBadge.style.borderColor = '#fde68a';
+} else {
+  refreshBadge.textContent = 'Manual data refresh';
+}
+
+const generatedInsight = automation.generated_insight;
+const generatedInsightCard = document.getElementById('generated-insight-card');
+if (generatedInsight?.title && generatedInsight?.body) {
+  const insightTone = ['green', 'purple', 'gold', 'red'].includes(generatedInsight.tone) ? generatedInsight.tone : 'purple';
+  const insightStatus = generatedInsight.status || 'stale';
+  const insightSources = (generatedInsight.source_keys || []).map(titleCase).join(', ') || 'Retained dashboard data';
+  generatedInsightCard.style.display = '';
+  document.getElementById('generated-insight-title').textContent = generatedInsight.title;
+  document.getElementById('generated-insight-meta').textContent = `Sources: ${insightSources}`;
+  document.getElementById('generated-insight-status').textContent = insightStatus === 'stale' ? 'Retained insight' : `${titleCase(insightStatus)} data`;
+  document.getElementById('generated-insight-body').className = `insight insight-${insightTone}`;
+  document.getElementById('generated-insight-body').innerHTML = `<p>${escapeHtml(generatedInsight.body)}</p>`;
+}
 
 // ---- SCORECARDS ----
 document.getElementById('sc-searches').textContent = fmt(D.google.searches);

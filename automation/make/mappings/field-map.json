@@ -1,0 +1,119 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Joyleaf Make metric field map",
+  "version": 1,
+  "sources": {
+    "google": {
+      "dashboardPath": "google",
+      "supportedMetrics": [
+        "searches",
+        "direction_requests",
+        "phone_calls",
+        "website_clicks",
+        "photo_views"
+      ],
+      "history": {
+        "searches": "search_history"
+      }
+    },
+    "instagram": {
+      "dashboardPath": "instagram",
+      "supportedMetrics": [
+        "views",
+        "reach",
+        "interactions",
+        "new_follows",
+        "non_follower_reach"
+      ],
+      "history": {
+        "views": "views_history",
+        "reach": "reach_history"
+      }
+    },
+    "facebook": {
+      "dashboardPath": "facebook",
+      "supportedMetrics": [
+        "views",
+        "interactions",
+        "page_visits",
+        "new_follows"
+      ],
+      "history": {
+        "views": "views_history"
+      }
+    },
+    "youtube": {
+      "dashboardPath": "youtube",
+      "supportedMetrics": [
+        "views",
+        "subscribers",
+        "new_subs"
+      ],
+      "history": {
+        "views": "views_history"
+      }
+    },
+    "linkedin": {
+      "dashboardPath": "linkedin",
+      "supportedMetrics": [
+        "impressions",
+        "reactions",
+        "followers"
+      ]
+    },
+    "leafly": {
+      "dashboardPath": "leafly",
+      "supportedMetrics": [
+        "sessions",
+        "reviews",
+        "orders",
+        "deal_orders",
+        "gmv"
+      ],
+      "history": {
+        "sessions": "sessions_history",
+        "gmv": "gmv_history"
+      }
+    },
+    "weedmaps": {
+      "dashboardPath": "weedmaps",
+      "supportedMetrics": [
+        "dispensary_clicks",
+        "delivery_clicks",
+        "listing_visitors",
+        "contact_clicks",
+        "monthly_spend",
+        "dispensary_spend",
+        "delivery_spend",
+        "gmv"
+      ]
+    },
+    "yelp": {
+      "dashboardPath": "yelp",
+      "supportedMetrics": [
+        "impressions",
+        "page_visits",
+        "leads",
+        "website_visits",
+        "direction_views",
+        "calls"
+      ]
+    },
+    "reviews": {
+      "dashboardPath": "reviews",
+      "supportedMetrics": [
+        "rating",
+        "joyleaf_count"
+      ]
+    }
+  },
+  "derivedMetrics": {
+    "rule": "Make may include a change field only when it has both a valid current and valid comparable prior-period value. Otherwise the merger leaves the existing change field untouched.",
+    "fields": {
+      "google": ["searches_change", "direction_change", "phone_change", "website_change", "photo_change"],
+      "instagram": ["views_change", "reach_change", "interactions_change", "follows_change", "non_follower_change"],
+      "facebook": ["views_change", "interactions_change", "page_visits_change", "follows_change"],
+      "leafly": ["sessions_change", "orders_change", "deal_orders_change", "gmv_change"]
+    }
+  }
+}
