@@ -102,3 +102,11 @@ The prior manual webhook validation completed only the webhook module because th
 ## Intended production schedule
 
 The scenario is a webhook-triggered scenario configured to run immediately when data arrives. The existing GitHub Actions workflow calls its encrypted webhook endpoint weekly; a manual `POST` to the same webhook triggers the same single scenario. This avoids duplicate scenarios and preserves the existing dashboard hosting and deployment setup.
+
+## 2026-08-11 end-to-end validation
+
+The active Make scenario successfully completed one connected manual execution through **Custom Webhook → OpenAI Generate a Response → HTTP Make a Request**. The initial HTTP keychain produced an `Unauthorized` response from GitHub and did not change repository data. The HTTP module was then switched to the separately labeled `Joyleaf GitHub dispatch token alternate` keychain. The retry completed all three modules successfully.
+
+A direct approved diagnostic `repository_dispatch` using the same `joyleaf_dashboard_refresh` event verified the GitHub Actions receiving workflow. **Joyleaf dashboard refresh #1** completed successfully, ran the `merge_dashboard_data` job, and retained the stale-safe no-zero behavior. The workflow run is available at `https://github.com/shaniakhan1/joyleafdashboard/actions/runs/31551959539`.
+
+The scenario remains active and is configured for immediate Custom Webhook processing. The weekly GitHub Actions caller and manual webhook both use the same one-scenario path. The currently visible older detached OpenAI and HTTP drafts are not on the connected route and do not execute.
