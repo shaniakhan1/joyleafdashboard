@@ -120,3 +120,7 @@ GitHub Actions registered **Joyleaf dashboard refresh #2** as a repository-dispa
 The scenario remains **active** and set to **Immediately as data arrives**. The encrypted `MAKE_JOYLEAF_REFRESH_WEBHOOK` Actions secret lets the existing weekly GitHub Actions workflow send the same payload to this one Make scenario; a manual POST to the same webhook invokes the same route. The connected production path is the three-module route described above. The visually separate earlier OpenAI and HTTP modules are detached drafts and do not execute.
 
 The native Make blueprint export was initiated during configuration, but the browser download is not accessible to the sandbox. The repository therefore contains the complete, versioned configuration specification, stale-safe merger, field map, prompt, fixtures, workflow, and verified execution record; no credential value is versioned.
+
+## Live-source rebuild checkpoint — 2026-08-11
+
+The existing single Make scenario `5917560` remains the only scenario and retains its active Custom Webhook endpoint. Before route rebuild, `My Google connection` and `Shania's Facebook connection` were verified reusable in Make, alongside the existing OpenAI and GitHub HTTP credentials. The approved rebuild changes the route order only: live source calls must execute before the single OpenAI insight call and GitHub repository dispatch. No credential value is stored in this repository.
