@@ -343,8 +343,8 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-11T20:55:00Z",
-    "trigger": "weekly",
+    "last_attempt": "2026-08-11T21:16:00Z",
+    "trigger": "manual",
     "metrics_updated": 0,
     "updated_sources": [],
     "stale_sources": [
@@ -361,47 +361,47 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "youtube": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-11T20:55:00Z",
+        "last_attempt": "2026-08-11T21:16:00Z",
         "reason": "No source payload received."
       }
     },
