@@ -110,3 +110,13 @@ The active Make scenario successfully completed one connected manual execution t
 A direct approved diagnostic `repository_dispatch` using the same `joyleaf_dashboard_refresh` event verified the GitHub Actions receiving workflow. **Joyleaf dashboard refresh #1** completed successfully, ran the `merge_dashboard_data` job, and retained the stale-safe no-zero behavior. The workflow run is available at `https://github.com/shaniakhan1/joyleafdashboard/actions/runs/31551959539`.
 
 The scenario remains active and is configured for immediate Custom Webhook processing. The weekly GitHub Actions caller and manual webhook both use the same one-scenario path. The currently visible older detached OpenAI and HTTP drafts are not on the connected route and do not execute.
+
+## Final verified operational state
+
+On 2026-08-11 at approximately 21:31 CDT, the active scenario `5917560` completed a successful three-operation manual execution through the connected route **Custom Webhook → OpenAI Generate a Response → HTTP Make a Request**. The HTTP module used `application/json` with **Body input method: JSON string** and sent the required `joyleaf_dashboard_refresh` repository-dispatch event.
+
+GitHub Actions registered **Joyleaf dashboard refresh #2** as a repository-dispatch workflow run and completed it successfully. The workflow committed `3d43032` (`chore(data): refresh Joyleaf dashboard`), modifying only the existing `data.js`. The merger preserved unavailable source values and recorded source statuses as `stale`; it did not write zeroes.
+
+The scenario remains **active** and set to **Immediately as data arrives**. The encrypted `MAKE_JOYLEAF_REFRESH_WEBHOOK` Actions secret lets the existing weekly GitHub Actions workflow send the same payload to this one Make scenario; a manual POST to the same webhook invokes the same route. The connected production path is the three-module route described above. The visually separate earlier OpenAI and HTTP modules are detached drafts and do not execute.
+
+The native Make blueprint export was initiated during configuration, but the browser download is not accessible to the sandbox. The repository therefore contains the complete, versioned configuration specification, stale-safe merger, field map, prompt, fixtures, workflow, and verified execution record; no credential value is versioned.
