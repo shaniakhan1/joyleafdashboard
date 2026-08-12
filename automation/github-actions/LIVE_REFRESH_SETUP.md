@@ -81,3 +81,13 @@ Google Business Profile Performance, Meta Insights, YouTube Analytics, and Meta 
 ## Manual run
 
 Open **Actions → Joyleaf dashboard refresh → Run workflow** in the repository to run the same self-contained collection immediately. The next scheduled run occurs every Monday at 13:00 UTC.
+
+## Google Business Profile setup checkpoint (2026-08-12)
+
+The `shania@flpmarketinggroup.com` Google account can manage the verified Joyleaf Weed Delivery and Joyleaf Weed Dispensary Business Profiles. The `Joyleaf Dashboard Reporting` Google Cloud project was created under `flpmarketinggroup.com`; the Business Profile Performance API and My Business Business Information API were enabled. OAuth consent configuration remains in progress and no OAuth client secret, refresh token, or client credential has been placed in the repository.
+
+```text
+Project: joyleaf-dashboard-reporting
+Managed Joyleaf profiles: delivery and dispensary
+Runtime: GitHub Actions only (no Make or Manus dependency)
+```

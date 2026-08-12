@@ -115,6 +115,81 @@ function currentPeriod() {
   return { label, month };
 }
 
+async function getGoogleAccessToken() {
+  const clientId = process.env.GOOGLE_CLIENT_ID;
+  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
+  if (!clientId || !clientSecret || !refreshToken) {
+    throw new Error('Missing GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, or GOOGLE_REFRESH_TOKEN.');
+  }
+  const response = await fetch('https://oauth2.googleapis.com/token', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams({
+      client_id: clientId,
+      client_secret: clientSecret,
+      refresh_token: refreshToken,
+      grant_type: 'refresh_token'
+    }),
+    signal: AbortSignal.timeout(25_000)
+  });
+  const body = await response.json();
+  if (!response.ok || !body.access_token) throw new Error(body?.error_description || body?.error || `Google OAuth HTTP ${response.status}`);
+  return body.access_token;
+}
+
+function sumGoogleValues(input) {
+  if (Array.isArray(input)) return input.reduce((sum, value) => sum + sumGoogleValues(value), 0);
+  if (!input || typeof input !== 'object') return 0;
+  if (typeof input.value === 'number') return input.value;
+  return Object.values(input).reduce((sum, value) => sum + sumGoogleValues(value), 0);
+}
+
+async function fetchGoogleBusinessProfileSource() {
+  const location = process.env.GOOGLE_LOCATION_NAME;
+  if (!location) return sourceTemplate('google', 'Missing GOOGLE_LOCATION_NAME (for example, locations/123456789).');
+  try {
+    const accessToken = await getGoogleAccessToken();
+    const end = new Date();
+    const start = new Date(end);
+    start.setUTCDate(start.getUTCDate() - 27);
+    const query = new URLSearchParams();
+    for (const metric of [
+      'BUSINESS_IMPRESSIONS_DESKTOP_SEARCH',
+      'BUSINESS_IMPRESSIONS_DESKTOP_MAPS',
+      'BUSINESS_IMPRESSIONS_MOBILE_SEARCH',
+      'BUSINESS_IMPRESSIONS_MOBILE_MAPS',
+      'BUSINESS_DIRECTION_REQUESTS',
+      'CALL_CLICKS',
+      'WEBSITE_CLICKS'
+    ]) query.append('dailyMetrics', metric);
+    for (const [prefix, date] of [['dailyRange.startDate', start], ['dailyRange.endDate', end]]) {
+      query.set(`${prefix}.year`, String(date.getUTCFullYear()));
+      query.set(`${prefix}.month`, String(date.getUTCMonth() + 1));
+      query.set(`${prefix}.day`, String(date.getUTCDate()));
+    }
+    const url = `https://businessprofileperformance.googleapis.com/v1/${location}:fetchMultiDailyMetricsTimeSeries?${query}`;
+    const response = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }, signal: AbortSignal.timeout(25_000) });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body?.error?.message || `Google Business Profile HTTP ${response.status}`);
+    const totals = {};
+    for (const series of body.multiDailyMetricTimeSeries || []) {
+      totals[series.dailyMetric] = sumGoogleValues(series.timeSeries || series);
+    }
+    const searches = ['BUSINESS_IMPRESSIONS_DESKTOP_SEARCH','BUSINESS_IMPRESSIONS_DESKTOP_MAPS','BUSINESS_IMPRESSIONS_MOBILE_SEARCH','BUSINESS_IMPRESSIONS_MOBILE_MAPS']
+      .reduce((sum, metric) => sum + (totals[metric] || 0), 0);
+    const metrics = {
+      searches,
+      direction_requests: totals.BUSINESS_DIRECTION_REQUESTS || 0,
+      phone_calls: totals.CALL_CLICKS || 0,
+      website_clicks: totals.WEBSITE_CLICKS || 0
+    };
+    return { status: 'partial', metrics, reason: 'Google Performance API does not provide a mapped photo_views measure in this refresh.' };
+  } catch (error) {
+    return { status: 'failed', metrics: {}, reason: String(error.message || error).slice(0, 180) };
+  }
+}
+
 async function generateInsight(sources) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return null;
@@ -153,7 +228,9 @@ async function generateInsight(sources) {
 const config = parseConfig();
 const sources = {};
 for (const sourceKey of Object.keys(fieldMap.sources)) {
-  sources[sourceKey] = await fetchSource(sourceKey, config[sourceKey]);
+  sources[sourceKey] = sourceKey === 'google' && process.env.GOOGLE_LOCATION_NAME
+    ? await fetchGoogleBusinessProfileSource()
+    : await fetchSource(sourceKey, config[sourceKey]);
 }
 
 const freshCount = Object.values(sources).filter((source) => source.status === 'success' || source.status === 'partial').length;
