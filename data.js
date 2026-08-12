@@ -1,6 +1,6 @@
 // JOYLEAF DASHBOARD DATA FILE
 // ============================================================
-// Managed by the single Make refresh scenario. See automation/make/.
+// Managed by the self-contained GitHub Actions weekly refresh. See automation/github-actions/.
 // Stale-source policy: unavailable or failed values are retained, never zeroed.
 // ============================================================
 

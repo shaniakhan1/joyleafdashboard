@@ -145,7 +145,7 @@ data.automation = {
   generated_insight: generatedInsight
 };
 
-const rendered = `// JOYLEAF DASHBOARD DATA FILE\n// ============================================================\n// Managed by the single Make refresh scenario. See automation/make/.\n// Stale-source policy: unavailable or failed values are retained, never zeroed.\n// ============================================================\n\nconst DASHBOARD_DATA = ${JSON.stringify(data, null, 2)};\n`;
+const rendered = `// JOYLEAF DASHBOARD DATA FILE\n// ============================================================\n// Managed by the self-contained GitHub Actions weekly refresh. See automation/github-actions/.\n// Stale-source policy: unavailable or failed values are retained, never zeroed.\n// ============================================================\n\nconst DASHBOARD_DATA = ${JSON.stringify(data, null, 2)};\n`;
 fs.writeFileSync(outputFile, rendered, 'utf8');
 
 console.log(JSON.stringify({
