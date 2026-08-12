@@ -90,3 +90,15 @@ An unintended unsaved GitHub **Get an Organization** module was removed before c
 The native GitHub modules available in this Make workspace did not expose a repository file-update or repository-dispatch action. A temporary HTTP bridge was explored but never saved or executed. The saved scenario therefore remains **Custom Webhook → OpenAI Generate a response** until a secure GitHub credential method can be used.
 
 Two fine-grained, repository-only GitHub credentials were created during the attempt, detected as unsafe to continue using, and revoked immediately. No Make keychain was created, no token is stored in the repository, and no HTTP call reached GitHub. The existing GitHub Actions merger remains documented and ready to accept the `joyleaf_dashboard_refresh` repository-dispatch payload once the bridge can be completed through a safe credential channel.
+
+## 2026-08-11 recovery checkpoint
+
+The saved Make canvas was rebuilt to a single connected route: **Custom Webhook → OpenAI Generate a Response → HTTP Make a Request**. The HTTP step is configured to use the Make keychain named `Joyleaf GitHub dispatch token`, send a `POST` request to the GitHub repository-dispatch endpoint, and use the `Joyleaf GitHub Dispatch Payload` structure with event type `joyleaf_dashboard_refresh`. No token value is stored in this repository.
+
+During scenario save, Make displayed `Prompt Type: Value must not be empty` for the attached OpenAI module even while its form visibly showed **Text prompt** and the prompt was present. This is recorded as a Make-side validator inconsistency; the user was not asked to re-enter the same setting repeatedly. The unconnected earlier OpenAI and HTTP drafts remain visually present on the canvas and should not be treated as part of the intended route.
+
+The prior manual webhook validation completed only the webhook module because the original modules had been unattached. A full end-to-end validation is pending resolution of the OpenAI validator.
+
+## Intended production schedule
+
+The scenario is a webhook-triggered scenario configured to run immediately when data arrives. The existing GitHub Actions workflow calls its encrypted webhook endpoint weekly; a manual `POST` to the same webhook triggers the same single scenario. This avoids duplicate scenarios and preserves the existing dashboard hosting and deployment setup.
