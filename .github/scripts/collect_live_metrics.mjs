@@ -145,11 +145,35 @@ function sumGoogleValues(input) {
   return Object.values(input).reduce((sum, value) => sum + sumGoogleValues(value), 0);
 }
 
+async function discoverGoogleLocation(accessToken) {
+  const headers = { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' };
+  const accountResponse = await fetch('https://mybusinessaccountmanagement.googleapis.com/v1/accounts', {
+    headers,
+    signal: AbortSignal.timeout(25_000)
+  });
+  const accountBody = await accountResponse.json();
+  if (!accountResponse.ok) throw new Error(accountBody?.error?.message || `Google account discovery HTTP ${accountResponse.status}`);
+  const accounts = accountBody.accounts || [];
+  if (!accounts.length) throw new Error('The authorized Google account has no Business Profile accounts.');
+
+  const candidates = [];
+  for (const account of accounts) {
+    const response = await fetch(`https://mybusinessbusinessinformation.googleapis.com/v1/${account.name}/locations?readMask=name,title&pageSize=100`, {
+      headers,
+      signal: AbortSignal.timeout(25_000)
+    });
+    const body = await response.json();
+    if (!response.ok) throw new Error(body?.error?.message || `Google location discovery HTTP ${response.status}`);
+    candidates.push(...(body.locations || []));
+  }
+  if (!candidates.length) throw new Error('No Google Business Profile locations are available to the authorized account.');
+  return candidates.find((location) => /joyleaf/i.test(location.title || ''))?.name || candidates[0].name;
+}
+
 async function fetchGoogleBusinessProfileSource() {
-  const location = process.env.GOOGLE_LOCATION_NAME;
-  if (!location) return sourceTemplate('google', 'Missing GOOGLE_LOCATION_NAME (for example, locations/123456789).');
   try {
     const accessToken = await getGoogleAccessToken();
+    const location = process.env.GOOGLE_LOCATION_NAME || await discoverGoogleLocation(accessToken);
     const end = new Date();
     const start = new Date(end);
     start.setUTCDate(start.getUTCDate() - 27);
@@ -228,7 +252,7 @@ async function generateInsight(sources) {
 const config = parseConfig();
 const sources = {};
 for (const sourceKey of Object.keys(fieldMap.sources)) {
-  sources[sourceKey] = sourceKey === 'google' && process.env.GOOGLE_LOCATION_NAME
+  sources[sourceKey] = sourceKey === 'google' && process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN
     ? await fetchGoogleBusinessProfileSource()
     : await fetchSource(sourceKey, config[sourceKey]);
 }
