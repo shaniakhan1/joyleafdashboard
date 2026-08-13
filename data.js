@@ -6,8 +6,8 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Mar 24 – Apr 20, 2026",
-    "month": "April 2026"
+    "label": "Jul 17 – Aug 13, 2026",
+    "month": "August 2026"
   },
   "google": {
     "searches": 4820,
@@ -100,16 +100,16 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 808,
-    "subscribers": 11,
-    "new_subs": 1,
+    "views": 11249,
+    "subscribers": 28,
+    "new_subs": 5,
     "views_history": [
-      420,
       510,
       600,
       720,
       690,
-      808
+      808,
+      11249
     ],
     "history_labels": [
       "Nov",
@@ -343,15 +343,17 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-13T17:01:51.069Z",
+    "last_attempt": "2026-08-13T19:52:06.456Z",
+    "last_success": "2026-08-13T19:52:06.456Z",
     "trigger": "manual",
-    "metrics_updated": 0,
-    "updated_sources": [],
+    "metrics_updated": 3,
+    "updated_sources": [
+      "youtube"
+    ],
     "stale_sources": [
       "google",
       "instagram",
       "facebook",
-      "youtube",
       "linkedin",
       "leafly",
       "weedmaps",
@@ -361,56 +363,58 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "Quota exceeded for quota metric 'Requests' and limit 'Requests per minute' of service 'mybusinessaccountmanagement.googleapis.com' for consumer 'project_number:937756072758'."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
-        "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
-        "reason": "No source endpoint configuration was supplied."
+        "status": "fresh",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_success": "2026-08-13T19:52:06.456Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "last_attempt": "2026-08-13T19:52:06.456Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "Data Availability Insight",
-      "body": "Currently, all data sources for Joyleaf are either unavailable or have failed, resulting in a lack of actionable metrics for analysis.",
-      "tone": "red",
-      "source_keys": [],
-      "status": "stale"
+      "title": "YouTube Engagement Insights",
+      "body": "Joyleaf's YouTube channel has garnered a total of 11,249 views and has 28 subscribers, with 5 new subscribers recently added. This indicates a growing interest in Joyleaf's content, although further engagement metrics are needed for a comprehensive analysis.",
+      "tone": "gold",
+      "source_keys": [
+        "youtube"
+      ],
+      "status": "fresh"
     }
   }
 };
