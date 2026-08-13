@@ -8,8 +8,11 @@ Add the following through **Settings → Secrets and variables → Actions**. Do
 
 | Secret | Purpose |
 |---|---|
-| `OPENAI_API_KEY` | The account owner's OpenAI API key for exactly one generated dashboard insight per run. |
-| `JOYLEAF_SOURCE_CONFIG` | A single JSON object that holds endpoint URLs, authorization values, and metric paths for all provider sources. GitHub masks this secret in logs. |
+| `OPENAI_API_KEY` | The Joyleaf-dedicated OpenAI API key used for exactly one generated dashboard insight per run. |
+| `GOOGLE_CLIENT_ID` | OAuth web-client ID for the Joyleaf Google Cloud project. |
+| `GOOGLE_CLIENT_SECRET` | OAuth web-client secret for the Joyleaf Google Cloud project. |
+| `GOOGLE_REFRESH_TOKEN` | Refresh token for the authorized Google account that manages the Joyleaf Business Profiles. |
+| `JOYLEAF_SOURCE_CONFIG` | A single JSON object that holds endpoint URLs, authorization values, and metric paths for all non-Google provider sources. GitHub masks this secret in logs. |
 
 `OPENAI_MODEL` is an optional Actions variable, not a secret. It defaults to `gpt-4o-mini` to minimize cost.
 
@@ -82,12 +85,21 @@ Google Business Profile Performance, Meta Insights, YouTube Analytics, and Meta 
 
 Open **Actions → Joyleaf dashboard refresh → Run workflow** in the repository to run the same self-contained collection immediately. The next scheduled run occurs every Monday at 13:00 UTC.
 
-## Google Business Profile setup checkpoint (2026-08-12)
+## Google Business Profile API access status (2026-08-13)
 
-The `shania@flpmarketinggroup.com` Google account can manage the verified Joyleaf Weed Delivery and Joyleaf Weed Dispensary Business Profiles. The `Joyleaf Dashboard Reporting` Google Cloud project was created under `flpmarketinggroup.com`; the Business Profile Performance API and My Business Business Information API were enabled. OAuth consent configuration remains in progress and no OAuth client secret, refresh token, or client credential has been placed in the repository.
+The authorized `shania@flpmarketinggroup.com` account manages the verified **Joyleaf Weed Delivery** and **Joyleaf Weed Dispensary** Business Profiles. The `joyleaf-dashboard-reporting` Google Cloud project uses OAuth credentials held only as encrypted GitHub Actions secrets; no client secret or refresh token is committed to the repository. The Business Profile Performance, My Business Business Information, and My Business Account Management APIs are enabled for the project.
 
 ```text
-Project: joyleaf-dashboard-reporting
-Managed Joyleaf profiles: delivery and dispensary
+Google Cloud project: joyleaf-dashboard-reporting
+Project number: 937756072758
+Selected verified profile for the allowlist request: Joyleaf Weed Delivery
 Runtime: GitHub Actions only (no Make or Manus dependency)
 ```
+
+### Required allowlist request
+
+The first self-contained refresh validated the OAuth configuration but received a `0 requests per minute` quota from `mybusinessaccountmanagement.googleapis.com`. The stale-safe merger retained the prior Google values rather than writing zeroes. Google’s legacy quota form now directs projects with a zero limit to request **Basic API Access** before requesting a higher quota.
+
+A Basic API Access case has been submitted through Google Business Profile API support for this project: **case `4-9715000041685`**. Google displayed an estimated review time of **seven to ten working days**. Until the project is allowlisted, manual or scheduled refreshes will correctly preserve Google values as stale. After approval, run **Actions → Joyleaf dashboard refresh → Run workflow** to validate that the Google source is fresh.
+
+> The `mybusinessaccountmanagement.googleapis.com` API is used solely for authorized account and location discovery before the workflow retrieves performance metrics. The weekly process is read-only and does not modify Business Profile listings.
