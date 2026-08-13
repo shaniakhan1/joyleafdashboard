@@ -16,6 +16,9 @@ vm.runInNewContext(`${sourceText}\n;globalThis.__dashboard_data__ = DASHBOARD_DA
 const priorData = context.__dashboard_data__;
 if (!priorData || typeof priorData !== 'object') throw new Error('data.js did not define DASHBOARD_DATA.');
 
+const DEFAULT_JOYLEAF_YOUTUBE_CHANNEL_ID = 'UC1IIAz60fxLfwyyXCQv-3sA';
+let googleAccessTokenPromise;
+
 function parseConfig() {
   const raw = process.env.JOYLEAF_SOURCE_CONFIG;
   if (!raw) return {};
@@ -116,26 +119,36 @@ function currentPeriod() {
 }
 
 async function getGoogleAccessToken() {
-  const clientId = process.env.GOOGLE_CLIENT_ID;
-  const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
-  const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
-  if (!clientId || !clientSecret || !refreshToken) {
-    throw new Error('Missing GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, or GOOGLE_REFRESH_TOKEN.');
+  if (!googleAccessTokenPromise) {
+    googleAccessTokenPromise = (async () => {
+      const clientId = process.env.GOOGLE_CLIENT_ID;
+      const clientSecret = process.env.GOOGLE_CLIENT_SECRET;
+      const refreshToken = process.env.GOOGLE_REFRESH_TOKEN;
+      if (!clientId || !clientSecret || !refreshToken) {
+        throw new Error('Missing GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET, or GOOGLE_REFRESH_TOKEN.');
+      }
+      const response = await fetch('https://oauth2.googleapis.com/token', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: new URLSearchParams({
+          client_id: clientId,
+          client_secret: clientSecret,
+          refresh_token: refreshToken,
+          grant_type: 'refresh_token'
+        }),
+        signal: AbortSignal.timeout(25_000)
+      });
+      const body = await response.json();
+      if (!response.ok || !body.access_token) throw new Error(body?.error_description || body?.error || `Google OAuth HTTP ${response.status}`);
+      return body.access_token;
+    })();
   }
-  const response = await fetch('https://oauth2.googleapis.com/token', {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-    body: new URLSearchParams({
-      client_id: clientId,
-      client_secret: clientSecret,
-      refresh_token: refreshToken,
-      grant_type: 'refresh_token'
-    }),
-    signal: AbortSignal.timeout(25_000)
-  });
-  const body = await response.json();
-  if (!response.ok || !body.access_token) throw new Error(body?.error_description || body?.error || `Google OAuth HTTP ${response.status}`);
-  return body.access_token;
+  try {
+    return await googleAccessTokenPromise;
+  } catch (error) {
+    googleAccessTokenPromise = undefined;
+    throw error;
+  }
 }
 
 function sumGoogleValues(input) {
@@ -214,6 +227,57 @@ async function fetchGoogleBusinessProfileSource() {
   }
 }
 
+function isoDate(date) {
+  return date.toISOString().slice(0, 10);
+}
+
+async function fetchYouTubeSource() {
+  try {
+    const accessToken = await getGoogleAccessToken();
+    const channelId = process.env.JOYLEAF_YOUTUBE_CHANNEL_ID || DEFAULT_JOYLEAF_YOUTUBE_CHANNEL_ID;
+    if (!/^UC[\w-]{20,}$/.test(channelId)) throw new Error('JOYLEAF_YOUTUBE_CHANNEL_ID is invalid.');
+
+    const end = new Date();
+    end.setUTCDate(end.getUTCDate() - 1);
+    const start = new Date(end);
+    start.setUTCDate(start.getUTCDate() - 27);
+    const headers = { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' };
+    const analyticsQuery = new URLSearchParams({
+      ids: `channel==${channelId}`,
+      startDate: isoDate(start),
+      endDate: isoDate(end),
+      metrics: 'views,subscribersGained'
+    });
+    const [analyticsResponse, channelResponse] = await Promise.all([
+      fetch(`https://youtubeanalytics.googleapis.com/v2/reports?${analyticsQuery}`, { headers, signal: AbortSignal.timeout(25_000) }),
+      fetch(`https://www.googleapis.com/youtube/v3/channels?part=statistics&id=${encodeURIComponent(channelId)}`, { headers, signal: AbortSignal.timeout(25_000) })
+    ]);
+    const [analyticsBody, channelBody] = await Promise.all([analyticsResponse.json(), channelResponse.json()]);
+    if (!analyticsResponse.ok) throw new Error(analyticsBody?.error?.message || `YouTube Analytics HTTP ${analyticsResponse.status}`);
+    if (!channelResponse.ok) throw new Error(channelBody?.error?.message || `YouTube Data API HTTP ${channelResponse.status}`);
+
+    const row = Array.isArray(analyticsBody.rows) ? analyticsBody.rows[0] : undefined;
+    const metrics = {};
+    const views = finiteNumber(row?.[0]);
+    const newSubs = finiteNumber(row?.[1]);
+    const subscribers = finiteNumber(channelBody?.items?.[0]?.statistics?.subscriberCount);
+    if (views !== undefined) metrics.views = views;
+    if (subscribers !== undefined) metrics.subscribers = subscribers;
+    if (newSubs !== undefined) metrics.new_subs = newSubs;
+
+    const metricCount = Object.keys(metrics).length;
+    if (!metricCount) throw new Error('YouTube returned no mapped numeric dashboard metrics.');
+    const expectedCount = fieldMap.sources.youtube.supportedMetrics.length;
+    return {
+      status: metricCount === expectedCount ? 'success' : 'partial',
+      metrics,
+      ...(metricCount === expectedCount ? {} : { reason: `Received ${metricCount} of ${expectedCount} mapped YouTube metrics.` })
+    };
+  } catch (error) {
+    return { status: 'failed', metrics: {}, reason: String(error.message || error).slice(0, 180) };
+  }
+}
+
 async function generateInsight(sources) {
   const apiKey = process.env.OPENAI_API_KEY;
   if (!apiKey) return null;
@@ -250,11 +314,14 @@ async function generateInsight(sources) {
 }
 
 const config = parseConfig();
+const googleCredentialsConfigured = Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN);
 const sources = {};
 for (const sourceKey of Object.keys(fieldMap.sources)) {
-  sources[sourceKey] = sourceKey === 'google' && process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN
+  sources[sourceKey] = sourceKey === 'google' && googleCredentialsConfigured
     ? await fetchGoogleBusinessProfileSource()
-    : await fetchSource(sourceKey, config[sourceKey]);
+    : sourceKey === 'youtube' && googleCredentialsConfigured
+      ? await fetchYouTubeSource()
+      : await fetchSource(sourceKey, config[sourceKey]);
 }
 
 const freshCount = Object.values(sources).filter((source) => source.status === 'success' || source.status === 'partial').length;
