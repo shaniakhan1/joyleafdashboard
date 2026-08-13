@@ -724,15 +724,15 @@ const listings = [
     insight: { cls: 'insight-gold', title: 'Leafly Biz baseline · stale', body: `Validated CSV for Jul 1–Aug 1: ${D.leafly.orders} orders, ${D.leafly.deal_orders} deal orders, and $${D.leafly.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} GMV. Sessions and reviews were not included, so their retained values stay stale until recurring reporting is enabled.` }
   },
   {
-    name: 'Weedmaps', icon: '💨', tag: 'Two listings', tagClass: 'tag-gold',
+    name: 'Weedmaps', icon: '💨', tag: 'Stale baseline · Aug 12', tagClass: 'tag-gold',
     stats: [
-      ['Dispensary clicks', D.weedmaps.dispensary_clicks],
-      ['Listing visitors', D.weedmaps.listing_visitors],
-      ['Delivery clicks', D.weedmaps.delivery_clicks],
-      ['Contact clicks', D.weedmaps.contact_clicks],
-      ['Monthly spend', '$' + D.weedmaps.monthly_spend]
+      ['Dispensary clicks', D.weedmaps.dispensary_clicks + ' · retained'],
+      ['Listing visitors', D.weedmaps.listing_visitors + ' · retained'],
+      ['Delivery clicks', D.weedmaps.delivery_clicks + ' · retained'],
+      ['Contact clicks', D.weedmaps.contact_clicks + ' · retained'],
+      ['GMV in import', '$' + D.weedmaps.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })]
     ],
-    insight: { cls: 'insight-gold', title: '📊 Two Active Listings', body: `Dispensary listing $${D.weedmaps.dispensary_spend}/mo. Delivery listing $${D.weedmaps.delivery_spend}/mo. Both managed by FLP.` }
+    insight: { cls: 'insight-gold', title: 'Weedmaps Orders baseline · stale', body: `Validated Orders CSV for Aug 6–12: $${D.weedmaps.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} subtotal from two Marketplace orders, both still marked In Progress. Retained traffic and click values stay stale until recurring reporting is enabled.` }
   },
   {
     name: 'Yelp', icon: '⭐', tag: 'FLP Managed', tagClass: 'tag-purple',

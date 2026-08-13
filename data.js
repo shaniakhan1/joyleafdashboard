@@ -168,7 +168,7 @@ const DASHBOARD_DATA = {
     "monthly_spend": 408,
     "dispensary_spend": 376,
     "delivery_spend": 31,
-    "gmv": 123
+    "gmv": 28
   },
   "yelp": {
     "impressions": 1400,
@@ -395,7 +395,8 @@ const DASHBOARD_DATA = {
       "weedmaps": {
         "status": "stale",
         "last_attempt": "2026-08-13T19:52:06.456Z",
-        "reason": "No source endpoint configuration was supplied."
+        "baseline_period": "2026-08-06 through 2026-08-12",
+        "reason": "Validated manual Weedmaps Orders CSV baseline imported for $28.00 subtotal GMV from two Marketplace orders still marked In Progress. Recurring official reporting access is pending."
       },
       "yelp": {
         "status": "stale",
