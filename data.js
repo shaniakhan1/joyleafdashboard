@@ -343,7 +343,7 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-11T21:16:00Z",
+    "last_attempt": "2026-08-13T17:01:51.069Z",
     "trigger": "manual",
     "metrics_updated": 0,
     "updated_sources": [],
@@ -361,54 +361,54 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "Quota exceeded for quota metric 'Requests' and limit 'Requests per minute' of service 'mybusinessaccountmanagement.googleapis.com' for consumer 'project_number:937756072758'."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-11T21:16:00Z",
-        "reason": "No source payload received."
+        "last_attempt": "2026-08-13T17:01:51.069Z",
+        "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "Dashboard insight pending",
-      "body": "The next successful data refresh will generate an evidence-based dashboard insight.",
-      "tone": "purple",
+      "title": "Data Availability Insight",
+      "body": "Currently, all data sources for Joyleaf are either unavailable or have failed, resulting in a lack of actionable metrics for analysis.",
+      "tone": "red",
       "source_keys": [],
       "status": "stale"
     }
