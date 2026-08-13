@@ -34,3 +34,15 @@ Official references: https://developers.google.com/youtube/analytics/reference/r
 ## YouTube authorization validation
 
 The new client-owned Google refresh token successfully returned official YouTube Analytics for the intended Joyleaf channel ID `UC1IIAz60fxLfwyyXCQv-3sA` when queried directly. The validation period 2026-07-16 through 2026-08-12 returned 9,861 views and 3 subscribers gained. The administrator account’s `mine=true` channel response identifies Shania’s personal channel; therefore the production collector must use the explicit Joyleaf channel ID rather than `mine=true`. This direct-channel query confirms the administrator permission can access Joyleaf’s Analytics report data despite the brand-account chooser’s service restriction.
+
+## LinkedIn administrator access validation
+
+The reconnected LinkedIn session has administrator access to the official **JoyLeaf** organization, numeric organization ID `97213401` (`urn:li:organization:97213401`). LinkedIn’s administrator dashboard identifies 692 followers and currently exposes its Analytics section. The dashboard currently reports 181 search appearances, 0 new followers, 114 post impressions, and 4 page visitors for the latest seven-day card. This browser access alone does not create a long-lived programmatic credential; the GitHub Actions collector still needs LinkedIn-approved Community Management API product access and an OAuth token with organization analytics permission before it can safely mark the LinkedIn source fresh.
+
+## LinkedIn app branding asset
+
+The client supplied the approved square Joyleaf logo (`JoyleafLogo.png`, 1000×1000) for the Joyleaf Dashboard Reporting LinkedIn app. The asset is ready for upload to the app-registration form and should not be committed to the public dashboard repository unless separately requested.
+
+## LinkedIn reporting app created
+
+On 2026-08-13, the account administrator confirmed creation of the LinkedIn app named **Joyleaf Dashboard Reporting**, associated irreversibly with the official JoyLeaf organization (ID `97213401`). The configured privacy policy is `https://joyleaf.com/privacy-policy`, and the client-supplied square Joyleaf logo was uploaded. Remaining steps are to add the LinkedIn-approved organization analytics product, configure the app’s callback URL, obtain a client-owned OAuth token with the required organization permissions, and add only those credentials to the existing GitHub Actions source configuration after a successful reporting request.
