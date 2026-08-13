@@ -713,15 +713,15 @@ const listings = [
     insight: { cls: 'insight-purple', title: '📌 FLP Managed', body: 'Hours, posts, closures, photos, and all review responses handled by FLP' }
   },
   {
-    name: 'Leafly', icon: '🌿', tag: '+67% deal orders', tagClass: 'tag-green',
+    name: 'Leafly', icon: '🌿', tag: 'Stale baseline · Aug 1', tagClass: 'tag-gold',
     stats: [
-      ['Sessions', fmt(D.leafly.sessions)],
-      ['Reviews', D.leafly.reviews],
+      ['Sessions', fmt(D.leafly.sessions) + ' · retained'],
+      ['Reviews', D.leafly.reviews + ' · retained'],
       ['Orders', D.leafly.orders],
       ['Orders with deal', D.leafly.deal_orders],
-      ['GMV this period', '$' + D.leafly.gmv.toLocaleString()]
+      ['GMV in import', '$' + D.leafly.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })]
     ],
-    insight: { cls: 'insight-green', title: `↑ +${D.leafly.deal_orders_change}% deal orders`, body: `Deal orders up ${D.leafly.deal_orders_change}% vs prior period. Sessions up ${D.leafly.sessions_change}%. GMV up ${D.leafly.gmv_change}%.` }
+    insight: { cls: 'insight-gold', title: 'Leafly Biz baseline · stale', body: `Validated CSV for Jul 1–Aug 1: ${D.leafly.orders} orders, ${D.leafly.deal_orders} deal orders, and $${D.leafly.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} GMV. Sessions and reviews were not included, so their retained values stay stale until recurring reporting is enabled.` }
   },
   {
     name: 'Weedmaps', icon: '💨', tag: 'Two listings', tagClass: 'tag-gold',

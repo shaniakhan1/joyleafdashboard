@@ -56,3 +56,7 @@ Official references: https://learn.microsoft.com/en-us/linkedin/marketing/commun
 ## LinkedIn Community Management request submitted
 
 On 2026-08-13, the Joyleaf account administrator confirmed submission of the **Community Management API Development Tier** access request for the Joyleaf Dashboard Reporting LinkedIn app. LinkedIn metrics must remain stale in `data.js` until LinkedIn approves this request, the `rw_organization_admin` permission is available to the app, and a direct reporting request succeeds with the app’s client-owned credential.
+
+## Leafly Biz CSV baseline imported
+
+On 2026-08-13, the client provided a Leafly Biz CSV covering **2026-07-01 through 2026-08-01**. The export was validated and imported into the existing Leafly dashboard metrics as a **stale baseline**, not a fresh automated source: **25 orders**, **16 orders with a deal**, and **$3,059.96 GMV**. The export did not contain sessions or reviews, so those fields remain retained stale values. Percentage-change fields were cleared because the export contained no comparable prior period. The raw CSV was intentionally not committed to the public repository. Automatic Leafly freshness still depends on a provider-approved recurring analytics export or reporting endpoint.

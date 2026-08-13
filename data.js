@@ -127,14 +127,14 @@ const DASHBOARD_DATA = {
   },
   "leafly": {
     "sessions": 298,
-    "sessions_change": 3,
+    "sessions_change": null,
     "reviews": 4,
-    "orders": 12,
-    "orders_change": -14,
-    "deal_orders": 10,
-    "deal_orders_change": 67,
-    "gmv": 1237,
-    "gmv_change": 6,
+    "orders": 25,
+    "orders_change": null,
+    "deal_orders": 16,
+    "deal_orders_change": null,
+    "gmv": 3059.96,
+    "gmv_change": null,
     "sessions_history": [
       210,
       240,
@@ -389,7 +389,8 @@ const DASHBOARD_DATA = {
       "leafly": {
         "status": "stale",
         "last_attempt": "2026-08-13T19:52:06.456Z",
-        "reason": "No source endpoint configuration was supplied."
+        "baseline_period": "2026-07-01 through 2026-08-01",
+        "reason": "Validated manual Leafly Biz CSV baseline imported for orders, deal orders, and GMV. Sessions and reviews were not supplied; recurring official reporting access is pending."
       },
       "weedmaps": {
         "status": "stale",
