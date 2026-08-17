@@ -6,7 +6,7 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Jul 17 – Aug 13, 2026",
+    "label": "Jul 21 – Aug 17, 2026",
     "month": "August 2026"
   },
   "google": {
@@ -100,9 +100,9 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 11249,
+    "views": 10800,
     "subscribers": 28,
-    "new_subs": 5,
+    "new_subs": 6,
     "views_history": [
       510,
       600,
@@ -343,9 +343,9 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-13T19:52:06.456Z",
-    "last_success": "2026-08-13T19:52:06.456Z",
-    "trigger": "manual",
+    "last_attempt": "2026-08-17T13:38:40.621Z",
+    "last_success": "2026-08-17T13:38:40.621Z",
+    "trigger": "weekly",
     "metrics_updated": 3,
     "updated_sources": [
       "youtube"
@@ -363,55 +363,53 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_attempt": "2026-08-17T13:38:40.621Z",
         "reason": "Quota exceeded for quota metric 'Requests' and limit 'Requests per minute' of service 'mybusinessaccountmanagement.googleapis.com' for consumer 'project_number:937756072758'."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_attempt": "2026-08-17T13:38:40.621Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_attempt": "2026-08-17T13:38:40.621Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
-        "last_success": "2026-08-13T19:52:06.456Z"
+        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_success": "2026-08-17T13:38:40.621Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_attempt": "2026-08-17T13:38:40.621Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
-        "baseline_period": "2026-07-01 through 2026-08-01",
-        "reason": "Validated manual Leafly Biz CSV baseline imported for orders, deal orders, and GMV. Sessions and reviews were not supplied; recurring official reporting access is pending."
+        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
-        "baseline_period": "2026-08-06 through 2026-08-12",
-        "reason": "Validated manual Weedmaps Orders CSV baseline imported for $28.00 subtotal GMV from two Marketplace orders still marked In Progress. Recurring official reporting access is pending."
+        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_attempt": "2026-08-17T13:38:40.621Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-13T19:52:06.456Z",
+        "last_attempt": "2026-08-17T13:38:40.621Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
       "title": "YouTube Engagement Insights",
-      "body": "Joyleaf's YouTube channel has garnered a total of 11,249 views and has 28 subscribers, with 5 new subscribers recently added. This indicates a growing interest in Joyleaf's content, although further engagement metrics are needed for a comprehensive analysis.",
+      "body": "Joyleaf's YouTube channel has garnered a total of 10,800 views and has 28 subscribers, with 6 new subscribers recently added. This indicates a growing interest in our content, although further engagement metrics are needed for a comprehensive analysis.",
       "tone": "gold",
       "source_keys": [
         "youtube"
