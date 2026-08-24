@@ -6,7 +6,7 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Jul 21 – Aug 17, 2026",
+    "label": "Jul 28 – Aug 24, 2026",
     "month": "August 2026"
   },
   "google": {
@@ -100,9 +100,9 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 10800,
-    "subscribers": 28,
-    "new_subs": 6,
+    "views": 8733,
+    "subscribers": 29,
+    "new_subs": 5,
     "views_history": [
       510,
       600,
@@ -343,8 +343,8 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-17T13:38:40.621Z",
-    "last_success": "2026-08-17T13:38:40.621Z",
+    "last_attempt": "2026-08-24T13:51:58.067Z",
+    "last_success": "2026-08-24T13:51:58.067Z",
     "trigger": "weekly",
     "metrics_updated": 3,
     "updated_sources": [
@@ -363,54 +363,54 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "Quota exceeded for quota metric 'Requests' and limit 'Requests per minute' of service 'mybusinessaccountmanagement.googleapis.com' for consumer 'project_number:937756072758'."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
-        "last_success": "2026-08-17T13:38:40.621Z"
+        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_success": "2026-08-24T13:51:58.067Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-17T13:38:40.621Z",
+        "last_attempt": "2026-08-24T13:51:58.067Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "YouTube Engagement Insights",
-      "body": "Joyleaf's YouTube channel has garnered a total of 10,800 views and has 28 subscribers, with 6 new subscribers recently added. This indicates a growing interest in our content, although further engagement metrics are needed for a comprehensive analysis.",
-      "tone": "gold",
+      "title": "YouTube Channel Growth Insight",
+      "body": "Joyleaf's YouTube channel has achieved a total of 8,733 views and gained 5 new subscribers recently, bringing the total subscriber count to 29. This indicates a growing interest in Joyleaf's content, suggesting potential for increased engagement and audience reach.",
+      "tone": "green",
       "source_keys": [
         "youtube"
       ],
