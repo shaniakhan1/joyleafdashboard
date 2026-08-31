@@ -343,17 +343,15 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-24T13:51:58.067Z",
-    "last_success": "2026-08-24T13:51:58.067Z",
+    "last_attempt": "2026-08-31T19:24:42.559Z",
     "trigger": "weekly",
-    "metrics_updated": 3,
-    "updated_sources": [
-      "youtube"
-    ],
+    "metrics_updated": 0,
+    "updated_sources": [],
     "stale_sources": [
       "google",
       "instagram",
       "facebook",
+      "youtube",
       "linkedin",
       "leafly",
       "weedmaps",
@@ -363,58 +361,56 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "Quota exceeded for quota metric 'Requests' and limit 'Requests per minute' of service 'mybusinessaccountmanagement.googleapis.com' for consumer 'project_number:937756072758'."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
-        "status": "fresh",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
-        "last_success": "2026-08-24T13:51:58.067Z"
+        "status": "stale",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "reason": "Forbidden"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-24T13:51:58.067Z",
+        "last_attempt": "2026-08-31T19:24:42.559Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "YouTube Channel Growth Insight",
-      "body": "Joyleaf's YouTube channel has achieved a total of 8,733 views and gained 5 new subscribers recently, bringing the total subscriber count to 29. This indicates a growing interest in Joyleaf's content, suggesting potential for increased engagement and audience reach.",
-      "tone": "green",
-      "source_keys": [
-        "youtube"
-      ],
-      "status": "fresh"
+      "title": "Social Media Metrics Unavailable",
+      "body": "Currently, all social media metrics from platforms such as Google, Instagram, Facebook, YouTube, LinkedIn, Leafly, Weedmaps, Yelp, and reviews are either failed or unavailable. This limits our ability to assess Joyleaf's online presence and engagement effectively.",
+      "tone": "red",
+      "source_keys": [],
+      "status": "stale"
     }
   }
 };
