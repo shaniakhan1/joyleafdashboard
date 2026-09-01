@@ -6,7 +6,6 @@
 <title>Joyleaf Marketing Dashboard | FLP Marketing Group</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
-<script src="config.js"></script>
 <script src="data.js"></script>
 <style>
 :root{
@@ -344,7 +343,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
 
     <div class="grid-2 mb">
       <div class="card">
-        <div class="card-header"><div><h3>Instagram Performance</h3><p id="ig-period-label">Loading...</p></div><span class="tag tag-green">Verified Data</span></div>
+        <div class="card-header"><div><h3>Instagram Performance</h3><p id="ig-period-label">Loading...</p></div><span class="tag tag-gold" id="ig-status-tag">Checking source</span></div>
         <div class="card-body">
           <div class="chart-wrap"><canvas id="chart-ig-views"></canvas></div>
           <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-top:0.75rem" id="ig-stats-grid"></div>
@@ -356,7 +355,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
       </div>
 
       <div class="card">
-        <div class="card-header"><div><h3>Facebook &middot; YouTube &middot; LinkedIn</h3><p id="social-period-label">Loading...</p></div><span class="tag tag-green">Verified Data</span></div>
+        <div class="card-header"><div><h3>Facebook &middot; YouTube &middot; LinkedIn</h3><p id="social-period-label">Loading...</p></div><span class="tag tag-gold" id="social-status-tag">Checking sources</span></div>
         <div class="card-body">
           <div style="margin-bottom:0.85rem">
             <div style="font-size:0.72rem;font-weight:700;color:#1877f2;margin-bottom:0.5rem">👤 Facebook — 6-month views trend</div>
@@ -545,6 +544,34 @@ function titleCase(value) {
 function sourceFreshness(source) {
   return sourceStatuses[source]?.status || 'stale';
 }
+function setSourceTag(elementId, sources) {
+  const element = document.getElementById(elementId);
+  const statuses = sources.map(sourceFreshness);
+  const freshCount = statuses.filter(status => status === 'fresh').length;
+  const partialCount = statuses.filter(status => status === 'partial').length;
+  const allFresh = freshCount === statuses.length;
+  const hasCurrentData = freshCount + partialCount > 0;
+
+  if (allFresh) {
+    element.textContent = 'Live verified data';
+    element.className = 'tag tag-green';
+  } else if (hasCurrentData) {
+    element.textContent = 'Partially refreshed';
+    element.className = 'tag tag-gold';
+  } else {
+    element.textContent = 'Retained data';
+    element.className = 'tag tag-red';
+  }
+
+  const attempted = sources
+    .map(source => sourceStatuses[source]?.last_attempt)
+    .filter(Boolean)
+    .sort()
+    .at(-1);
+  element.title = attempted
+    ? `Source status checked ${new Date(attempted).toLocaleString()}`
+    : 'No automated source check recorded';
+}
 
 const chartDefaults = {
   responsive: true,
@@ -587,6 +614,9 @@ if (automation.last_success && staleSourceCount === 0) {
 } else {
   refreshBadge.textContent = 'Manual data refresh';
 }
+
+setSourceTag('ig-status-tag', ['instagram']);
+setSourceTag('social-status-tag', ['facebook', 'youtube', 'linkedin']);
 
 const generatedInsight = automation.generated_insight;
 const generatedInsightCard = document.getElementById('generated-insight-card');
