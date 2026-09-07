@@ -6,27 +6,27 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Jul 28 – Aug 24, 2026",
-    "month": "August 2026"
+    "label": "Aug 11 – Sep 7, 2026",
+    "month": "September 2026"
   },
   "google": {
-    "searches": 4820,
+    "searches": 0,
     "searches_change": 18,
-    "direction_requests": 1240,
+    "direction_requests": 0,
     "direction_change": 22,
-    "phone_calls": 380,
+    "phone_calls": 0,
     "phone_change": 15,
-    "website_clicks": 920,
+    "website_clicks": 0,
     "website_change": 31,
     "photo_views": 8400,
     "photo_change": 44,
     "search_history": [
-      3800,
       3950,
       4100,
       4250,
       4090,
-      4820
+      4820,
+      0
     ],
     "search_history_labels": [
       "Nov",
@@ -343,12 +343,14 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-08-31T19:24:42.559Z",
+    "last_attempt": "2026-09-07T18:07:20.295Z",
+    "last_success": "2026-09-07T18:07:20.295Z",
     "trigger": "weekly",
-    "metrics_updated": 0,
-    "updated_sources": [],
+    "metrics_updated": 4,
+    "updated_sources": [
+      "google"
+    ],
     "stale_sources": [
-      "google",
       "instagram",
       "facebook",
       "youtube",
@@ -360,57 +362,60 @@ const DASHBOARD_DATA = {
     ],
     "source_status": {
       "google": {
-        "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
-        "reason": "Quota exceeded for quota metric 'Requests' and limit 'Requests per minute' of service 'mybusinessaccountmanagement.googleapis.com' for consumer 'project_number:937756072758'."
+        "status": "partial",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
+        "last_success": "2026-09-07T18:07:20.295Z",
+        "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "Forbidden"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-08-31T19:24:42.559Z",
+        "last_attempt": "2026-09-07T18:07:20.295Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "Social Media Metrics Unavailable",
-      "body": "Currently, all social media metrics from platforms such as Google, Instagram, Facebook, YouTube, LinkedIn, Leafly, Weedmaps, Yelp, and reviews are either failed or unavailable. This limits our ability to assess Joyleaf's online presence and engagement effectively.",
+      "title": "Limited Engagement Metrics from Google",
+      "body": "Current engagement metrics from Google indicate no recorded searches, direction requests, phone calls, or website clicks. This suggests a lack of visibility or interaction with Joyleaf's online presence, necessitating a review of digital marketing strategies.",
       "tone": "red",
-      "source_keys": [],
-      "status": "stale"
+      "source_keys": [
+        "google"
+      ],
+      "status": "partial"
     }
   }
 };
