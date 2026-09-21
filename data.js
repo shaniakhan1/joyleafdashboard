@@ -6,7 +6,7 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Aug 18 – Sep 14, 2026",
+    "label": "Aug 25 – Sep 21, 2026",
     "month": "September 2026"
   },
   "google": {
@@ -343,8 +343,8 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-09-14T18:21:40.574Z",
-    "last_success": "2026-09-14T18:21:40.574Z",
+    "last_attempt": "2026-09-21T18:29:51.033Z",
+    "last_success": "2026-09-21T18:29:51.033Z",
     "trigger": "weekly",
     "metrics_updated": 4,
     "updated_sources": [
@@ -363,54 +363,54 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
-        "last_success": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_success": "2026-09-21T18:29:51.033Z",
         "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "Forbidden"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-09-14T18:21:40.574Z",
+        "last_attempt": "2026-09-21T18:29:51.033Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "Limited Engagement Metrics for Joyleaf",
-      "body": "Current data indicates no recorded searches, direction requests, phone calls, or website clicks from Google, highlighting a lack of engagement and visibility. Further insights from other platforms are currently unavailable.",
+      "title": "Limited Engagement Metrics from Google",
+      "body": "Current data from Google indicates no recorded searches, direction requests, phone calls, or website clicks, suggesting a lack of engagement or visibility for Joyleaf across this platform.",
       "tone": "red",
       "source_keys": [
         "google"
