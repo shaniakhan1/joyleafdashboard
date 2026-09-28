@@ -6,7 +6,7 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Aug 25 – Sep 21, 2026",
+    "label": "Sep 1 – Sep 28, 2026",
     "month": "September 2026"
   },
   "google": {
@@ -100,9 +100,9 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 8733,
-    "subscribers": 29,
-    "new_subs": 5,
+    "views": 8990,
+    "subscribers": 39,
+    "new_subs": 9,
     "views_history": [
       510,
       600,
@@ -343,17 +343,17 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-09-21T18:29:51.033Z",
-    "last_success": "2026-09-21T18:29:51.033Z",
+    "last_attempt": "2026-09-28T20:00:08.329Z",
+    "last_success": "2026-09-28T20:00:08.329Z",
     "trigger": "weekly",
-    "metrics_updated": 4,
+    "metrics_updated": 7,
     "updated_sources": [
-      "google"
+      "google",
+      "youtube"
     ],
     "stale_sources": [
       "instagram",
       "facebook",
-      "youtube",
       "linkedin",
       "leafly",
       "weedmaps",
@@ -363,59 +363,59 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
-        "last_success": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_success": "2026-09-28T20:00:08.329Z",
         "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
-        "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
-        "reason": "Forbidden"
+        "status": "fresh",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_success": "2026-09-28T20:00:08.329Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-09-21T18:29:51.033Z",
+        "last_attempt": "2026-09-28T20:00:08.329Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
-      "title": "Limited Engagement Metrics from Google",
-      "body": "Current data from Google indicates no recorded searches, direction requests, phone calls, or website clicks, suggesting a lack of engagement or visibility for Joyleaf across this platform.",
-      "tone": "red",
+      "title": "YouTube Engagement Insights",
+      "body": "Joyleaf's YouTube channel has garnered a total of 8,990 views and gained 39 subscribers, with 9 new subscribers in the recent period. This indicates a growing interest in video content, which could be leveraged for marketing strategies.",
+      "tone": "green",
       "source_keys": [
-        "google"
+        "youtube"
       ],
-      "status": "partial"
+      "status": "fresh"
     }
   }
 };
