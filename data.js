@@ -6,8 +6,8 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Sep 1 – Sep 28, 2026",
-    "month": "September 2026"
+    "label": "Sep 8 – Oct 5, 2026",
+    "month": "October 2026"
   },
   "google": {
     "searches": 0,
@@ -21,11 +21,11 @@ const DASHBOARD_DATA = {
     "photo_views": 8400,
     "photo_change": 44,
     "search_history": [
-      3950,
       4100,
       4250,
       4090,
       4820,
+      0,
       0
     ],
     "search_history_labels": [
@@ -100,16 +100,16 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 8990,
-    "subscribers": 39,
+    "views": 8811,
+    "subscribers": 41,
     "new_subs": 9,
     "views_history": [
-      510,
       600,
       720,
       690,
       808,
-      11249
+      11249,
+      8811
     ],
     "history_labels": [
       "Nov",
@@ -343,8 +343,8 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-09-28T20:00:08.329Z",
-    "last_success": "2026-09-28T20:00:08.329Z",
+    "last_attempt": "2026-10-05T20:58:47.845Z",
+    "last_success": "2026-10-05T20:58:47.845Z",
     "trigger": "weekly",
     "metrics_updated": 7,
     "updated_sources": [
@@ -363,54 +363,54 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
-        "last_success": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
+        "last_success": "2026-10-05T20:58:47.845Z",
         "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
-        "last_success": "2026-09-28T20:00:08.329Z"
+        "last_attempt": "2026-10-05T20:58:47.845Z",
+        "last_success": "2026-10-05T20:58:47.845Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-09-28T20:00:08.329Z",
+        "last_attempt": "2026-10-05T20:58:47.845Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
       "title": "YouTube Engagement Insights",
-      "body": "Joyleaf's YouTube channel has garnered a total of 8,990 views and gained 39 subscribers, with 9 new subscribers in the recent period. This indicates a growing interest in video content, which could be leveraged for marketing strategies.",
+      "body": "Joyleaf's YouTube channel has garnered a total of 8,811 views and gained 41 subscribers, with 9 new subscribers in the recent period. This indicates a growing interest in the content being shared.",
       "tone": "green",
       "source_keys": [
         "youtube"
