@@ -6,7 +6,7 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Sep 15 – Oct 12, 2026",
+    "label": "Sep 22 – Oct 19, 2026",
     "month": "October 2026"
   },
   "google": {
@@ -100,9 +100,9 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 8228,
+    "views": 8129,
     "subscribers": 41,
-    "new_subs": 6,
+    "new_subs": 2,
     "views_history": [
       600,
       720,
@@ -343,8 +343,8 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-10-12T21:34:38.900Z",
-    "last_success": "2026-10-12T21:34:38.900Z",
+    "last_attempt": "2026-10-19T19:03:13.186Z",
+    "last_success": "2026-10-19T19:03:13.186Z",
     "trigger": "weekly",
     "metrics_updated": 7,
     "updated_sources": [
@@ -363,54 +363,54 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
-        "last_success": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
+        "last_success": "2026-10-19T19:03:13.186Z",
         "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
-        "last_success": "2026-10-12T21:34:38.900Z"
+        "last_attempt": "2026-10-19T19:03:13.186Z",
+        "last_success": "2026-10-19T19:03:13.186Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-10-12T21:34:38.900Z",
+        "last_attempt": "2026-10-19T19:03:13.186Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
       "title": "YouTube Engagement Insights",
-      "body": "Joyleaf's YouTube channel has garnered 8,228 views and gained 6 new subscribers recently, indicating a growing interest in video content. With a total of 41 subscribers, this platform shows potential for increased engagement and outreach.",
+      "body": "Joyleaf's YouTube channel has garnered a total of 8,129 views and 41 subscribers, with 2 new subscribers recently added. This indicates a growing interest in the content being shared, although further engagement metrics are needed for a comprehensive analysis.",
       "tone": "gold",
       "source_keys": [
         "youtube"
