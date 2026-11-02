@@ -6,8 +6,8 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Sep 29 – Oct 26, 2026",
-    "month": "October 2026"
+    "label": "Oct 6 – Nov 2, 2026",
+    "month": "November 2026"
   },
   "google": {
     "searches": 0,
@@ -21,10 +21,10 @@ const DASHBOARD_DATA = {
     "photo_views": 8400,
     "photo_change": 44,
     "search_history": [
-      4100,
       4250,
       4090,
       4820,
+      0,
       0,
       0
     ],
@@ -100,16 +100,16 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 9878,
+    "views": 7267,
     "subscribers": 43,
-    "new_subs": 4,
+    "new_subs": 2,
     "views_history": [
-      600,
       720,
       690,
       808,
       11249,
-      8811
+      8811,
+      7267
     ],
     "history_labels": [
       "Nov",
@@ -343,8 +343,8 @@ const DASHBOARD_DATA = {
   ],
   "automation": {
     "version": 1,
-    "last_attempt": "2026-10-26T19:02:24.093Z",
-    "last_success": "2026-10-26T19:02:24.093Z",
+    "last_attempt": "2026-11-02T22:10:57.724Z",
+    "last_success": "2026-11-02T22:10:57.724Z",
     "trigger": "weekly",
     "metrics_updated": 7,
     "updated_sources": [
@@ -363,55 +363,55 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
-        "last_success": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
+        "last_success": "2026-11-02T22:10:57.724Z",
         "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
-        "last_success": "2026-10-26T19:02:24.093Z"
+        "last_attempt": "2026-11-02T22:10:57.724Z",
+        "last_success": "2026-11-02T22:10:57.724Z"
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-10-26T19:02:24.093Z",
+        "last_attempt": "2026-11-02T22:10:57.724Z",
         "reason": "No source endpoint configuration was supplied."
       }
     },
     "generated_insight": {
       "title": "YouTube Engagement Insights",
-      "body": "Joyleaf's YouTube channel has achieved a total of 9,878 views and gained 43 subscribers, with 4 new subscribers in the recent period. This indicates a growing interest in video content, which could be leveraged for further engagement strategies.",
-      "tone": "green",
+      "body": "Joyleaf has achieved a total of 7,267 views on YouTube, with a current subscriber count of 43 and 2 new subscribers recently. This indicates a growing interest in video content, which could be leveraged for marketing strategies.",
+      "tone": "gold",
       "source_keys": [
         "youtube"
       ],
