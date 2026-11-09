@@ -6,7 +6,7 @@
 <title>Joyleaf Marketing Dashboard | FLP Marketing Group</title>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 
-<script src="data.js"></script>
+
 <style>
 :root{
   --purple:#7B2D8B;--purple-dark:#5a1f68;--purple-deep:#2d0f3d;
@@ -530,7 +530,14 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
 // All charts and data are driven by data.js
 // ============================================================
 
-const D = DASHBOARD_DATA;
+async function renderDashboard() {
+// Revalidate the data on every visit. Static Pages caching must not pair new UI with last week's data.
+const response = await fetch(`data.js?refresh=${Date.now()}`, { cache: 'no-store' });
+if (!response.ok) throw new Error('Dashboard data is unavailable.');
+const source = await response.text();
+const assignment = source.match(/const DASHBOARD_DATA\s*=\s*(\{[\s\S]*\});?\s*$/);
+if (!assignment) throw new Error('Dashboard data format is invalid.');
+const D = JSON.parse(assignment[1]);
 const purple = '#7B2D8B';
 const gold = '#D4A843';
 const green = '#16a34a';
@@ -965,6 +972,12 @@ note(document.getElementById('review-bars'),'Rating distribution: retained basel
 note(document.getElementById('review-rating').parentElement,metricText('reviews','rating'));
 document.querySelectorAll('#content-bars .progress-bar').forEach(el=>el.hidden=true);
 
+}
+renderDashboard().catch(() => {
+  document.getElementById('refresh-badge').textContent = 'Data unavailable';
+  document.getElementById('period-badge').textContent = 'No verified data loaded';
+  document.querySelector('.content').textContent = 'Dashboard data could not be loaded. Please reload this page. No current metrics can be verified until the data loads.';
+});
 </script>
 </body>
 </html>

@@ -121,6 +121,7 @@ for (const [sourceKey, config] of Object.entries(fieldMap.sources)) {
     ...(updatedMetrics.length ? { last_success: now, ...(period ? { period } : {}) } : {}),
     ...(incomingSource.source_label ? { source_label: sanitizeReason(incomingSource.source_label) } : {}),
     updated_metrics: updatedMetrics,
+    authorization_blocked: Boolean(incomingSource.authorization_blocked),
     metric_status: metricStatus
   };
   delete sourceStatus[sourceKey].reason;

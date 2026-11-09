@@ -197,6 +197,10 @@ async function fetchGoogleBusinessProfileSource() {
 }
 
 async function fetchGoogleReviewsSource() {
+  const previous = priorData.automation?.source_status?.reviews;
+  if (previous?.authorization_blocked || /Reviews HTTP (401|403)/.test(previous?.reason || '')) {
+    return { status: 'unavailable', metrics: {}, authorization_blocked: true, reason: 'Google Reviews access denied (HTTP 403). Approved reporting access is required; automatic retries paused.' };
+  }
   try {
     const accessToken = await getGoogleAccessToken();
     const location = await discoverGoogleLocation(accessToken);
@@ -313,7 +317,8 @@ for (const sourceKey of Object.keys(fieldMap.sources)) {
 
 const freshCount = Object.values(sources).filter((source) => source.status === 'success' || source.status === 'partial').length;
 // Keep the established weekly AI-call budget when provider refreshes run daily.
-const shouldGenerateInsight = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' || new Date().getUTCDay() === 1;
+const previousInsightDate = priorData.automation?.generated_insight?.generated_at?.slice(0, 10);
+const shouldGenerateInsight = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' || (new Date().getUTCDay() === 1 && previousInsightDate !== new Date().toISOString().slice(0, 10));
 const insightContent = shouldGenerateInsight ? await generateInsight(sources) : null;
 const now = new Date().toISOString();
 const payload = {

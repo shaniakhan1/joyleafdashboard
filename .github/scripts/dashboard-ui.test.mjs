@@ -37,4 +37,8 @@ assert.ok(!script.includes('new Chart('));
 assert.ok(html.includes('GitHub Actions runs a daily refresh'));
 assert.ok(!html.includes('This gap is why Budzooka'));
 assert.ok(!html.includes('organic new customer acquisition'));
-console.log('UI freshness regression: 19 assertions passed; renderer syntax valid.');
+assert.ok(html.includes("cache: 'no-store'"));
+assert.ok(html.includes('Data unavailable'));
+assert.ok(!html.includes('<script src="data.js">'));
+
+console.log('UI freshness regression: 22 assertions passed; renderer syntax valid.');
