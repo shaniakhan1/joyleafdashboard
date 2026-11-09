@@ -6,20 +6,20 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Oct 6 – Nov 2, 2026",
+    "label": "Oct 12 – Nov 8, 2026",
     "month": "November 2026"
   },
   "google": {
-    "searches": 0,
-    "searches_change": 18,
-    "direction_requests": 0,
-    "direction_change": 22,
-    "phone_calls": 0,
-    "phone_change": 15,
-    "website_clicks": 0,
-    "website_change": 31,
+    "searches": 19228,
+    "searches_change": null,
+    "direction_requests": 1442,
+    "direction_change": null,
+    "phone_calls": 234,
+    "phone_change": null,
+    "website_clicks": 4878,
+    "website_change": null,
     "photo_views": 8400,
-    "photo_change": 44,
+    "photo_change": null,
     "search_history": [
       4250,
       4090,
@@ -39,15 +39,15 @@ const DASHBOARD_DATA = {
   },
   "instagram": {
     "views": 26600,
-    "views_change": 85.3,
+    "views_change": null,
     "reach": 3300,
-    "reach_change": 168.7,
+    "reach_change": null,
     "interactions": 750,
-    "interactions_change": 111.3,
+    "interactions_change": null,
     "new_follows": 115,
-    "follows_change": 33.7,
+    "follows_change": null,
     "non_follower_reach": 2267,
-    "non_follower_change": 349.8,
+    "non_follower_change": null,
     "views_history": [
       8200,
       10500,
@@ -75,13 +75,13 @@ const DASHBOARD_DATA = {
   },
   "facebook": {
     "views": 2400,
-    "views_change": 36.1,
+    "views_change": null,
     "interactions": 85,
-    "interactions_change": 44.1,
+    "interactions_change": null,
     "page_visits": 340,
-    "page_visits_change": 9,
+    "page_visits_change": null,
     "new_follows": 5,
-    "follows_change": 150,
+    "follows_change": null,
     "views_history": [
       1400,
       1600,
@@ -100,9 +100,9 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 7267,
-    "subscribers": 43,
-    "new_subs": 2,
+    "views": 6407,
+    "subscribers": 44,
+    "new_subs": 3,
     "views_history": [
       720,
       690,
@@ -342,10 +342,12 @@ const DASHBOARD_DATA = {
     }
   ],
   "automation": {
-    "version": 1,
-    "last_attempt": "2026-11-02T22:10:57.724Z",
-    "last_success": "2026-11-02T22:10:57.724Z",
-    "trigger": "weekly",
+    "version": 2,
+    "cadence": "daily",
+    "stale_after_hours": 36,
+    "last_attempt": "2026-11-09T18:38:00.933Z",
+    "last_success": "2026-11-09T18:38:00.933Z",
+    "trigger": "deployment",
     "metrics_updated": 7,
     "updated_sources": [
       "google",
@@ -362,53 +364,263 @@ const DASHBOARD_DATA = {
     ],
     "source_status": {
       "google": {
-        "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
-        "reason": "Earlier Google totals were invalid due to a parser error. Corrected collection must succeed before these values can be used.",
+        "status": "partial",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
         "metric_status": {
           "searches": {
-            "status": "invalid",
-            "reason": "Prior parser output is not valid provider data."
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-10",
+              "end_date": "2026-11-06",
+              "label": "Oct 10 – Nov 6, 2026",
+              "month": "November 2026"
+            }
           },
           "direction_requests": {
-            "status": "invalid",
-            "reason": "Prior parser output is not valid provider data."
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-10",
+              "end_date": "2026-11-06",
+              "label": "Oct 10 – Nov 6, 2026",
+              "month": "November 2026"
+            }
           },
           "phone_calls": {
-            "status": "invalid",
-            "reason": "Prior parser output is not valid provider data."
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-10",
+              "end_date": "2026-11-06",
+              "label": "Oct 10 – Nov 6, 2026",
+              "month": "November 2026"
+            }
           },
           "website_clicks": {
-            "status": "invalid",
-            "reason": "Prior parser output is not valid provider data."
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-10",
+              "end_date": "2026-11-06",
+              "label": "Oct 10 – Nov 6, 2026",
+              "month": "November 2026"
+            }
+          },
+          "photo_views": {
+            "status": "stale"
+          },
+          "searches_change": {
+            "status": "stale"
+          },
+          "direction_change": {
+            "status": "stale"
+          },
+          "phone_change": {
+            "status": "stale"
+          },
+          "website_change": {
+            "status": "stale"
+          },
+          "photo_change": {
+            "status": "stale"
           }
-        }
+        },
+        "snapshots": [
+          {
+            "collected_at": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-10",
+              "end_date": "2026-11-06",
+              "label": "Oct 10 – Nov 6, 2026",
+              "month": "November 2026"
+            },
+            "metrics": {
+              "searches": 19228,
+              "direction_requests": 1442,
+              "phone_calls": 234,
+              "website_clicks": 4878
+            }
+          }
+        ],
+        "last_success": "2026-11-09T18:38:00.933Z",
+        "period": {
+          "start_date": "2026-10-10",
+          "end_date": "2026-11-06",
+          "label": "Oct 10 – Nov 6, 2026",
+          "month": "November 2026"
+        },
+        "source_label": "Joyleaf Weed Dispensary",
+        "updated_metrics": [
+          "searches",
+          "direction_requests",
+          "phone_calls",
+          "website_clicks"
+        ],
+        "reason": "Refreshed 4 of 5 metrics. Photo views are not provided by Google Performance API; missing measures remain historical."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "updated_metrics": [],
+        "metric_status": {
+          "views": {
+            "status": "stale"
+          },
+          "reach": {
+            "status": "stale"
+          },
+          "interactions": {
+            "status": "stale"
+          },
+          "new_follows": {
+            "status": "stale"
+          },
+          "non_follower_reach": {
+            "status": "stale"
+          },
+          "views_change": {
+            "status": "stale"
+          },
+          "reach_change": {
+            "status": "stale"
+          },
+          "interactions_change": {
+            "status": "stale"
+          },
+          "follows_change": {
+            "status": "stale"
+          },
+          "non_follower_change": {
+            "status": "stale"
+          }
+        },
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "updated_metrics": [],
+        "metric_status": {
+          "views": {
+            "status": "stale"
+          },
+          "interactions": {
+            "status": "stale"
+          },
+          "page_visits": {
+            "status": "stale"
+          },
+          "new_follows": {
+            "status": "stale"
+          },
+          "views_change": {
+            "status": "stale"
+          },
+          "interactions_change": {
+            "status": "stale"
+          },
+          "page_visits_change": {
+            "status": "stale"
+          },
+          "follows_change": {
+            "status": "stale"
+          }
+        },
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
-        "last_success": "2026-11-02T22:10:57.724Z"
+        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_success": "2026-11-09T18:38:00.933Z",
+        "snapshots": [
+          {
+            "collected_at": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-12",
+              "end_date": "2026-11-08",
+              "label": "Oct 12 – Nov 8, 2026",
+              "month": "November 2026"
+            },
+            "metrics": {
+              "views": 6407,
+              "subscribers": 44,
+              "new_subs": 3
+            }
+          }
+        ],
+        "period": {
+          "start_date": "2026-10-12",
+          "end_date": "2026-11-08",
+          "label": "Oct 12 – Nov 8, 2026",
+          "month": "November 2026"
+        },
+        "source_label": "Joyleaf YouTube channel",
+        "updated_metrics": [
+          "views",
+          "subscribers",
+          "new_subs"
+        ],
+        "metric_status": {
+          "views": {
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-12",
+              "end_date": "2026-11-08",
+              "label": "Oct 12 – Nov 8, 2026",
+              "month": "November 2026"
+            }
+          },
+          "subscribers": {
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-12",
+              "end_date": "2026-11-08",
+              "label": "Oct 12 – Nov 8, 2026",
+              "month": "November 2026"
+            }
+          },
+          "new_subs": {
+            "status": "fresh",
+            "last_success": "2026-11-09T18:38:00.933Z",
+            "period": {
+              "start_date": "2026-10-12",
+              "end_date": "2026-11-08",
+              "label": "Oct 12 – Nov 8, 2026",
+              "month": "November 2026"
+            }
+          }
+        }
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "updated_metrics": [],
+        "metric_status": {
+          "impressions": {
+            "status": "stale"
+          },
+          "reactions": {
+            "status": "stale"
+          },
+          "followers": {
+            "status": "stale"
+          }
+        },
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
-        "reason": "No source endpoint configuration was supplied.",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
         "metric_status": {
+          "sessions": {
+            "status": "stale"
+          },
+          "reviews": {
+            "status": "stale"
+          },
           "orders": {
             "status": "stale",
             "period": {
@@ -432,14 +644,48 @@ const DASHBOARD_DATA = {
               "end_date": "2026-08-01",
               "label": "Jul 1 – Aug 1, 2026"
             }
+          },
+          "sessions_change": {
+            "status": "stale"
+          },
+          "orders_change": {
+            "status": "stale"
+          },
+          "deal_orders_change": {
+            "status": "stale"
+          },
+          "gmv_change": {
+            "status": "stale"
           }
-        }
+        },
+        "updated_metrics": [],
+        "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
-        "reason": "No source endpoint configuration was supplied.",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
         "metric_status": {
+          "dispensary_clicks": {
+            "status": "stale"
+          },
+          "delivery_clicks": {
+            "status": "stale"
+          },
+          "listing_visitors": {
+            "status": "stale"
+          },
+          "contact_clicks": {
+            "status": "stale"
+          },
+          "monthly_spend": {
+            "status": "stale"
+          },
+          "dispensary_spend": {
+            "status": "stale"
+          },
+          "delivery_spend": {
+            "status": "stale"
+          },
           "gmv": {
             "status": "stale",
             "period": {
@@ -448,27 +694,61 @@ const DASHBOARD_DATA = {
               "label": "Aug 6 – Aug 12, 2026"
             }
           }
-        }
+        },
+        "updated_metrics": [],
+        "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
+        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "updated_metrics": [],
+        "metric_status": {
+          "impressions": {
+            "status": "stale"
+          },
+          "page_visits": {
+            "status": "stale"
+          },
+          "leads": {
+            "status": "stale"
+          },
+          "website_visits": {
+            "status": "stale"
+          },
+          "direction_views": {
+            "status": "stale"
+          },
+          "calls": {
+            "status": "stale"
+          }
+        },
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-11-02T22:10:57.724Z",
-        "reason": "No source endpoint configuration was supplied."
+        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "updated_metrics": [],
+        "metric_status": {
+          "rating": {
+            "status": "stale"
+          },
+          "joyleaf_count": {
+            "status": "stale"
+          }
+        },
+        "reason": "Google Business Profile Reviews HTTP 403."
       }
     },
     "generated_insight": {
-      "title": "YouTube Engagement Insights",
-      "body": "Joyleaf has achieved a total of 7,267 views on YouTube, with a current subscriber count of 43 and 2 new subscribers recently. This indicates a growing interest in video content, which could be leveraged for marketing strategies.",
+      "title": "Google Search and YouTube Engagement Snapshot",
+      "body": "In the latest period, Joyleaf recorded 19,228 searches and 4,878 website clicks from Google, alongside 6,407 views and 44 subscribers on YouTube. However, data from Instagram, Facebook, LinkedIn, Leafly, Weedmaps, Yelp, and reviews are unavailable or failed.",
       "tone": "gold",
       "source_keys": [
+        "google",
         "youtube"
       ],
-      "status": "stale"
+      "status": "partial",
+      "generated_at": "2026-11-09T18:38:00.933Z"
     }
   }
 };
