@@ -345,8 +345,8 @@ const DASHBOARD_DATA = {
     "version": 2,
     "cadence": "daily",
     "stale_after_hours": 36,
-    "last_attempt": "2026-11-09T18:38:00.933Z",
-    "last_success": "2026-11-09T18:38:00.933Z",
+    "last_attempt": "2026-11-09T18:40:56.471Z",
+    "last_success": "2026-11-09T18:40:56.471Z",
     "trigger": "deployment",
     "metrics_updated": 7,
     "updated_sources": [
@@ -365,11 +365,11 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "metric_status": {
           "searches": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-10",
               "end_date": "2026-11-06",
@@ -379,7 +379,7 @@ const DASHBOARD_DATA = {
           },
           "direction_requests": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-10",
               "end_date": "2026-11-06",
@@ -389,7 +389,7 @@ const DASHBOARD_DATA = {
           },
           "phone_calls": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-10",
               "end_date": "2026-11-06",
@@ -399,7 +399,7 @@ const DASHBOARD_DATA = {
           },
           "website_clicks": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-10",
               "end_date": "2026-11-06",
@@ -428,7 +428,7 @@ const DASHBOARD_DATA = {
         },
         "snapshots": [
           {
-            "collected_at": "2026-11-09T18:38:00.933Z",
+            "collected_at": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-10",
               "end_date": "2026-11-06",
@@ -443,7 +443,7 @@ const DASHBOARD_DATA = {
             }
           }
         ],
-        "last_success": "2026-11-09T18:38:00.933Z",
+        "last_success": "2026-11-09T18:40:56.471Z",
         "period": {
           "start_date": "2026-10-10",
           "end_date": "2026-11-06",
@@ -457,11 +457,12 @@ const DASHBOARD_DATA = {
           "phone_calls",
           "website_clicks"
         ],
+        "authorization_blocked": false,
         "reason": "Refreshed 4 of 5 metrics. Photo views are not provided by Google Performance API; missing measures remain historical."
       },
       "instagram": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "updated_metrics": [],
         "metric_status": {
           "views": {
@@ -495,11 +496,12 @@ const DASHBOARD_DATA = {
             "status": "stale"
           }
         },
+        "authorization_blocked": false,
         "reason": "No source endpoint configuration was supplied."
       },
       "facebook": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "updated_metrics": [],
         "metric_status": {
           "views": {
@@ -527,15 +529,16 @@ const DASHBOARD_DATA = {
             "status": "stale"
           }
         },
+        "authorization_blocked": false,
         "reason": "No source endpoint configuration was supplied."
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
-        "last_success": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
+        "last_success": "2026-11-09T18:40:56.471Z",
         "snapshots": [
           {
-            "collected_at": "2026-11-09T18:38:00.933Z",
+            "collected_at": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -564,7 +567,7 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "views": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -574,7 +577,7 @@ const DASHBOARD_DATA = {
           },
           "subscribers": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -584,7 +587,7 @@ const DASHBOARD_DATA = {
           },
           "new_subs": {
             "status": "fresh",
-            "last_success": "2026-11-09T18:38:00.933Z",
+            "last_success": "2026-11-09T18:40:56.471Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -592,11 +595,12 @@ const DASHBOARD_DATA = {
               "month": "November 2026"
             }
           }
-        }
+        },
+        "authorization_blocked": false
       },
       "linkedin": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "updated_metrics": [],
         "metric_status": {
           "impressions": {
@@ -609,11 +613,12 @@ const DASHBOARD_DATA = {
             "status": "stale"
           }
         },
+        "authorization_blocked": false,
         "reason": "No source endpoint configuration was supplied."
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "metric_status": {
           "sessions": {
             "status": "stale"
@@ -659,11 +664,12 @@ const DASHBOARD_DATA = {
           }
         },
         "updated_metrics": [],
+        "authorization_blocked": false,
         "reason": "No source endpoint configuration was supplied."
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "metric_status": {
           "dispensary_clicks": {
             "status": "stale"
@@ -696,11 +702,12 @@ const DASHBOARD_DATA = {
           }
         },
         "updated_metrics": [],
+        "authorization_blocked": false,
         "reason": "No source endpoint configuration was supplied."
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "updated_metrics": [],
         "metric_status": {
           "impressions": {
@@ -722,11 +729,12 @@ const DASHBOARD_DATA = {
             "status": "stale"
           }
         },
+        "authorization_blocked": false,
         "reason": "No source endpoint configuration was supplied."
       },
       "reviews": {
         "status": "stale",
-        "last_attempt": "2026-11-09T18:38:00.933Z",
+        "last_attempt": "2026-11-09T18:40:56.471Z",
         "updated_metrics": [],
         "metric_status": {
           "rating": {
@@ -736,7 +744,8 @@ const DASHBOARD_DATA = {
             "status": "stale"
           }
         },
-        "reason": "Google Business Profile Reviews HTTP 403."
+        "authorization_blocked": true,
+        "reason": "Google Reviews access denied (HTTP 403). Approved reporting access is required; automatic retries paused."
       }
     },
     "generated_insight": {
@@ -747,7 +756,7 @@ const DASHBOARD_DATA = {
         "google",
         "youtube"
       ],
-      "status": "partial",
+      "status": "stale",
       "generated_at": "2026-11-09T18:38:00.933Z"
     }
   }
