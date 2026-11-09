@@ -2,8 +2,14 @@ name: Joyleaf dashboard refresh
 
 on:
   schedule:
-    # Monday 13:00 UTC / 08:00–09:00 America/Chicago depending on daylight saving time.
-    - cron: "0 13 * * 1"
+    # Refresh provider metrics daily; upstream reporting windows and lag are shown on the dashboard.
+    - cron: "17 13 * * *"
+  push:
+    branches: [main]
+    paths:
+      - ".github/scripts/**"
+      - ".github/workflows/joyleaf-dashboard-refresh.yml"
+      - "automation/make/mappings/field-map.json"
   workflow_dispatch:
 
 permissions:
@@ -20,7 +26,10 @@ jobs:
       - name: Check out the existing dashboard repository
         uses: actions/checkout@v4
 
-      - name: Collect live provider metrics and generate one insight
+      - name: Check provider parsing and stale-data regression tests
+        run: node --test .github/scripts/*.test.mjs
+
+      - name: Collect provider metrics (AI insight remains weekly)
         env:
           JOYLEAF_SOURCE_CONFIG: ${{ secrets.JOYLEAF_SOURCE_CONFIG }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}

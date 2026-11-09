@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import vm from 'node:vm';
+import { finiteNumber, reportingPeriod, parseGoogleMetrics, googleMetricKeys } from './metrics.mjs';
 
 const [dataFile, payloadFile] = process.argv.slice(2);
 if (!dataFile || !payloadFile) {
@@ -41,12 +42,6 @@ function getAtPath(input, expression) {
     .split('.')
     .filter(Boolean);
   return tokens.reduce((value, token) => value == null ? undefined : value[token], input);
-}
-
-function finiteNumber(value) {
-  if (typeof value === 'number' && Number.isFinite(value)) return value;
-  if (typeof value === 'string' && value.trim() && Number.isFinite(Number(value))) return Number(value);
-  return undefined;
 }
 
 function sourceTemplate(sourceKey, reason) {
@@ -108,16 +103,6 @@ async function fetchSource(sourceKey, definition) {
   };
 }
 
-function currentPeriod() {
-  const end = new Date();
-  const start = new Date(end);
-  start.setUTCDate(start.getUTCDate() - 27);
-  const label = new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', timeZone: 'UTC' }).format(start) +
-    ' – ' + new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric', timeZone: 'UTC' }).format(end);
-  const month = new Intl.DateTimeFormat('en-US', { month: 'long', year: 'numeric', timeZone: 'UTC' }).format(end);
-  return { label, month };
-}
-
 async function getGoogleAccessToken() {
   if (!googleAccessTokenPromise) {
     googleAccessTokenPromise = (async () => {
@@ -151,84 +136,84 @@ async function getGoogleAccessToken() {
   }
 }
 
-function sumGoogleValues(input) {
-  if (Array.isArray(input)) return input.reduce((sum, value) => sum + sumGoogleValues(value), 0);
-  if (!input || typeof input !== 'object') return 0;
-  if (typeof input.value === 'number') return input.value;
-  return Object.values(input).reduce((sum, value) => sum + sumGoogleValues(value), 0);
-}
-
+let googleLocationPromise;
 async function discoverGoogleLocation(accessToken) {
-  const headers = { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' };
-  const accountResponse = await fetch('https://mybusinessaccountmanagement.googleapis.com/v1/accounts', {
-    headers,
-    signal: AbortSignal.timeout(25_000)
-  });
-  const accountBody = await accountResponse.json();
-  if (!accountResponse.ok) throw new Error(accountBody?.error?.message || `Google account discovery HTTP ${accountResponse.status}`);
-  const accounts = accountBody.accounts || [];
-  if (!accounts.length) throw new Error('The authorized Google account has no Business Profile accounts.');
-
-  const candidates = [];
-  for (const account of accounts) {
-    const response = await fetch(`https://mybusinessbusinessinformation.googleapis.com/v1/${account.name}/locations?readMask=name,title&pageSize=100`, {
-      headers,
-      signal: AbortSignal.timeout(25_000)
-    });
-    const body = await response.json();
-    if (!response.ok) throw new Error(body?.error?.message || `Google location discovery HTTP ${response.status}`);
-    candidates.push(...(body.locations || []));
-  }
-  if (!candidates.length) throw new Error('No Google Business Profile locations are available to the authorized account.');
-  return candidates.find((location) => /joyleaf/i.test(location.title || ''))?.name || candidates[0].name;
+  if (googleLocationPromise) return googleLocationPromise;
+  googleLocationPromise = (async () => {
+    const headers = { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' };
+    const candidates = [];
+    let accountPage;
+    do {
+      const accountQuery = accountPage ? `?pageToken=${encodeURIComponent(accountPage)}` : '';
+      const accountResponse = await fetch(`https://mybusinessaccountmanagement.googleapis.com/v1/accounts${accountQuery}`, { headers, signal: AbortSignal.timeout(25_000) });
+      const accountBody = await accountResponse.json();
+      if (!accountResponse.ok) throw new Error(`Google account discovery HTTP ${accountResponse.status}.`);
+      for (const account of accountBody.accounts || []) {
+        let locationPage;
+        do {
+          const query = new URLSearchParams({ readMask: 'name,title', pageSize: '100', ...(locationPage ? { pageToken: locationPage } : {}) });
+          const response = await fetch(`https://mybusinessbusinessinformation.googleapis.com/v1/${account.name}/locations?${query}`, { headers, signal: AbortSignal.timeout(25_000) });
+          const body = await response.json();
+          if (!response.ok) throw new Error(`Google location discovery HTTP ${response.status}.`);
+          candidates.push(...(body.locations || []).map(location => ({ ...location, account: account.name })));
+          locationPage = body.nextPageToken;
+        } while (locationPage);
+      }
+      accountPage = accountBody.nextPageToken;
+    } while (accountPage);
+    const unique = [...new Map(candidates.map(location => [location.name, location])).values()];
+    const configured = process.env.GOOGLE_LOCATION_NAME;
+    // The dashboard names Joyleaf Dispensary, not the separate delivery listing.
+    const expectedTitle = 'joyleaf weed dispensary';
+    const matches = configured ? unique.filter(location => location.name === configured) : unique.filter(location => (location.title || '').trim().toLowerCase() === expectedTitle);
+    if (matches.length !== 1) throw new Error(configured ? 'Configured Google location was not found in the authorized account.' : `Found ${matches.length} exact Joyleaf Weed Dispensary profiles. Set GOOGLE_LOCATION_NAME to the intended profile; no location was guessed.`);
+    return matches[0];
+  })();
+  return googleLocationPromise;
 }
 
 async function fetchGoogleBusinessProfileSource() {
   try {
     const accessToken = await getGoogleAccessToken();
-    const location = process.env.GOOGLE_LOCATION_NAME || await discoverGoogleLocation(accessToken);
-    const end = new Date();
-    const start = new Date(end);
-    start.setUTCDate(start.getUTCDate() - 27);
+    const location = await discoverGoogleLocation(accessToken);
+    // GBP reporting can lag. Query completed days and identify the exact period shown.
+    const period = reportingPeriod(new Date(), 3);
     const query = new URLSearchParams();
-    for (const metric of [
-      'BUSINESS_IMPRESSIONS_DESKTOP_SEARCH',
-      'BUSINESS_IMPRESSIONS_DESKTOP_MAPS',
-      'BUSINESS_IMPRESSIONS_MOBILE_SEARCH',
-      'BUSINESS_IMPRESSIONS_MOBILE_MAPS',
-      'BUSINESS_DIRECTION_REQUESTS',
-      'CALL_CLICKS',
-      'WEBSITE_CLICKS'
-    ]) query.append('dailyMetrics', metric);
-    for (const [prefix, date] of [['dailyRange.startDate', start], ['dailyRange.endDate', end]]) {
+    for (const metric of googleMetricKeys) query.append('dailyMetrics', metric);
+    for (const [prefix, dateText] of [['dailyRange.startDate', period.start_date], ['dailyRange.endDate', period.end_date]]) {
+      const date = new Date(`${dateText}T00:00:00Z`);
       query.set(`${prefix}.year`, String(date.getUTCFullYear()));
       query.set(`${prefix}.month`, String(date.getUTCMonth() + 1));
       query.set(`${prefix}.day`, String(date.getUTCDate()));
     }
-    const url = `https://businessprofileperformance.googleapis.com/v1/${location}:fetchMultiDailyMetricsTimeSeries?${query}`;
-    const response = await fetch(url, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }, signal: AbortSignal.timeout(25_000) });
+    const response = await fetch(`https://businessprofileperformance.googleapis.com/v1/${location.name}:fetchMultiDailyMetricsTimeSeries?${query}`, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }, signal: AbortSignal.timeout(25_000) });
     const body = await response.json();
-    if (!response.ok) throw new Error(body?.error?.message || `Google Business Profile HTTP ${response.status}`);
-    const totals = {};
-    for (const series of body.multiDailyMetricTimeSeries || []) {
-      totals[series.dailyMetric] = sumGoogleValues(series.timeSeries || series);
-    }
-    const searches = ['BUSINESS_IMPRESSIONS_DESKTOP_SEARCH','BUSINESS_IMPRESSIONS_DESKTOP_MAPS','BUSINESS_IMPRESSIONS_MOBILE_SEARCH','BUSINESS_IMPRESSIONS_MOBILE_MAPS']
-      .reduce((sum, metric) => sum + (totals[metric] || 0), 0);
-    const metrics = {
-      searches,
-      direction_requests: totals.BUSINESS_DIRECTION_REQUESTS || 0,
-      phone_calls: totals.CALL_CLICKS || 0,
-      website_clicks: totals.WEBSITE_CLICKS || 0
-    };
-    return { status: 'partial', metrics, reason: 'Google Performance API does not provide a mapped photo_views measure in this refresh.' };
+    if (!response.ok) throw new Error(`Google Business Profile HTTP ${response.status}.`);
+    const metrics = parseGoogleMetrics(body);
+    return { status: 'partial', metrics, period, source_label: location.title, reason: `Refreshed ${Object.keys(metrics).length} of 5 metrics. Photo views are not provided by Google Performance API; missing measures remain historical.` };
   } catch (error) {
     return { status: 'failed', metrics: {}, reason: String(error.message || error).slice(0, 180) };
   }
 }
 
-function isoDate(date) {
-  return date.toISOString().slice(0, 10);
+async function fetchGoogleReviewsSource() {
+  try {
+    const accessToken = await getGoogleAccessToken();
+    const location = await discoverGoogleLocation(accessToken);
+    // Only publish aggregate count/rating, never individual review text or reviewer identities.
+    const response = await fetch(`https://mybusiness.googleapis.com/v4/${location.account}/${location.name}/reviews?pageSize=1`, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }, signal: AbortSignal.timeout(25_000) });
+    const body = await response.json();
+    if (!response.ok) throw new Error(`Google Business Profile Reviews HTTP ${response.status}.`);
+    const metrics = {};
+    const count = finiteNumber(body.totalReviewCount);
+    const rating = finiteNumber(body.averageRating);
+    if (count !== undefined && count >= 0 && Number.isInteger(count)) metrics.joyleaf_count = count;
+    if (rating !== undefined && rating >= 1 && rating <= 5) metrics.rating = rating;
+    if (!Object.keys(metrics).length) throw new Error('Google Reviews returned no aggregate rating or count.');
+    return { status: 'partial', metrics, source_label: `Google Business Profile · ${location.title}`, period: { label: `Snapshot ${new Date().toISOString().slice(0, 10)}` }, reason: 'Joyleaf Google rating/count only. Competitor counts and star distribution remain historical, not refreshed.' };
+  } catch (error) {
+    return { status: 'failed', metrics: {}, reason: String(error.message || error).slice(0, 180) };
+  }
 }
 
 async function fetchYouTubeSource() {
@@ -237,15 +222,12 @@ async function fetchYouTubeSource() {
     const channelId = process.env.JOYLEAF_YOUTUBE_CHANNEL_ID || DEFAULT_JOYLEAF_YOUTUBE_CHANNEL_ID;
     if (!/^UC[\w-]{20,}$/.test(channelId)) throw new Error('JOYLEAF_YOUTUBE_CHANNEL_ID is invalid.');
 
-    const end = new Date();
-    end.setUTCDate(end.getUTCDate() - 1);
-    const start = new Date(end);
-    start.setUTCDate(start.getUTCDate() - 27);
+    const period = reportingPeriod();
     const headers = { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' };
     const analyticsQuery = new URLSearchParams({
       ids: `channel==${channelId}`,
-      startDate: isoDate(start),
-      endDate: isoDate(end),
+      startDate: period.start_date,
+      endDate: period.end_date,
       metrics: 'views,subscribersGained'
     });
     const [analyticsResponse, channelResponse] = await Promise.all([
@@ -271,6 +253,8 @@ async function fetchYouTubeSource() {
     return {
       status: metricCount === expectedCount ? 'success' : 'partial',
       metrics,
+      period,
+      source_label: 'Joyleaf YouTube channel',
       ...(metricCount === expectedCount ? {} : { reason: `Received ${metricCount} of ${expectedCount} mapped YouTube metrics.` })
     };
   } catch (error) {
@@ -286,6 +270,7 @@ async function generateInsight(sources) {
   const prompt = [
     'Create one concise evidence-based dashboard insight for Joyleaf.',
     'Use only the source data supplied below. Do not invent metrics and explicitly account for unavailable or failed sources.',
+    'Do not claim growth, momentum, acquisition, ROI or causation without comparable prior-period evidence. Report these period totals as a snapshot.',
     'Return JSON only with title, body, tone, source_keys, status.',
     'tone must be one of green, purple, gold, red; status must be fresh, partial, or stale; source_keys may contain at most three source names.',
     JSON.stringify(compactSourceData)
@@ -321,15 +306,19 @@ for (const sourceKey of Object.keys(fieldMap.sources)) {
     ? await fetchGoogleBusinessProfileSource()
     : sourceKey === 'youtube' && googleCredentialsConfigured
       ? await fetchYouTubeSource()
-      : await fetchSource(sourceKey, config[sourceKey]);
+      : sourceKey === 'reviews' && googleCredentialsConfigured && !config.reviews
+        ? await fetchGoogleReviewsSource()
+        : await fetchSource(sourceKey, config[sourceKey]);
 }
 
 const freshCount = Object.values(sources).filter((source) => source.status === 'success' || source.status === 'partial').length;
-const insightContent = await generateInsight(sources);
+// Keep the established weekly AI-call budget when provider refreshes run daily.
+const shouldGenerateInsight = process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' || new Date().getUTCDay() === 1;
+const insightContent = shouldGenerateInsight ? await generateInsight(sources) : null;
 const now = new Date().toISOString();
 const payload = {
-  run: { trigger: process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' ? 'manual' : 'weekly', requested_at: now },
-  period: currentPeriod(),
+  run: { trigger: process.env.GITHUB_EVENT_NAME === 'workflow_dispatch' ? 'manual' : process.env.GITHUB_EVENT_NAME === 'push' ? 'deployment' : 'daily', requested_at: now },
+  period: reportingPeriod(),
   sources,
   insight: insightContent ? { status: 'success', content: insightContent } : { status: 'failed', content: null },
   meta: { collector: 'github-actions', fresh_sources: freshCount }
@@ -337,3 +326,9 @@ const payload = {
 
 fs.writeFileSync(payloadFile, JSON.stringify(payload, null, 2), 'utf8');
 console.log(JSON.stringify({ fresh_sources: freshCount, output: payloadFile }));
+
+const summaryLines = Object.entries(sources).map(([key, value]) => `| ${key} | ${value.status} | ${Object.keys(value.metrics || {}).join(', ') || 'none'} | ${(value.reason || '').replaceAll('|', '/')} |`);
+if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, `## Provider refresh coverage\n\nA successful job is not proof that every provider is connected.\n\n| Source | Result | Metrics received | Details |\n|---|---|---|---|\n${summaryLines.join('\n')}\n`);
+for (const [key, source] of Object.entries(sources)) {
+  if (source.status !== 'success') console.log(`::warning title=${key} refresh::${source.status}: ${(source.reason || 'Incomplete source').replace(/[\r\n%]/g, ' ')}`);
+}

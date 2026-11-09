@@ -108,12 +108,34 @@
     }
   },
   "derivedMetrics": {
-    "rule": "Make may include a change field only when it has both a valid current and valid comparable prior-period value. Otherwise the merger leaves the existing change field untouched.",
+    "rule": "A change field is published only with a valid current and comparable prior-period value. Otherwise it is cleared; retained old comparisons must never accompany newly collected totals.",
     "fields": {
-      "google": ["searches_change", "direction_change", "phone_change", "website_change", "photo_change"],
-      "instagram": ["views_change", "reach_change", "interactions_change", "follows_change", "non_follower_change"],
-      "facebook": ["views_change", "interactions_change", "page_visits_change", "follows_change"],
-      "leafly": ["sessions_change", "orders_change", "deal_orders_change", "gmv_change"]
+      "google": [
+        "searches_change",
+        "direction_change",
+        "phone_change",
+        "website_change",
+        "photo_change"
+      ],
+      "instagram": [
+        "views_change",
+        "reach_change",
+        "interactions_change",
+        "follows_change",
+        "non_follower_change"
+      ],
+      "facebook": [
+        "views_change",
+        "interactions_change",
+        "page_visits_change",
+        "follows_change"
+      ],
+      "leafly": [
+        "sessions_change",
+        "orders_change",
+        "deal_orders_change",
+        "gmv_change"
+      ]
     }
   }
 }

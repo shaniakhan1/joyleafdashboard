@@ -38,10 +38,6 @@ function sanitizeReason(reason) {
   return reason.replace(/[\r\n]+/g, ' ').trim().slice(0, 180) || undefined;
 }
 
-function monthKey(label) {
-  return typeof label === 'string' ? label.trim().toLowerCase() : '';
-}
-
 function normalizeInsight(insight, previous) {
   const valid = insight && typeof insight === 'object' &&
     typeof insight.title === 'string' && insight.title.trim() &&
@@ -81,47 +77,55 @@ for (const [sourceKey, config] of Object.entries(fieldMap.sources)) {
   const status = isAllowedSourceStatus(incomingSource.status) ? incomingSource.status : 'failed';
   const metrics = incomingSource.metrics && typeof incomingSource.metrics === 'object' ? incomingSource.metrics : {};
   const target = data[config.dashboardPath];
-  let changedForSource = 0;
+  const previous = previousAutomation.source_status?.[sourceKey] || {};
+  const updatedMetrics = [];
+  const metricStatus = {};
+  const period = incomingSource.period || null;
+  const canUpdate = (status === 'success' || status === 'partial') && target && typeof target === 'object';
 
-  if ((status === 'success' || status === 'partial') && target && typeof target === 'object') {
-    for (const metric of config.supportedMetrics || []) {
-      if (isFiniteNumber(metrics[metric])) {
-        target[metric] = metrics[metric];
-        changedForSource += 1;
-        updatedMetricCount += 1;
-      }
-    }
-
-    for (const changeMetric of fieldMap.derivedMetrics?.fields?.[sourceKey] || []) {
-      if (isFiniteNumber(metrics[changeMetric])) {
-        target[changeMetric] = metrics[changeMetric];
-        changedForSource += 1;
-        updatedMetricCount += 1;
-      }
-    }
-
-    const incomingMonth = payload?.period?.month;
-    const existingMonth = data?.period?.month;
-    if (changedForSource && incomingMonth && monthKey(incomingMonth) !== monthKey(existingMonth)) {
-      for (const [metric, historyField] of Object.entries(config.history || {})) {
-        if (isFiniteNumber(metrics[metric]) && Array.isArray(target[historyField])) {
-          target[historyField] = [...target[historyField].slice(-5), metrics[metric]];
-        }
-      }
+  for (const metric of config.supportedMetrics || []) {
+    const priorMetric = previous.metric_status?.[metric] || {};
+    if (canUpdate && isFiniteNumber(metrics[metric]) && metrics[metric] >= 0) {
+      target[metric] = metrics[metric];
+      updatedMetrics.push(metric);
+      updatedMetricCount += 1;
+      metricStatus[metric] = { status: 'fresh', last_success: now, ...(period ? { period } : {}) };
+    } else {
+      metricStatus[metric] = { ...priorMetric, status: priorMetric.status === 'invalid' ? 'invalid' : 'stale' };
     }
   }
-
-  const dashboardStatus = changedForSource > 0
-    ? (status === 'partial' ? 'partial' : 'fresh')
+  // Old percentage changes must not survive beside newly collected totals.
+  for (const metric of fieldMap.derivedMetrics?.fields?.[sourceKey] || []) {
+    if (canUpdate && isFiniteNumber(metrics[metric])) {
+      target[metric] = metrics[metric];
+      metricStatus[metric] = { status: 'fresh', last_success: now, ...(period ? { period } : {}) };
+    } else {
+      target[metric] = null;
+      metricStatus[metric] = { ...(previous.metric_status?.[metric] || {}), status: 'stale' };
+    }
+  }
+  // Keep legacy monthly arrays unchanged. Rolling 28-day totals are not calendar-month observations.
+  if (updatedMetrics.length) {
+    const snapshots = Array.isArray(previous.snapshots) ? previous.snapshots : [];
+    const snapshot = { collected_at: now, ...(period ? { period } : {}), metrics: Object.fromEntries(updatedMetrics.map(key => [key, metrics[key]])) };
+    const samePeriod = old => period?.end_date && old.period?.end_date === period.end_date;
+    previous.snapshots = [...snapshots.filter(old => !samePeriod(old)), snapshot].slice(-35);
+  }
+  const dashboardStatus = updatedMetrics.length
+    ? (status === 'partial' || updatedMetrics.length < config.supportedMetrics.length ? 'partial' : 'fresh')
     : 'stale';
   sourceStatus[sourceKey] = {
+    ...previous,
     status: dashboardStatus,
     last_attempt: now,
-    ...(changedForSource > 0 ? { last_success: now } : {}),
-    ...(sanitizeReason(incomingSource.reason) ? { reason: sanitizeReason(incomingSource.reason) } : {})
+    ...(updatedMetrics.length ? { last_success: now, ...(period ? { period } : {}) } : {}),
+    ...(incomingSource.source_label ? { source_label: sanitizeReason(incomingSource.source_label) } : {}),
+    updated_metrics: updatedMetrics,
+    metric_status: metricStatus
   };
-
-  if (changedForSource > 0) updatedSources.push(sourceKey);
+  delete sourceStatus[sourceKey].reason;
+  if (sanitizeReason(incomingSource.reason)) sourceStatus[sourceKey].reason = sanitizeReason(incomingSource.reason);
+  if (updatedMetrics.length) updatedSources.push(sourceKey);
   else staleSources.push(sourceKey);
 }
 
@@ -131,13 +135,16 @@ if (updatedMetricCount > 0 && payload?.period && typeof payload.period === 'obje
 }
 
 const incomingInsight = payload?.insight?.status === 'success' ? payload.insight.content : null;
-const generatedInsight = normalizeInsight(incomingInsight, previousInsight);
+const generatedInsight = normalizeInsight(incomingInsight, { ...previousInsight, status: 'stale' });
+if (incomingInsight && generatedInsight !== previousInsight) generatedInsight.generated_at = now;
 
 data.automation = {
-  version: 1,
+  version: 2,
+  cadence: 'daily',
+  stale_after_hours: 36,
   last_attempt: now,
-  ...(updatedMetricCount > 0 ? { last_success: now } : {}),
-  trigger: payload?.run?.trigger === 'manual' ? 'manual' : 'weekly',
+  ...(updatedMetricCount > 0 ? { last_success: now } : previousAutomation.last_success ? { last_success: previousAutomation.last_success } : {}),
+  trigger: ['manual', 'daily', 'deployment'].includes(payload?.run?.trigger) ? payload.run.trigger : 'daily',
   metrics_updated: updatedMetricCount,
   updated_sources: updatedSources,
   stale_sources: staleSources,
@@ -145,7 +152,7 @@ data.automation = {
   generated_insight: generatedInsight
 };
 
-const rendered = `// JOYLEAF DASHBOARD DATA FILE\n// ============================================================\n// Managed by the self-contained GitHub Actions weekly refresh. See automation/github-actions/.\n// Stale-source policy: unavailable or failed values are retained, never zeroed.\n// ============================================================\n\nconst DASHBOARD_DATA = ${JSON.stringify(data, null, 2)};\n`;
+const rendered = `// JOYLEAF DASHBOARD DATA FILE\n// ============================================================\n// Managed by the self-contained GitHub Actions daily refresh. See automation/github-actions/.\n// Stale-source policy: unavailable or failed values are retained, never zeroed.\n// ============================================================\n\nconst DASHBOARD_DATA = ${JSON.stringify(data, null, 2)};\n`;
 fs.writeFileSync(outputFile, rendered, 'utf8');
 
 console.log(JSON.stringify({

@@ -1,6 +1,6 @@
 // JOYLEAF DASHBOARD DATA FILE
 // ============================================================
-// Managed by the self-contained GitHub Actions weekly refresh. See automation/github-actions/.
+// Managed by the self-contained GitHub Actions daily refresh. See automation/github-actions/.
 // Stale-source policy: unavailable or failed values are retained, never zeroed.
 // ============================================================
 
@@ -362,10 +362,27 @@ const DASHBOARD_DATA = {
     ],
     "source_status": {
       "google": {
-        "status": "partial",
+        "status": "stale",
         "last_attempt": "2026-11-02T22:10:57.724Z",
-        "last_success": "2026-11-02T22:10:57.724Z",
-        "reason": "Google Performance API does not provide a mapped photo_views measure in this refresh."
+        "reason": "Earlier Google totals were invalid due to a parser error. Corrected collection must succeed before these values can be used.",
+        "metric_status": {
+          "searches": {
+            "status": "invalid",
+            "reason": "Prior parser output is not valid provider data."
+          },
+          "direction_requests": {
+            "status": "invalid",
+            "reason": "Prior parser output is not valid provider data."
+          },
+          "phone_calls": {
+            "status": "invalid",
+            "reason": "Prior parser output is not valid provider data."
+          },
+          "website_clicks": {
+            "status": "invalid",
+            "reason": "Prior parser output is not valid provider data."
+          }
+        }
       },
       "instagram": {
         "status": "stale",
@@ -390,12 +407,48 @@ const DASHBOARD_DATA = {
       "leafly": {
         "status": "stale",
         "last_attempt": "2026-11-02T22:10:57.724Z",
-        "reason": "No source endpoint configuration was supplied."
+        "reason": "No source endpoint configuration was supplied.",
+        "metric_status": {
+          "orders": {
+            "status": "stale",
+            "period": {
+              "start_date": "2026-07-01",
+              "end_date": "2026-08-01",
+              "label": "Jul 1 – Aug 1, 2026"
+            }
+          },
+          "deal_orders": {
+            "status": "stale",
+            "period": {
+              "start_date": "2026-07-01",
+              "end_date": "2026-08-01",
+              "label": "Jul 1 – Aug 1, 2026"
+            }
+          },
+          "gmv": {
+            "status": "stale",
+            "period": {
+              "start_date": "2026-07-01",
+              "end_date": "2026-08-01",
+              "label": "Jul 1 – Aug 1, 2026"
+            }
+          }
+        }
       },
       "weedmaps": {
         "status": "stale",
         "last_attempt": "2026-11-02T22:10:57.724Z",
-        "reason": "No source endpoint configuration was supplied."
+        "reason": "No source endpoint configuration was supplied.",
+        "metric_status": {
+          "gmv": {
+            "status": "stale",
+            "period": {
+              "start_date": "2026-08-06",
+              "end_date": "2026-08-12",
+              "label": "Aug 6 – Aug 12, 2026"
+            }
+          }
+        }
       },
       "yelp": {
         "status": "stale",
@@ -415,7 +468,7 @@ const DASHBOARD_DATA = {
       "source_keys": [
         "youtube"
       ],
-      "status": "fresh"
+      "status": "stale"
     }
   }
 };
