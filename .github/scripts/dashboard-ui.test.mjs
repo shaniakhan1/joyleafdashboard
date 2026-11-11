@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import vm from 'node:vm';
 import test from 'node:test';
 import assert from 'node:assert/strict';
+import {createHash} from 'node:crypto';
 
 const html = fs.readFileSync(new URL('../../index.html', import.meta.url),'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
@@ -25,6 +26,38 @@ test('renderer parses as JavaScript and static page remains failure safe',() => 
   assert.ok(html.includes("cache: 'no-store'"));
   assert.ok(html.includes('Data unavailable'));
   assert.ok(!script.includes('eval('));
+});
+
+test('the original supplied Joyleaf logo and its exact colors define the brand',() => {
+  const logo=fs.readFileSync(new URL('../../assets/joyleaf-logo.png',import.meta.url));
+  assert.equal(createHash('sha256').update(logo).digest('hex'),'0638a20575fdb9a2fd70c1a86e4c91efedfbb1370a15b9dc18c8bea8c118b6c6');
+  assert.match(html,/<img class="brand-logo" src="assets\/joyleaf-logo\.png" alt="Joyleaf" width="60" height="60"/);
+  assert.ok(html.includes('--purple:#954098;--cream:#f7eee2;'));
+  assert.ok(html.includes('--paper:var(--cream)'));
+  assert.ok(!html.includes('class="brand-mark"'));
+  assert.ok(html.includes('Prepared by <strong>FLP Marketing Group</strong>'));
+});
+
+test('brand typography has resilient fallbacks and readable primary color contrast',() => {
+  assert.ok(html.includes('family=Outfit:wght@400;500;600;700&display=swap'));
+  assert.match(html,/h1,h2,h3\{[^}]*font-family:Outfit,'DM Sans',Arial,sans-serif/);
+  assert.match(html,/\.brand-logo\{[^}]*width:60px;height:60px;object-fit:contain/);
+  assert.match(html,/@media\(max-width:560px\)[\s\S]*\.brand-logo\{width:48px;height:48px\}/);
+  const luminance=hex=>hex.match(/[a-f\d]{2}/gi).map(part=>parseInt(part,16)/255).map(value=>value<=.04045?value/12.92:((value+.055)/1.055)**2.4).reduce((sum,value,index)=>sum+value*[.2126,.7152,.0722][index],0);
+  const contrast=(first,second)=>(Math.max(luminance(first),luminance(second))+.05)/(Math.min(luminance(first),luminance(second))+.05);
+  assert.ok(contrast('954098','f7eee2')>=4.5);
+  assert.ok(contrast('716878','f7eee2')>=4.5);
+});
+
+test('source links use dependable vector arrows and accessible new-tab labels',() => {
+  assert.ok(!html.includes('↗'));
+  const content={status:'fresh',collected_at:recent,groups:[{platform:'instagram',items:[{title:'Verified post',url:'https://www.instagram.com/p/verified/',metrics:[]}]}]};
+  const rendered=context.renderTopContent(content,now);
+  assert.match(rendered,/<svg class="external-link-icon"[^>]*aria-hidden="true" focusable="false">/);
+  assert.ok(rendered.includes('<span class="sr-only"> (opens in a new tab)</span>'));
+  const benchmark=context.renderReviewBenchmark(benchmarkFixture(),now);
+  assert.equal((benchmark.match(/class="external-link-icon"/g)||[]).length,4);
+  assert.equal((benchmark.match(/\(opens in a new tab\)/g)||[]).length,4);
 });
 
 test('automatic evidence expires after 36 hours, including future or missing timestamps',() => {
