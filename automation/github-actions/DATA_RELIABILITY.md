@@ -48,3 +48,10 @@ Input schema for the importer is `{collected_at: actual ISO timestamp, sources: 
 `node .github/scripts/import_windsor_snapshot.mjs data.js provider-results.json output.js`
 
 Publish only the generated `data.js` after fetching the latest branch/file. Preserve concurrent updates using an expected branch head, and rerun the merge against the latest data if the branch changed. Verify the deployment and public source timestamps before reporting success. On provider failure, preserve historical values and publish the failure state. On publishing failure, report the blocker; never claim fresh data was delivered.
+
+
+## Google Reviews restored (2026-11-11)
+
+Google approved project `joyleaf-dashboard-reporting` on September 2, 2026. On November 11 the account owner confirmed enabling the separate Google My Business API. One authorized validation then succeeded through the existing OAuth credentials: total review count 3,220 and average rating approximately 4.9 for Joyleaf Weed Dispensary, retrieved at 2026-11-11T16:23:08.309Z. No Windsor upgrade or new credential was needed.
+
+The existing daily GitHub workflow now refreshes those two aggregates. The request restricts the response to `averageRating` and `totalReviewCount`; no individual review text or reviewer details are published. The UI displays the rating to one decimal and exact review count, with individual source timestamps. Competitor counts, star distribution, and AI rankings remain historical. Reviews stays partial rather than implying those other measures were refreshed. A future 401/403 stops subsequent automatic Reviews requests until access is restored and explicitly revalidated; only approved diagnostic codes are published, never raw provider messages or credentials.

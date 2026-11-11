@@ -264,7 +264,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
     <div class="scorecards" id="scorecards-wrap">
       <div class="scorecard"><span class="sc-icon">🤖</span><div class="sc-value" id="sc-ai">3/4</div><div class="sc-label">AI Platforms Ranking</div><div class="sc-change up" id="sc-ai-sub">Retained manual baseline</div></div>
       <div class="scorecard"><span class="sc-icon">🔍</span><div class="sc-value" id="sc-searches">--</div><div class="sc-label">Google Profile Impressions</div><div class="sc-change up" id="sc-searches-chg">Loading...</div></div>
-      <div class="scorecard"><span class="sc-icon">❤️</span><div class="sc-value" id="sc-reviews">—</div><div class="sc-label">Reviews Managed</div><div class="sc-change up">Management coverage unverified</div></div>
+      <div class="scorecard"><span class="sc-icon">❤️</span><div class="sc-value" id="sc-reviews">—</div><div class="sc-label">Google Reviews</div><div class="sc-change up">Management coverage unverified</div></div>
       <div class="scorecard"><span class="sc-icon">📱</span><div class="sc-value" id="sc-ig-views">--</div><div class="sc-label">Instagram Views</div><div class="sc-change up" id="sc-ig-chg">Loading...</div></div>
       <div class="scorecard"><span class="sc-icon">📍</span><div class="sc-value" id="sc-directions">--</div><div class="sc-label">Direction Requests</div><div class="sc-change up" id="sc-dir-chg">Loading...</div></div>
       <div class="scorecard"><span class="sc-icon">📝</span><div class="sc-value" id="sc-posts">--</div><div class="sc-label">Posts Delivered</div><div class="sc-change up" id="sc-posts-sub">Loading...</div></div>
@@ -384,6 +384,10 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
             <div class="review-num" id="review-rating">--</div>
 
             <div class="review-label">Overall Rating</div>
+          </div>
+          <div class="review-big">
+            <div class="review-num" id="review-count">--</div>
+            <div class="review-label">Total Google Reviews</div>
           </div>
           <div id="review-bars"></div>
         </div>
@@ -518,7 +522,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
     <div class="footer-note">
       <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Existing dashboard delivery remains unchanged</p>
       <p style="margin-top:0.3rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly Business, Weedmaps, Yelp Business, YouTube Studio, LinkedIn Analytics &middot; Unavailable or failed sources retain their last known values and are marked stale.</p>
-      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">Google and YouTube refresh daily through GitHub Actions; Instagram, Facebook and LinkedIn refresh daily through the connected Windsor publishing task. Provider data may lag. See source and metric status above.</p>
+      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">Google, Google Reviews and YouTube refresh daily through GitHub Actions; Instagram, Facebook and LinkedIn refresh daily through the connected Windsor publishing task. Provider data may lag. See source and metric status above.</p>
     </div>
 
   </div>
@@ -848,7 +852,11 @@ document.getElementById('yt-li-grid').innerHTML = `
   </div>`;
 
 // ---- REVIEWS ----
-document.getElementById('review-rating').textContent = D.reviews.rating;
+const reviewRating = metricValue('reviews','rating');
+const reviewCount = metricValue('reviews','joyleaf_count');
+const reviewRatingDisplay = typeof reviewRating === 'number' && Number.isFinite(reviewRating) ? reviewRating.toFixed(1) : '—';
+document.getElementById('review-rating').textContent = reviewRatingDisplay;
+document.getElementById('review-count').textContent = typeof reviewCount === 'number' ? reviewCount.toLocaleString('en-US') : '—';
 document.getElementById('review-bars').innerHTML = [
   ['5 star', D.reviews.five_star_pct, gold],
   ['4 star', D.reviews.four_star_pct, purple],
@@ -889,7 +897,7 @@ document.getElementById('ai-platform-cards').innerHTML = aiPlatforms.map(p => `
 
 // ---- COMPETITORS ----
 const competitors = [
-  { name: 'Joyleaf ⭐', location: 'Roselle, NJ', rating: '4.9', reviews: D.reviews.joyleaf_count.toLocaleString(), chatgpt: 'Mentioned', gemini: 'Mentioned', claude: '#1', distance: 'Home', highlight: true },
+  { name: 'Joyleaf ⭐', location: 'Roselle, NJ', rating: reviewRatingDisplay, reviews: typeof reviewCount === 'number' ? reviewCount.toLocaleString('en-US') : '—', chatgpt: 'Mentioned', gemini: 'Mentioned', claude: '#1', distance: 'Home', highlight: true },
   { name: 'Budzooka', location: 'Union County', rating: '5.0', reviews: D.reviews.budzooka_count.toLocaleString(), chatgpt: '#1', gemini: '#1', claude: 'Mentioned', distance: '5 mi', highlight: false },
   { name: 'Breakwater', location: 'Roselle Park', rating: '4.8', reviews: D.reviews.breakwater_count.toLocaleString(), chatgpt: 'Mentioned', gemini: 'Mentioned', claude: 'Mentioned', distance: '1 mi', highlight: false },
   { name: 'Botera', location: 'Union, NJ', rating: '4.7', reviews: D.reviews.botera_count.toLocaleString(), chatgpt: '--', gemini: '--', claude: 'Mentioned', distance: '4 mi', highlight: false },
@@ -899,8 +907,8 @@ document.getElementById('competitor-table-body').innerHTML = competitors.map(c =
   <tr style="${c.highlight ? 'background:var(--purple-light)' : ''}">
     <td><strong>${c.name}</strong></td>
     <td>${c.location}</td>
-    <td>⭐ ${c.rating}</td>
-    <td style="font-family:DM Mono,monospace;font-weight:600">${c.reviews}</td>
+    <td>⭐ ${c.rating}${c.highlight ? `<div class="freshness-note">${escapeHtml(metricText('reviews','rating'))}</div>` : ''}</td>
+    <td style="font-family:DM Mono,monospace;font-weight:600">${c.reviews}${c.highlight ? `<div class="freshness-note">${escapeHtml(metricText('reviews','joyleaf_count'))}</div>` : ''}</td>
     <td>${c.chatgpt}</td>
     <td>${c.gemini}</td>
     <td>${c.claude}</td>
@@ -936,10 +944,10 @@ const sourceCards = {
   'fb-stats-grid':'facebook', 'review-rating':'reviews', 'chart-reviews':'reviews', 'del-wm-clicks':'weedmaps'
 };
 Object.entries(sourceCards).forEach(([id,source]) => note(document.getElementById(id)?.closest('.card'),sourceText(source)));
-['snack-pack-body','grade-cards-top','ai-platform-cards','competitor-table-body','content-bars'].forEach(id => note(document.getElementById(id)?.closest('.card'),manualBaseline));
+['snack-pack-body','grade-cards-top','ai-platform-cards','content-bars'].forEach(id => note(document.getElementById(id)?.closest('.card'),manualBaseline));
 const scores = [
  ['sc-ai',manualBaseline], ['sc-searches',metricText('google','searches')],
- ['sc-reviews','Review management coverage not verified by the data feed'],
+ ['sc-reviews',metricText('reviews','joyleaf_count')],
  ['sc-ig-views',metricText('instagram','views')], ['sc-directions',metricText('google','direction_requests')],
  ['sc-posts',manualBaseline]
 ];
@@ -947,7 +955,7 @@ scores.forEach(([id,message]) => {
  const card=document.getElementById(id).closest('.scorecard');
  const label=card.querySelector('.sc-change'); label.textContent=message; label.className='sc-change neutral';
 });
-document.getElementById('sc-reviews').textContent = '—';
+document.getElementById('sc-reviews').textContent = typeof reviewCount === 'number' ? reviewCount.toLocaleString('en-US') : '—';
 // No comparable prior-period provenance is available for the legacy percentage fields.
 document.querySelectorAll('.stat-chg').forEach(el => { if (el.classList.contains('up') || el.classList.contains('down')) { el.textContent='Comparison unavailable'; el.className='stat-chg neutral'; } });
 document.getElementById('searches-chg-big').textContent='Comparison unavailable';
@@ -981,6 +989,8 @@ Array.from(document.getElementById('yt-li-grid').children).forEach((card,i)=>{
 note(document.getElementById('del-wm-clicks').closest('.stat-row'),metricText('weedmaps','delivery_clicks'));
 note(document.getElementById('review-bars'),'Rating distribution: retained baseline; per-field coverage in source health.');
 note(document.getElementById('review-rating').parentElement,metricText('reviews','rating'));
+note(document.getElementById('review-count').parentElement,metricText('reviews','joyleaf_count'));
+note(document.getElementById('competitor-table-body').closest('.card'),'Joyleaf rating and review count follow their source timestamps. Competitor figures and all AI rankings are retained manual baselines.');
 document.querySelectorAll('#content-bars .progress-bar').forEach(el=>el.hidden=true);
 
 }
