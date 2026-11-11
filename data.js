@@ -988,8 +988,8 @@ const DASHBOARD_DATA = {
             "status": "stale"
           }
         },
-        "authorization_blocked": true,
-        "reason": "Google Reviews access denied (HTTP 403). Approved reporting access is required; automatic retries paused."
+        "authorization_blocked": false,
+        "reason": "The account owner enabled Google My Business API on November 11; one validation request is pending. Retained values are not current."
       }
     },
     "generated_insight": {

@@ -47,3 +47,23 @@ export function parseGoogleMetrics(body) {
   if (!Object.keys(metrics).length) throw new Error('Google returned no valid dated metric values; previous values retained.');
   return metrics;
 }
+
+
+export function parseGoogleReviewMetrics(body) {
+  const metrics = {};
+  const count = finiteNumber(body?.totalReviewCount);
+  const rating = finiteNumber(body?.averageRating);
+  if (count !== undefined && count >= 0 && Number.isSafeInteger(count)) metrics.joyleaf_count = count;
+  if (rating !== undefined && rating >= 1 && rating <= 5) metrics.rating = rating;
+  if (!Object.keys(metrics).length) throw new Error('Google Reviews returned no valid aggregate rating or count.');
+  return metrics;
+}
+
+export function googleReviewError(status, body) {
+  // Whitelist provider diagnostic codes, never publish raw messages, URLs, tokens or review content.
+  const codes = new Set(['SERVICE_DISABLED', 'ACCESS_TOKEN_SCOPE_INSUFFICIENT', 'IAM_PERMISSION_DENIED', 'PERMISSION_DENIED', 'UNAUTHENTICATED', 'NOT_FOUND', 'INVALID_ARGUMENT', 'RESOURCE_EXHAUSTED', 'BILLING_DISABLED', 'CONSUMER_INVALID', 'API_KEY_SERVICE_BLOCKED', 'USER_PROJECT_DENIED']);
+  const details = Array.isArray(body?.error?.details) ? body.error.details : [];
+  const parts = [body?.error?.status, ...details.map(detail => detail?.reason)].filter(code => codes.has(code));
+  const services = details.map(detail => detail?.metadata?.service).filter(service => service === 'mybusiness.googleapis.com');
+  return `Google Business Profile Reviews HTTP ${Number.isInteger(status) ? status : 'error'}${parts.length || services.length ? ` (${[...new Set([...parts, ...services])].join('; ')})` : ''}.`;
+}

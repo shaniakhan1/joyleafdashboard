@@ -5,7 +5,7 @@ import os from 'node:os';
 import path from 'node:path';
 import vm from 'node:vm';
 import { execFileSync } from 'node:child_process';
-import { parseGoogleMetrics, googleMetricKeys, reportingPeriod } from './metrics.mjs';
+import { parseGoogleMetrics, parseGoogleReviewMetrics, googleReviewError, googleMetricKeys, reportingPeriod } from './metrics.mjs';
 const date = { year: 2026, month: 11, day: 1 };
 const series = (key, values) => ({ dailyMetric: key, timeSeries: { datedValues: values.map(value => ({ date, ...(value === undefined ? {} : { value }) })) } });
 const body = (...items) => ({ multiDailyMetricTimeSeries: [{ dailyMetricTimeSeries: items }] });
@@ -71,4 +71,16 @@ test('no-credential collection fails closed and does not call providers', () => 
     assert.equal(payload.meta.fresh_sources, 0);
     assert.ok(Object.values(payload.sources).every(source => source.status === 'unavailable' && Object.keys(source.metrics).length === 0));
   } finally { fs.rmSync(dir, { recursive: true, force: true }); }
+});
+
+test('review parser keeps only valid public aggregate rating and count', () => {
+  assert.deepEqual(parseGoogleReviewMetrics({totalReviewCount: 123, averageRating: 4.9, reviews: [{reviewer:'private',comment:'private'}]}), {joyleaf_count:123,rating:4.9});
+  assert.deepEqual(parseGoogleReviewMetrics({totalReviewCount:0}), {joyleaf_count:0});
+  assert.deepEqual(parseGoogleReviewMetrics({totalReviewCount:'57',averageRating:'4.8'}), {joyleaf_count:57,rating:4.8});
+  for (const invalid of [{}, {totalReviewCount:-1,averageRating:6}, {totalReviewCount:1.5}, {totalReviewCount:NaN}, {totalReviewCount:9007199254740992}, {totalReviewCount:true,averageRating:''}]) assert.throws(()=>parseGoogleReviewMetrics(invalid), /no valid aggregate/);
+});
+test('review errors expose only approved diagnostic codes, never provider text or secrets', () => {
+  const result = googleReviewError(403, {error:{status:'PERMISSION_DENIED',message:'secret=https://private',details:[{reason:'SERVICE_DISABLED',metadata:{service:'mybusiness.googleapis.com',consumer:'private'}},{reason:'SECRET',metadata:{service:'private'}}]}});
+  assert.equal(result,'Google Business Profile Reviews HTTP 403 (PERMISSION_DENIED; SERVICE_DISABLED; mybusiness.googleapis.com).');
+  assert.equal(googleReviewError(401,{error:{message:'secret'}}),'Google Business Profile Reviews HTTP 401.');
 });

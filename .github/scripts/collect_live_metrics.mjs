@@ -3,7 +3,7 @@ import path from 'node:path';
 import process from 'node:process';
 import vm from 'node:vm';
 import { fetchWindsorSource, windsorSources } from './windsor.mjs';
-import { finiteNumber, reportingPeriod, parseGoogleMetrics, googleMetricKeys } from './metrics.mjs';
+import { finiteNumber, reportingPeriod, parseGoogleMetrics, parseGoogleReviewMetrics, googleReviewError, googleMetricKeys } from './metrics.mjs';
 
 const [dataFile, payloadFile] = process.argv.slice(2);
 if (!dataFile || !payloadFile) {
@@ -206,15 +206,10 @@ async function fetchGoogleReviewsSource() {
     const accessToken = await getGoogleAccessToken();
     const location = await discoverGoogleLocation(accessToken);
     // Only publish aggregate count/rating, never individual review text or reviewer identities.
-    const response = await fetch(`https://mybusiness.googleapis.com/v4/${location.account}/${location.name}/reviews?pageSize=1`, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }, signal: AbortSignal.timeout(25_000) });
+    const response = await fetch(`https://mybusiness.googleapis.com/v4/${location.account}/${location.name}/reviews?pageSize=1&fields=averageRating,totalReviewCount`, { headers: { Authorization: `Bearer ${accessToken}`, Accept: 'application/json' }, signal: AbortSignal.timeout(25_000) });
     const body = await response.json();
-    if (!response.ok) throw new Error(`Google Business Profile Reviews HTTP ${response.status}.`);
-    const metrics = {};
-    const count = finiteNumber(body.totalReviewCount);
-    const rating = finiteNumber(body.averageRating);
-    if (count !== undefined && count >= 0 && Number.isInteger(count)) metrics.joyleaf_count = count;
-    if (rating !== undefined && rating >= 1 && rating <= 5) metrics.rating = rating;
-    if (!Object.keys(metrics).length) throw new Error('Google Reviews returned no aggregate rating or count.');
+    if (!response.ok) return { status: 'failed', metrics: {}, authorization_blocked: response.status === 401 || response.status === 403, reason: googleReviewError(response.status, body) };
+    const metrics = parseGoogleReviewMetrics(body);
     return { status: 'partial', metrics, source_label: `Google Business Profile · ${location.title}`, period: { label: `Snapshot ${new Date().toISOString().slice(0, 10)}` }, reason: 'Joyleaf Google rating/count only. Competitor counts and star distribution remain historical, not refreshed.' };
   } catch (error) {
     return { status: 'failed', metrics: {}, reason: String(error.message || error).slice(0, 180) };
