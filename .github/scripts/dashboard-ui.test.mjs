@@ -118,8 +118,9 @@ test('Facebook and LinkedIn metric semantics survive expiry',() => {
   assert.equal(context.metricLabel('linkedin','reactions',statuses),'Likes');
   assert.match(context.metricText('linkedin','reactions',statuses,now),/2026-10-14 to 2026-11-10/);
   const rendered=context.createDashboard(fixture(),now);
-  assert.ok(rendered.includes('Earlier views and interactions baselines are not comparable.'));
-  assert.ok(rendered.includes('Likes count likes only, not all reaction types.'));
+  assert.ok(rendered.includes('Content impressions'));
+  assert.ok(rendered.includes('Post engagements'));
+  assert.ok(rendered.includes('Likes'));
 });
 
 test('Google review rating and count use actual verified measurements',() => {
@@ -155,15 +156,41 @@ test('no manual report means no retained Weedmaps metric card',() => {
   assert.ok(!context.createDashboard(d,now).includes('Weedmaps storefront'));
 });
 
-test('AI is compact, unmeasured, and contains only the three requested platforms',() => {
-  const rendered=context.createDashboard(fixture(),now);
-  assert.match(rendered,/<details class="ai-section" id="ai-search">/);
-  assert.ok(rendered.includes('ChatGPT, Claude and Gemini · Not yet measured'));
-  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,3);
+test('AI baseline uses actual dated answer evidence and leaves Claude untested',() => {
+  const rendered=context.renderAiBaseline(fixture().ai_search,now);
+  assert.match(rendered,/<section class="ai-section" id="ai-search"/);
+  assert.ok(rendered.includes('Manual baseline · Checked Nov 11, 2026'));
+  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,2);
+  assert.equal((rendered.match(/3 of 3<\/strong> tested answers named Joyleaf/g)||[]).length,2);
+  assert.ok(rendered.includes('Website linked in 2 of 3 answers.'));
+  assert.ok(rendered.includes('Website linked in 3 of 3 answers.'));
+  assert.ok(rendered.includes('Claude: not tested (sign-in required).'));
+  assert.ok(rendered.includes('independent ownership was not confirmed'));
+  assert.ok(rendered.includes('Website links were explicitly requested.'));
+  assert.ok(rendered.includes('These checks do not update automatically.'));
   assert.ok(!/manus/i.test(html));
-  assert.ok(!/3\s*\/\s*4/.test(rendered));
-  assert.ok(!rendered.includes('Mentioned'));
   assert.ok(!rendered.includes('#1'));
+  assert.ok(!rendered.includes('100%'));
+});
+
+test('AI answer counts must agree with all three unique completed prompt checks',() => {
+  const d=fixture().ai_search;
+  d.engines.find(x=>x.id==='chatgpt').brand_mentions=2;
+  let rendered=context.renderAiBaseline(d,now);
+  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,1);
+  d.engines.find(x=>x.id==='gemini').checks[1].prompt_id=d.engines.find(x=>x.id==='gemini').checks[0].prompt_id;
+  assert.equal(context.renderAiBaseline(d,now),'');
+  assert.equal(context.renderAiBaseline({...fixture().ai_search,collected_at:'2099-01-01'},now),'');
+  assert.equal(context.renderAiBaseline(undefined,now),'');
+});
+
+test('AI method is escaped, dated and not falsely refreshed with daily feeds',() => {
+  const d=fixture().ai_search;d.prompts[0].text='<img src=x onerror=alert(1)>';
+  const rendered=context.renderAiBaseline(d,now+40*86400000);
+  assert.ok(rendered.includes('&lt;img src=x onerror=alert(1)&gt;'));
+  assert.ok(!rendered.includes('<img src=x'));
+  assert.ok(rendered.includes('Checked Nov 11, 2026'));
+  assert.ok(rendered.includes('not a search ranking'));
 });
 
 test('unsupported metrics, raw errors, duplicate warnings and fabricated charts are absent',() => {
@@ -172,7 +199,12 @@ test('unsupported metrics, raw errors, duplicate warnings and fabricated charts 
   for(const excluded of ['Comparison unavailable','Chart withheld','RAW_ERROR_SHOULD_STAY_PRIVATE','data-metric="google.photo_views"','data-metric="instagram.reach"','data-metric="leafly.','data-metric="yelp.','SEO Health Score','Content Delivery']) assert.ok(!rendered.includes(excluded),excluded);
   assert.ok(!html.includes('<canvas'));
   assert.ok(!script.includes('new Chart('));
-  assert.match(rendered,/<details class="sources" id="sources">/);
+  assert.ok(!rendered.includes('Sources & reporting details'));
+  assert.ok(!rendered.includes('Last refresh attempt:'));
+  assert.ok(!rendered.includes('Last successful refresh: 2026-'));
+  assert.ok(!html.includes('href="#sources"'));
+  assert.ok(rendered.includes('Dates are shown beside each measure.'));
+  assert.ok(rendered.includes('Profile actions show customer interest. They are not confirmed store visits or sales.'));
 });
 
 test('top-content section stays hidden when no actual dataset exists',() => {

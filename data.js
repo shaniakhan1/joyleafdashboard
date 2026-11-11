@@ -229,13 +229,197 @@ const DASHBOARD_DATA = {
     "google_posts": "Weekly"
   },
   "ai_search": {
-    "platforms": [
-      "ChatGPT",
-      "Claude",
-      "Gemini"
+    "schema_version": 1,
+    "status": "partial",
+    "collected_at": "2026-11-11T17:11:30.200Z",
+    "checked_date": "2026-11-11",
+    "collection_method": "manual-browser-check",
+    "title": "AI answer presence baseline",
+    "prompts": [
+      {
+        "id": "local_roselle",
+        "kind": "discovery",
+        "text": "List cannabis dispensaries physically located in Roselle, New Jersey. Give each business name and official website. Use current public web sources."
+      },
+      {
+        "id": "nearby_roselle_park",
+        "kind": "discovery",
+        "text": "Which dispensary businesses serve Roselle Park, New Jersey? Give each business name and official website. Use current public web sources."
+      },
+      {
+        "id": "independent_union_county",
+        "kind": "discovery",
+        "text": "List independently owned cannabis dispensary businesses in Union County, New Jersey. Give each business name and official website. Use current public web sources."
+      },
+      {
+        "id": "branded_details",
+        "kind": "branded_accuracy",
+        "text": "What is the official website and street address of Joyleaf in Roselle, New Jersey? Use current public web sources."
+      }
     ],
-    "status": "awaiting_verified_audit",
-    "method": "Repeatable checks with recorded prompts, dates, location and answer evidence. Not part of the daily analytics feeds."
+    "method": {
+      "repetitions_per_prompt": 1,
+      "language": "English",
+      "geography": "Roselle, Roselle Park and Union County, New Jersey, explicitly named in each applicable prompt",
+      "fresh_conversation_per_prompt": true,
+      "web_sources_requested": true,
+      "metrics": {
+        "brand_mentions": "Number of completed nonbranded discovery answers naming Joyleaf or Joy Leaf and clearly identifying the Roselle business, including qualified mentions.",
+        "website_links": "Number of completed nonbranded discovery answers containing a direct link to joyleaf.com. Prompts explicitly request official websites.",
+        "branded_accuracy": "Separate website/address check; excluded from discovery counts."
+      },
+      "limitations": [
+        "One dated manual check of three local discovery prompts per accessible assistant, not a representative sample of all searches.",
+        "Mention counts include qualified mentions and do not mean a recommendation, endorsement or verified independent ownership.",
+        "Website links were requested in the prompts; this does not measure unsolicited citation frequency.",
+        "ChatGPT was logged out with its default model not identified by the interface. Gemini used Flash in temporary chats while signed in. Surfaces are not controlled equivalents.",
+        "No traffic, impressions, reach, market share, search volume, persistent ranking or growth is inferred.",
+        "No automation is active. Future comparisons must repeat the same prompt set and record surface/mode changes.",
+        "Outputs may contain errors about other businesses. This baseline records Joyleaf presence, not the correctness of each entire answer."
+      ]
+    },
+    "engines": [
+      {
+        "id": "chatgpt",
+        "name": "ChatGPT",
+        "status": "measured",
+        "surface": "Logged-out ChatGPT web app",
+        "model": "Default; version not shown",
+        "discovery_completed": 3,
+        "discovery_planned": 3,
+        "brand_mentions": 3,
+        "website_links": 2,
+        "checks": [
+          {
+            "prompt_id": "local_roselle",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "observed_joyleaf_address": "711 E 1st Ave, Roselle, NJ 07203",
+            "owned_urls": [
+              "https://joyleaf.com/",
+              "https://joyleaf.com/contact-us"
+            ],
+            "summary": "Joyleaf appeared in the Roselle list with its website and address."
+          },
+          {
+            "prompt_id": "nearby_roselle_park",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "summary": "Joyleaf appeared under nearby Roselle businesses serving Roselle Park, with a website link."
+          },
+          {
+            "prompt_id": "independent_union_county",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": false,
+            "owned_urls": [],
+            "summary": "Joy Leaf — Roselle appeared only under potentially independent businesses, outside the confirmed independent shortlist. The answer could not sufficiently verify independent ownership and official website details.",
+            "mention_qualification": "potentially_independent_not_verified"
+          },
+          {
+            "prompt_id": "branded_details",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "website_correct": true,
+            "address_correct": true,
+            "observed_joyleaf_address": "711 E 1st Ave, Roselle, NJ 07203",
+            "owned_urls": [
+              "https://joyleaf.com/",
+              "https://joyleaf.com/contact-us"
+            ],
+            "summary": "Returned the correct official website and Roselle street address."
+          }
+        ]
+      },
+      {
+        "id": "gemini",
+        "name": "Gemini",
+        "status": "measured",
+        "surface": "Signed-in Gemini web app, temporary chats",
+        "model": "Flash; version not shown",
+        "discovery_completed": 3,
+        "discovery_planned": 3,
+        "brand_mentions": 3,
+        "website_links": 3,
+        "checks": [
+          {
+            "prompt_id": "local_roselle",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "observed_joyleaf_address": "711 E 1st Ave, Roselle, NJ 07203",
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "summary": "Joyleaf appeared in the Roselle list with its website, address and joyleaf.com source citations."
+          },
+          {
+            "prompt_id": "nearby_roselle_park",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "summary": "Joyleaf appeared under nearby dispensaries serving Roselle Park with its website and joyleaf.com citations."
+          },
+          {
+            "prompt_id": "independent_union_county",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "summary": "Joyleaf appeared in the independent/local operator table with its website. The baseline does not independently verify the answer's ownership classification."
+          },
+          {
+            "prompt_id": "branded_details",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "website_correct": true,
+            "address_correct": true,
+            "observed_joyleaf_address": "711 E 1st Ave, Roselle, NJ 07203",
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "summary": "Returned the correct official website and Roselle street address."
+          }
+        ]
+      },
+      {
+        "id": "claude",
+        "name": "Claude",
+        "status": "blocked",
+        "surface": "Claude web app",
+        "model": null,
+        "discovery_completed": 0,
+        "discovery_planned": 3,
+        "brand_mentions": null,
+        "website_links": null,
+        "branded_accuracy": null,
+        "checks": [],
+        "blocker": "Sign-in required. No prompt submitted, account created, subscription purchased or zero-result measurement inferred."
+      }
+    ],
+    "branded_truth_source": {
+      "official_website": "https://joyleaf.com/",
+      "street_address": "711 E 1st Ave, Roselle, NJ 07203",
+      "verification_url": "https://joyleaf.com/contact-us",
+      "checked_date": "2026-11-11"
+    },
+    "ai_referral_traffic": {
+      "status": "not_connected",
+      "sessions": null,
+      "note": "Website visits are separate from answer presence. Joyleaf GA4 property access has not been verified."
+    }
   },
   "rankings": [
     {

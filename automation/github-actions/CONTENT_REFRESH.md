@@ -36,3 +36,11 @@ Current peer addresses: Budzooka, 142 Broad St, Elizabeth; Ayr, 2536 US-22, Unio
 ## Other sections
 
 The October Weedmaps Value Analytics export remains a dated report; daily jobs must preserve its import provenance without calling it live. Leafly and Yelp are not public live feeds. ChatGPT, Claude and Gemini visibility needs a separately evidenced repeatable audit; generated dashboard commentary is not an AI search measurement. Do not restore unsupported AI ranks or Manus.
+
+## AI answer presence baseline (November 11, 2026)
+
+The `ai_search` object now holds a real, dated manual consumer-app baseline: three fixed nonbranded discovery questions and one separate branded website/address accuracy check. ChatGPT named Joyleaf in 3/3 discovery answers and linked its website in 2/3. Gemini Flash named Joyleaf and linked its website in 3/3. One ChatGPT mention was qualified as potentially independent, outside its verified shortlist; the qualification is preserved explicitly. Claude required sign-in and was not tested, with null counts rather than zero.
+
+This is not a rank, audience estimate, traffic measure or continuous feed. The website links were explicitly requested. The logged-out ChatGPT and Gemini temporary-chat surfaces were different, and one response per prompt is a small sample. Future manual checks must retain exact prompts, timestamp, surface/model, one fresh conversation per prompt, per-answer outcomes and any qualifications. Counts must agree with the completed unique prompt checks. Keep the branded accuracy test separate from discovery counts. Do not let daily data refreshes change the baseline date or infer that automation is active. No paid monitoring tool or additional AI credential is configured by this baseline.
+
+The client page omits operational source/configuration panels. Keep source health in the machine-readable data for maintenance, while retaining relevant reporting dates, delayed-value labels and short measurement notes beside the visible metrics. Raw responses, account details and private chat/session links are not published.
