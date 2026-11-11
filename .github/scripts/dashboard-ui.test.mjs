@@ -14,7 +14,8 @@ const now = Date.parse('2026-11-12T00:00:00Z');
 const recent = new Date(now - 3600000).toISOString();
 const old = new Date(now - 37 * 3600000).toISOString();
 const period = {start_date:'2026-10-14',end_date:'2026-11-10'};
-const data = context.parseDashboardData(fs.readFileSync(new URL('../../data.js',import.meta.url),'utf8'));
+// Stable evidence fixture: daily production data must not change unit-test expectations.
+const data = JSON.parse(fs.readFileSync(new URL('./fixtures/client-report.json',import.meta.url),'utf8'));
 const fixture = () => JSON.parse(JSON.stringify(data));
 const metric = (status='fresh',time=recent) => ({status,last_success:time,period});
 
@@ -362,4 +363,12 @@ test('a blocked or future Claude check is not reported as zero or as a verified 
  rendered=context.renderAiBaseline(future,now);
  assert.ok(rendered.includes('Claude: result not verified.'));
  assert.ok(!rendered.includes('Website linked in 1 of 3 answers.'));
+});
+
+
+test('current production data remains parseable and renderable without fixed dates or counts',() => {
+ const production=context.parseDashboardData(fs.readFileSync(new URL('../../data.js',import.meta.url),'utf8'));
+ const rendered=context.createDashboard(production,Date.now()+60000);
+ assert.ok(rendered.includes('Your marketing, at a glance.'));
+ assert.ok(!rendered.includes('Sources & reporting details'));
 });
