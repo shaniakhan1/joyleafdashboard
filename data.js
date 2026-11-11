@@ -345,8 +345,8 @@ const DASHBOARD_DATA = {
     "version": 2,
     "cadence": "daily",
     "stale_after_hours": 36,
-    "last_attempt": "2026-11-11T16:23:08.309Z",
-    "last_success": "2026-11-11T16:23:08.309Z",
+    "last_attempt": "2026-11-11T16:25:31.962Z",
+    "last_success": "2026-11-11T16:25:31.962Z",
     "trigger": "deployment",
     "metrics_updated": 9,
     "updated_sources": [
@@ -362,11 +362,11 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-11-11T16:23:08.309Z",
+        "last_attempt": "2026-11-11T16:25:31.962Z",
         "metric_status": {
           "searches": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -376,7 +376,7 @@ const DASHBOARD_DATA = {
           },
           "direction_requests": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -386,7 +386,7 @@ const DASHBOARD_DATA = {
           },
           "phone_calls": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -396,7 +396,7 @@ const DASHBOARD_DATA = {
           },
           "website_clicks": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -455,7 +455,7 @@ const DASHBOARD_DATA = {
             }
           },
           {
-            "collected_at": "2026-11-11T16:23:08.309Z",
+            "collected_at": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -470,7 +470,7 @@ const DASHBOARD_DATA = {
             }
           }
         ],
-        "last_success": "2026-11-11T16:23:08.309Z",
+        "last_success": "2026-11-11T16:25:31.962Z",
         "period": {
           "start_date": "2026-10-12",
           "end_date": "2026-11-08",
@@ -689,8 +689,8 @@ const DASHBOARD_DATA = {
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-11-11T16:23:08.309Z",
-        "last_success": "2026-11-11T16:23:08.309Z",
+        "last_attempt": "2026-11-11T16:25:31.962Z",
+        "last_success": "2026-11-11T16:25:31.962Z",
         "snapshots": [
           {
             "collected_at": "2026-11-09T18:40:56.471Z",
@@ -721,7 +721,7 @@ const DASHBOARD_DATA = {
             }
           },
           {
-            "collected_at": "2026-11-11T16:23:08.309Z",
+            "collected_at": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-14",
               "end_date": "2026-11-10",
@@ -755,7 +755,7 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "views": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-14",
               "end_date": "2026-11-10",
@@ -765,14 +765,14 @@ const DASHBOARD_DATA = {
           },
           "subscribers": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "label": "Current snapshot 2026-11-11"
             }
           },
           "new_subs": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "start_date": "2026-10-14",
               "end_date": "2026-11-10",
@@ -862,7 +862,7 @@ const DASHBOARD_DATA = {
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-11-11T16:23:08.309Z",
+        "last_attempt": "2026-11-11T16:25:31.962Z",
         "metric_status": {
           "sessions": {
             "status": "stale"
@@ -913,7 +913,7 @@ const DASHBOARD_DATA = {
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-11-11T16:23:08.309Z",
+        "last_attempt": "2026-11-11T16:25:31.962Z",
         "metric_status": {
           "dispensary_clicks": {
             "status": "stale"
@@ -951,7 +951,7 @@ const DASHBOARD_DATA = {
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-11-11T16:23:08.309Z",
+        "last_attempt": "2026-11-11T16:25:31.962Z",
         "updated_metrics": [],
         "metric_status": {
           "impressions": {
@@ -978,7 +978,7 @@ const DASHBOARD_DATA = {
       },
       "reviews": {
         "status": "partial",
-        "last_attempt": "2026-11-11T16:23:08.309Z",
+        "last_attempt": "2026-11-11T16:25:31.962Z",
         "updated_metrics": [
           "rating",
           "joyleaf_count"
@@ -986,14 +986,14 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "rating": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "label": "Snapshot 2026-11-11"
             }
           },
           "joyleaf_count": {
             "status": "fresh",
-            "last_success": "2026-11-11T16:23:08.309Z",
+            "last_success": "2026-11-11T16:25:31.962Z",
             "period": {
               "label": "Snapshot 2026-11-11"
             }
@@ -1010,9 +1010,19 @@ const DASHBOARD_DATA = {
               "rating": 4.900000095367432,
               "joyleaf_count": 3220
             }
+          },
+          {
+            "collected_at": "2026-11-11T16:25:31.962Z",
+            "period": {
+              "label": "Snapshot 2026-11-11"
+            },
+            "metrics": {
+              "rating": 4.900000095367432,
+              "joyleaf_count": 3220
+            }
           }
         ],
-        "last_success": "2026-11-11T16:23:08.309Z",
+        "last_success": "2026-11-11T16:25:31.962Z",
         "period": {
           "label": "Snapshot 2026-11-11"
         },
