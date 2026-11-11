@@ -5,7 +5,7 @@ import assert from 'node:assert/strict';
 const html = fs.readFileSync(new URL('../../index.html', import.meta.url), 'utf8');
 const script = html.match(/<script>([\s\S]*?)<\/script>/)[1];
 new vm.Script(script);
-const functions = ['ageStatus','periodText','sourceFreshness','metricText','titleCase','escapeHtml','metricValue'].map(name => {
+const functions = ['ageStatus','periodText','sourceFreshness','metricText','titleCase','escapeHtml','metricValue','metricLabel'].map(name => {
  const start = script.indexOf(`function ${name}(`);
  let brace = script.indexOf('{', start), depth = 1, i = brace + 1;
  // Functions in this set have no unbalanced braces in string literals.
@@ -34,11 +34,27 @@ assert.equal(ctx.periodText(), 'Period not recorded');
 assert.equal(ctx.escapeHtml('<script>'), '&lt;script&gt;');
 assert.ok(!script.includes('D.period'));
 assert.ok(!script.includes('new Chart('));
-assert.ok(html.includes('GitHub Actions runs a daily refresh'));
+assert.ok(html.includes('Google and YouTube refresh daily through GitHub Actions; Instagram, Facebook and LinkedIn refresh daily through the connected Windsor publishing task.'));
 assert.ok(!html.includes('This gap is why Budzooka'));
 assert.ok(!html.includes('organic new customer acquisition'));
 assert.ok(html.includes("cache: 'no-store'"));
 assert.ok(html.includes('Data unavailable'));
 assert.ok(!html.includes('<script src="data.js">'));
 
-console.log('UI freshness regression: 22 assertions passed; renderer syntax valid.');
+assert.equal(ctx.metricLabel('facebook','views'),'Views (legacy baseline)');
+assert.equal(ctx.metricLabel('facebook','interactions'),'Interactions (legacy baseline)');
+assert.equal(ctx.metricLabel('linkedin','reactions'),'Reactions (legacy baseline)');
+ctx.sourceStatuses.facebook = {metric_status:{views:{provider_field:'page_impressions',status:'fresh',last_success:recent,period:{label:'Impressions period'}},interactions:{provider_field:'page_post_engagements',status:'fresh',last_success:recent,period:{label:'Engagement period'}}}};
+ctx.sourceStatuses.linkedin = {metric_status:{reactions:{provider_field:'account_analytics_like_count',status:'stale',last_success:old,period:{label:'Likes period'}}}};
+assert.equal(ctx.metricLabel('facebook','views'),'Content impressions');
+assert.equal(ctx.metricLabel('facebook','interactions'),'Post engagements');
+assert.equal(ctx.metricLabel('linkedin','reactions'),'Likes'); // Semantics survive expiry.
+assert.match(ctx.metricText('facebook','views'),/Impressions period/);
+assert.match(ctx.metricText('facebook','interactions'),/Engagement period/);
+assert.match(ctx.metricText('linkedin','reactions'),/^stale · Likes period/);
+assert.ok(script.includes('metricLabel(\'facebook\',\'views\')'));
+assert.ok(script.includes('metricLabel(\'facebook\',\'interactions\')'));
+assert.ok(script.includes('metricLabel(\'linkedin\',\'reactions\')'));
+assert.ok(html.includes('Earlier views and interactions baselines are not comparable.'));
+assert.ok(html.includes('Likes count likes only, not all reaction types.'));
+console.log('UI freshness regression: 36 assertions passed; renderer syntax valid.');

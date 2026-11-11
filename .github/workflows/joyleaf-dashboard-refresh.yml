@@ -31,6 +31,7 @@ jobs:
 
       - name: Collect provider metrics (AI insight remains weekly)
         env:
+          WINDSOR_API_KEY: ${{ secrets.WINDSOR_API_KEY }}
           JOYLEAF_SOURCE_CONFIG: ${{ secrets.JOYLEAF_SOURCE_CONFIG }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}

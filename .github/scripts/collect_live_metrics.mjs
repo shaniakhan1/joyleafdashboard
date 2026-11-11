@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import process from 'node:process';
 import vm from 'node:vm';
+import { fetchWindsorSource, windsorSources } from './windsor.mjs';
 import { finiteNumber, reportingPeriod, parseGoogleMetrics, googleMetricKeys } from './metrics.mjs';
 
 const [dataFile, payloadFile] = process.argv.slice(2);
@@ -258,6 +259,7 @@ async function fetchYouTubeSource() {
       status: metricCount === expectedCount ? 'success' : 'partial',
       metrics,
       period,
+      metric_periods: { subscribers: { label: `Current snapshot ${new Date().toISOString().slice(0, 10)}` } },
       source_label: 'Joyleaf YouTube channel',
       ...(metricCount === expectedCount ? {} : { reason: `Received ${metricCount} of ${expectedCount} mapped YouTube metrics.` })
     };
@@ -306,13 +308,19 @@ const config = parseConfig();
 const googleCredentialsConfigured = Boolean(process.env.GOOGLE_CLIENT_ID && process.env.GOOGLE_CLIENT_SECRET && process.env.GOOGLE_REFRESH_TOKEN);
 const sources = {};
 for (const sourceKey of Object.keys(fieldMap.sources)) {
+  if (windsorSources[sourceKey] && !config[sourceKey] && !process.env.WINDSOR_API_KEY && priorData.automation?.source_status?.[sourceKey]?.managed_by === 'windsor-connected-app') {
+    sources[sourceKey] = { preserve_external: true, metrics: {}, status: 'unavailable', reason: 'Updated independently by the daily connected Windsor publishing task; see each source timestamp.' };
+    continue;
+  }
   sources[sourceKey] = sourceKey === 'google' && googleCredentialsConfigured
     ? await fetchGoogleBusinessProfileSource()
     : sourceKey === 'youtube' && googleCredentialsConfigured
       ? await fetchYouTubeSource()
       : sourceKey === 'reviews' && googleCredentialsConfigured && !config.reviews
         ? await fetchGoogleReviewsSource()
-        : await fetchSource(sourceKey, config[sourceKey]);
+        : windsorSources[sourceKey] && !config[sourceKey]
+          ? await fetchWindsorSource(sourceKey, process.env.WINDSOR_API_KEY)
+          : await fetchSource(sourceKey, config[sourceKey]);
 }
 
 const freshCount = Object.values(sources).filter((source) => source.status === 'success' || source.status === 'partial').length;

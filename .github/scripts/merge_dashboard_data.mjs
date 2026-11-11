@@ -73,6 +73,11 @@ const staleSources = [];
 let updatedMetricCount = 0;
 
 for (const [sourceKey, config] of Object.entries(fieldMap.sources)) {
+  if ((payload?.meta?.snapshot_only && !payload?.sources?.[sourceKey]) || (payload?.sources?.[sourceKey]?.preserve_external && previousAutomation.source_status?.[sourceKey]?.managed_by === 'windsor-connected-app')) {
+    sourceStatus[sourceKey] = previousAutomation.source_status?.[sourceKey] || { status: 'stale' };
+    if (sourceStatus[sourceKey].status === 'stale') staleSources.push(sourceKey);
+    continue;
+  }
   const incomingSource = payload?.sources?.[sourceKey] || { status: 'unavailable', metrics: {}, reason: 'No source payload received.' };
   const status = isAllowedSourceStatus(incomingSource.status) ? incomingSource.status : 'failed';
   const metrics = incomingSource.metrics && typeof incomingSource.metrics === 'object' ? incomingSource.metrics : {};
@@ -89,7 +94,8 @@ for (const [sourceKey, config] of Object.entries(fieldMap.sources)) {
       target[metric] = metrics[metric];
       updatedMetrics.push(metric);
       updatedMetricCount += 1;
-      metricStatus[metric] = { status: 'fresh', last_success: now, ...(period ? { period } : {}) };
+      const metricPeriod = incomingSource.metric_periods?.[metric] || period;
+      metricStatus[metric] = { status: 'fresh', last_success: now, ...(metricPeriod ? { period: metricPeriod } : {}), ...(incomingSource.metric_fields?.[metric] ? { provider_field: sanitizeReason(incomingSource.metric_fields[metric]) } : {}) };
     } else {
       metricStatus[metric] = { ...priorMetric, status: priorMetric.status === 'invalid' ? 'invalid' : 'stale' };
     }
@@ -107,7 +113,7 @@ for (const [sourceKey, config] of Object.entries(fieldMap.sources)) {
   // Keep legacy monthly arrays unchanged. Rolling 28-day totals are not calendar-month observations.
   if (updatedMetrics.length) {
     const snapshots = Array.isArray(previous.snapshots) ? previous.snapshots : [];
-    const snapshot = { collected_at: now, ...(period ? { period } : {}), metrics: Object.fromEntries(updatedMetrics.map(key => [key, metrics[key]])) };
+    const snapshot = { collected_at: now, ...(period ? { period } : {}), ...(incomingSource.metric_periods ? { metric_periods: incomingSource.metric_periods } : {}), ...(incomingSource.metric_fields ? { metric_fields: incomingSource.metric_fields } : {}), metrics: Object.fromEntries(updatedMetrics.map(key => [key, metrics[key]])) };
     const samePeriod = old => period?.end_date && old.period?.end_date === period.end_date;
     previous.snapshots = [...snapshots.filter(old => !samePeriod(old)), snapshot].slice(-35);
   }
@@ -120,6 +126,7 @@ for (const [sourceKey, config] of Object.entries(fieldMap.sources)) {
     last_attempt: now,
     ...(updatedMetrics.length ? { last_success: now, ...(period ? { period } : {}) } : {}),
     ...(incomingSource.source_label ? { source_label: sanitizeReason(incomingSource.source_label) } : {}),
+    ...(incomingSource.managed_by === 'windsor-connected-app' ? { managed_by: incomingSource.managed_by } : {}),
     updated_metrics: updatedMetrics,
     authorization_blocked: Boolean(incomingSource.authorization_blocked),
     metric_status: metricStatus

@@ -518,7 +518,7 @@ body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min
     <div class="footer-note">
       <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Existing dashboard delivery remains unchanged</p>
       <p style="margin-top:0.3rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly Business, Weedmaps, Yelp Business, YouTube Studio, LinkedIn Analytics &middot; Unavailable or failed sources retain their last known values and are marked stale.</p>
-      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">GitHub Actions runs a daily refresh; generated insights are scheduled weekly. A successful workflow does not mean every source refreshed. See source and metric status above.</p>
+      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">Google and YouTube refresh daily through GitHub Actions; Instagram, Facebook and LinkedIn refresh daily through the connected Windsor publishing task. Provider data may lag. See source and metric status above.</p>
     </div>
 
   </div>
@@ -623,6 +623,15 @@ function sourceText(source) {
   const meta = sourceStatuses[source] || {};
   return `${titleCase(source)}${meta.source_label ? ' (' + meta.source_label + ')' : ''}: ${sourceFreshness(source)} · ${periodText(meta.period)} · Last success: ${meta.last_success || 'not recorded'}`;
 }
+// Legacy storage keys are not always the provider's metric definition.
+function metricLabel(source, key) {
+  const metric = sourceStatuses[source]?.metric_status?.[key];
+  const field = metric?.provider_field;
+  if (source === 'facebook' && key === 'views') return field === 'page_impressions' ? 'Content impressions' : 'Views (legacy baseline)';
+  if (source === 'facebook' && key === 'interactions') return field === 'page_post_engagements' ? 'Post engagements' : 'Interactions (legacy baseline)';
+  if (source === 'linkedin' && key === 'reactions') return field === 'account_analytics_like_count' ? 'Likes' : 'Reactions (legacy baseline)';
+  return titleCase(key);
+}
 function metricText(source, key) {
   const meta = sourceStatuses[source] || {};
   const metric = meta.metric_status?.[key];
@@ -656,7 +665,7 @@ health.className = 'card mb';
 health.id = 'source-health';
 health.innerHTML = `<div class="card-header"><div><h3>Source health and reporting periods</h3><p>Daily feeds expire after 36 hours. Provider reporting may lag; this is not real-time data. Partial sources include retained fields. Refresh date is not the measurement period.</p></div></div><div class="card-body"><p class="freshness-note">Last refresh attempt: ${escapeHtml(automation.last_attempt || 'not recorded')}. Comparisons and historical charts are withheld until dated, comparable observations are available.</p><div class="grid-3">${sourceKeys.map(source => {
   const meta = sourceStatuses[source] || {};
-  return `<article class="platform-mini"><h4>${escapeHtml(titleCase(source))} · ${sourceFreshness(source)}</h4><p>${escapeHtml(meta.source_label || titleCase(source))}</p><p>${escapeHtml(periodText(meta.period))}</p><p>Last success: ${escapeHtml(meta.last_success || 'not recorded')}</p><p>Last attempt: ${escapeHtml(meta.last_attempt || 'not recorded')}</p><p>${escapeHtml(meta.reason || (sourceFreshness(source) === 'stale' ? 'No recent verified refresh.' : 'See field-level coverage below.'))}</p><details><summary>Metric coverage</summary>${Object.keys(D[source] || {}).filter(key => !Array.isArray(D[source][key])).map(key => `<p><strong>${escapeHtml(titleCase(key))}:</strong> ${escapeHtml(metricText(source,key))}</p>`).join('')}</details></article>`;
+  return `<article class="platform-mini"><h4>${escapeHtml(titleCase(source))} · ${sourceFreshness(source)}</h4><p>${escapeHtml(meta.source_label || titleCase(source))}</p><p>${escapeHtml(periodText(meta.period))}</p><p>Last success: ${escapeHtml(meta.last_success || 'not recorded')}</p><p>Last attempt: ${escapeHtml(meta.last_attempt || 'not recorded')}</p><p>${escapeHtml(meta.reason || (sourceFreshness(source) === 'stale' ? 'No recent verified refresh.' : 'See field-level coverage below.'))}</p><details><summary>Metric coverage</summary>${Object.keys(D[source] || {}).filter(key => !Array.isArray(D[source][key])).map(key => `<p><strong>${escapeHtml(metricLabel(source,key))}:</strong> ${escapeHtml(metricText(source,key))}</p>`).join('')}</details></article>`;
 }).join('')}</div></div>`;
 document.querySelector('.content').prepend(health);
 
@@ -812,9 +821,9 @@ document.getElementById('ig-insight-text').textContent = 'Views and reach do not
 // ---- FACEBOOK CHART ----
 
 document.getElementById('fb-stats-grid').innerHTML = [
-  ['Views', fmt(D.facebook.views), `+${D.facebook.views_change}%`],
+  [metricLabel('facebook','views'), fmt(metricValue('facebook','views')), `+${D.facebook.views_change}%`],
   ['Page Visits', D.facebook.page_visits, `+${D.facebook.page_visits_change}%`],
-  ['Interactions', D.facebook.interactions, `+${D.facebook.interactions_change}%`],
+  [metricLabel('facebook','interactions'), fmt(metricValue('facebook','interactions')), `+${D.facebook.interactions_change}%`],
   ['New Follows', `+${D.facebook.new_follows}`, `+${D.facebook.follows_change}%`]
 ].map(s => `
   <div style="background:#f0f4ff;border-radius:8px;padding:0.6rem;border:1px solid #bfdbfe">
@@ -833,7 +842,7 @@ document.getElementById('yt-li-grid').innerHTML = `
   <div style="background:#f0f4ff;border-radius:10px;padding:0.85rem;border:1px solid #bfdbfe">
     <div style="font-size:0.7rem;font-weight:700;color:#1d4ed8;margin-bottom:0.5rem">👥 LinkedIn</div>
     <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Impressions: <strong>${D.linkedin.impressions}</strong></div>
-    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Reactions: <strong>${D.linkedin.reactions}</strong></div>
+    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">${escapeHtml(metricLabel('linkedin','reactions'))}: <strong>${fmt(metricValue('linkedin','reactions'))}</strong></div>
     <div style="font-size:0.75rem;color:var(--text-soft)">Followers: <strong>${D.linkedin.followers}</strong></div>
     <p style="font-size:0.65rem;color:#1e40af;margin-top:0.5rem;font-style:italic">B2B audience. Cannabis restrictions apply.</p>
   </div>`;
@@ -945,7 +954,7 @@ document.getElementById('searches-chg-big').textContent='Comparison unavailable'
 ['chart-searches','chart-seo-score','chart-ig-views','chart-fb-views','chart-reviews','chart-competitors'].forEach(id => {
  const wrap=document.getElementById(id).parentElement;
  wrap.style.height='auto';
- wrap.textContent='Chart withheld: dated, comparable observations are not verified.';
+ wrap.textContent='Chart withheld: dated, comparable observations are not verified. Legacy baselines may use different metric definitions.';
  wrap.classList.add('freshness-note');
 });
 function labelRows(id,source,keys) {
@@ -955,6 +964,7 @@ function labelRows(id,source,keys) {
 labelRows('google-actions-wrap','google',['direction_requests','phone_calls','website_clicks','photo_views']);
 labelRows('ig-stats-grid','instagram',['views','reach','interactions','new_follows']);
 labelRows('fb-stats-grid','facebook',['views','page_visits','interactions','new_follows']);
+note(document.getElementById('fb-stats-grid').parentElement, 'Content impressions and post engagements use provider definitions. Earlier views and interactions baselines are not comparable.');
 ['ig-stats-grid','fb-stats-grid'].forEach(id => Array.from(document.getElementById(id).children).forEach(row => {row.lastElementChild.textContent='Comparison unavailable';row.lastElementChild.style.color='#666';}));
 const listingSources=['google','leafly','weedmaps','yelp'];
 const listingKeys=[['searches','direction_requests','phone_calls','photo_views',null],['sessions','reviews','orders','deal_orders','gmv'],['dispensary_clicks','listing_visitors','delivery_clicks','contact_clicks','gmv'],['impressions','page_visits','leads','website_visits','direction_views']];
@@ -964,6 +974,7 @@ Array.from(document.getElementById('listings-grid').children).forEach((card,i)=>
 });
 Array.from(document.getElementById('yt-li-grid').children).forEach((card,i)=>{
  const source=i===0?'youtube':'linkedin'; note(card,sourceText(source));
+ if (source === 'linkedin') note(card,'Likes count likes only, not all reaction types. Earlier reactions baselines are not comparable.');
  const keys=i===0?['views','subscribers','new_subs']:['impressions','reactions','followers'];
  Array.from(card.querySelectorAll('div')).filter(el=>el.querySelector('strong')).forEach((row,j)=>note(row,metricText(source,keys[j])));
 });

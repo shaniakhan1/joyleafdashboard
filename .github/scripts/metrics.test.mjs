@@ -65,7 +65,7 @@ test('no-credential collection fails closed and does not call providers', () => 
   const dir = fs.mkdtempSync(path.join(os.tmpdir(), 'joyleaf-collector-'));
   try {
     const file = path.join(dir, 'payload.json');
-    const env = { ...process.env, GOOGLE_CLIENT_ID: '', GOOGLE_CLIENT_SECRET: '', GOOGLE_REFRESH_TOKEN: '', JOYLEAF_SOURCE_CONFIG: '', OPENAI_API_KEY: '' };
+    const env = { ...process.env, WINDSOR_API_KEY: '', GOOGLE_CLIENT_ID: '', GOOGLE_CLIENT_SECRET: '', GOOGLE_REFRESH_TOKEN: '', JOYLEAF_SOURCE_CONFIG: '', OPENAI_API_KEY: '' };
     execFileSync(process.execPath, [path.join(root, '.github/scripts/collect_live_metrics.mjs'), path.join(root, 'data.js'), file], { env });
     const payload = JSON.parse(fs.readFileSync(file));
     assert.equal(payload.meta.fresh_sources, 0);
