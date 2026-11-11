@@ -10,13 +10,13 @@ const DASHBOARD_DATA = {
     "month": "November 2026"
   },
   "google": {
-    "searches": 19126,
+    "searches": 19752,
     "searches_change": null,
     "direction_requests": 1448,
     "direction_change": null,
     "phone_calls": 218,
     "phone_change": null,
-    "website_clicks": 5123,
+    "website_clicks": 5310,
     "website_change": null,
     "photo_views": 8400,
     "photo_change": null,
@@ -186,7 +186,7 @@ const DASHBOARD_DATA = {
     "four_star_pct": 14,
     "three_star_pct": 5,
     "one_two_star_pct": 3,
-    "joyleaf_count": 3220,
+    "joyleaf_count": 3221,
     "budzooka_count": 4627,
     "breakwater_count": 400,
     "botera_count": 180,
@@ -580,9 +580,9 @@ const DASHBOARD_DATA = {
     "version": 2,
     "cadence": "daily",
     "stale_after_hours": 36,
-    "last_attempt": "2026-11-11T17:45:04.908Z",
-    "last_success": "2026-11-11T17:45:04.908Z",
-    "trigger": "deployment",
+    "last_attempt": "2026-11-11T20:12:36.433Z",
+    "last_success": "2026-11-11T20:12:36.433Z",
+    "trigger": "daily",
     "metrics_updated": 9,
     "updated_sources": [
       "google",
@@ -597,11 +597,11 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-11-11T17:45:04.908Z",
+        "last_attempt": "2026-11-11T20:12:36.433Z",
         "metric_status": {
           "searches": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -611,7 +611,7 @@ const DASHBOARD_DATA = {
           },
           "direction_requests": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -621,7 +621,7 @@ const DASHBOARD_DATA = {
           },
           "phone_calls": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -631,7 +631,7 @@ const DASHBOARD_DATA = {
           },
           "website_clicks": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -690,7 +690,7 @@ const DASHBOARD_DATA = {
             }
           },
           {
-            "collected_at": "2026-11-11T17:45:04.908Z",
+            "collected_at": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-12",
               "end_date": "2026-11-08",
@@ -698,14 +698,14 @@ const DASHBOARD_DATA = {
               "month": "November 2026"
             },
             "metrics": {
-              "searches": 19126,
+              "searches": 19752,
               "direction_requests": 1448,
               "phone_calls": 218,
-              "website_clicks": 5123
+              "website_clicks": 5310
             }
           }
         ],
-        "last_success": "2026-11-11T17:45:04.908Z",
+        "last_success": "2026-11-11T20:12:36.433Z",
         "period": {
           "start_date": "2026-10-12",
           "end_date": "2026-11-08",
@@ -924,8 +924,8 @@ const DASHBOARD_DATA = {
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-11-11T17:45:04.908Z",
-        "last_success": "2026-11-11T17:45:04.908Z",
+        "last_attempt": "2026-11-11T20:12:36.433Z",
+        "last_success": "2026-11-11T20:12:36.433Z",
         "snapshots": [
           {
             "collected_at": "2026-11-09T18:40:56.471Z",
@@ -956,7 +956,7 @@ const DASHBOARD_DATA = {
             }
           },
           {
-            "collected_at": "2026-11-11T17:45:04.908Z",
+            "collected_at": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-14",
               "end_date": "2026-11-10",
@@ -990,7 +990,7 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "views": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-14",
               "end_date": "2026-11-10",
@@ -1000,14 +1000,14 @@ const DASHBOARD_DATA = {
           },
           "subscribers": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "label": "Current snapshot 2026-11-11"
             }
           },
           "new_subs": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "start_date": "2026-10-14",
               "end_date": "2026-11-10",
@@ -1097,7 +1097,7 @@ const DASHBOARD_DATA = {
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-11-11T17:45:04.908Z",
+        "last_attempt": "2026-11-11T20:12:36.433Z",
         "metric_status": {
           "sessions": {
             "status": "stale"
@@ -1148,7 +1148,7 @@ const DASHBOARD_DATA = {
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-11-11T17:45:04.908Z",
+        "last_attempt": "2026-11-11T20:12:36.433Z",
         "metric_status": {
           "dispensary_clicks": {
             "status": "stale"
@@ -1235,7 +1235,7 @@ const DASHBOARD_DATA = {
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-11-11T17:45:04.908Z",
+        "last_attempt": "2026-11-11T20:12:36.433Z",
         "updated_metrics": [],
         "metric_status": {
           "impressions": {
@@ -1262,7 +1262,7 @@ const DASHBOARD_DATA = {
       },
       "reviews": {
         "status": "partial",
-        "last_attempt": "2026-11-11T17:45:04.908Z",
+        "last_attempt": "2026-11-11T20:12:36.433Z",
         "updated_metrics": [
           "rating",
           "joyleaf_count"
@@ -1270,14 +1270,14 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "rating": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "label": "Snapshot 2026-11-11"
             }
           },
           "joyleaf_count": {
             "status": "fresh",
-            "last_success": "2026-11-11T17:45:04.908Z",
+            "last_success": "2026-11-11T20:12:36.433Z",
             "period": {
               "label": "Snapshot 2026-11-11"
             }
@@ -1354,9 +1354,19 @@ const DASHBOARD_DATA = {
               "rating": 4.900000095367432,
               "joyleaf_count": 3220
             }
+          },
+          {
+            "collected_at": "2026-11-11T20:12:36.433Z",
+            "period": {
+              "label": "Snapshot 2026-11-11"
+            },
+            "metrics": {
+              "rating": 4.900000095367432,
+              "joyleaf_count": 3221
+            }
           }
         ],
-        "last_success": "2026-11-11T17:45:04.908Z",
+        "last_success": "2026-11-11T20:12:36.433Z",
         "period": {
           "label": "Snapshot 2026-11-11"
         },
