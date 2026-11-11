@@ -156,15 +156,19 @@ test('no manual report means no retained Weedmaps metric card',() => {
   assert.ok(!context.createDashboard(d,now).includes('Weedmaps storefront'));
 });
 
-test('AI baseline uses actual dated answer evidence and leaves Claude untested',() => {
+test('AI baseline uses actual dated answer evidence for all three assistants',() => {
   const rendered=context.renderAiBaseline(fixture().ai_search,now);
   assert.match(rendered,/<section class="ai-section" id="ai-search"/);
   assert.ok(rendered.includes('Manual baseline · Checked Nov 11, 2026'));
-  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,2);
-  assert.equal((rendered.match(/3 of 3<\/strong> tested answers named Joyleaf/g)||[]).length,2);
+  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,3);
+  assert.equal((rendered.match(/3 of 3<\/strong> tested answers named Joyleaf/g)||[]).length,3);
   assert.ok(rendered.includes('Website linked in 2 of 3 answers.'));
   assert.ok(rendered.includes('Website linked in 3 of 3 answers.'));
-  assert.ok(rendered.includes('Claude: not tested (sign-in required).'));
+  assert.ok(rendered.includes('Website linked in 1 of 3 answers.'));
+  assert.ok(!rendered.includes('Claude: not tested'));
+  assert.ok(rendered.includes('Two mentions were qualified'));
+  assert.ok(rendered.includes('Website and address details came from secondhand sources'));
+  assert.ok(rendered.includes('Sonnet 5.5 Medium'));
   assert.ok(rendered.includes('independent ownership was not confirmed'));
   assert.ok(rendered.includes('Website links were explicitly requested.'));
   assert.ok(rendered.includes('These checks do not update automatically.'));
@@ -177,8 +181,9 @@ test('AI answer counts must agree with all three unique completed prompt checks'
   const d=fixture().ai_search;
   d.engines.find(x=>x.id==='chatgpt').brand_mentions=2;
   let rendered=context.renderAiBaseline(d,now);
-  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,1);
+  assert.equal((rendered.match(/class="ai-card"/g)||[]).length,2);
   d.engines.find(x=>x.id==='gemini').checks[1].prompt_id=d.engines.find(x=>x.id==='gemini').checks[0].prompt_id;
+  d.engines.find(x=>x.id==='claude').collected_at='2099-01-01';
   assert.equal(context.renderAiBaseline(d,now),'');
   assert.equal(context.renderAiBaseline({...fixture().ai_search,collected_at:'2099-01-01'},now),'');
   assert.equal(context.renderAiBaseline(undefined,now),'');
@@ -344,4 +349,17 @@ test('benchmark links are exact Google Maps CID URLs and peer names are escaped'
   assert.ok(rendered.includes('&lt;script&gt;alert(1)&lt;/script&gt;'));
   assert.ok(!rendered.includes('<script>'));
   assert.equal((rendered.match(/cid=10489408539509163036/g)||[]).length,1);
+});
+
+test('a blocked or future Claude check is not reported as zero or as a verified result',() => {
+ const audit=fixture().ai_search,claude=audit.engines.find(engine=>engine.id==='claude');
+ claude.status='blocked';claude.brand_mentions=null;claude.website_links=null;claude.checks=[];
+ let rendered=context.renderAiBaseline(audit,now);
+ assert.equal((rendered.match(/class="ai-card"/g)||[]).length,2);
+ assert.ok(rendered.includes('Claude: not tested (sign-in required).'));
+ assert.ok(!rendered.includes('0 of 3'));
+ const future=fixture().ai_search;future.engines.find(engine=>engine.id==='claude').collected_at='2099-01-01';
+ rendered=context.renderAiBaseline(future,now);
+ assert.ok(rendered.includes('Claude: result not verified.'));
+ assert.ok(!rendered.includes('Website linked in 1 of 3 answers.'));
 });

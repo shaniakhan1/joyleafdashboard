@@ -230,7 +230,7 @@ const DASHBOARD_DATA = {
   },
   "ai_search": {
     "schema_version": 1,
-    "status": "partial",
+    "status": "measured",
     "collected_at": "2026-11-11T17:11:30.200Z",
     "checked_date": "2026-11-11",
     "collection_method": "manual-browser-check",
@@ -272,10 +272,11 @@ const DASHBOARD_DATA = {
         "One dated manual check of three local discovery prompts per accessible assistant, not a representative sample of all searches.",
         "Mention counts include qualified mentions and do not mean a recommendation, endorsement or verified independent ownership.",
         "Website links were requested in the prompts; this does not measure unsolicited citation frequency.",
-        "ChatGPT was logged out with its default model not identified by the interface. Gemini used Flash in temporary chats while signed in. Surfaces are not controlled equivalents.",
+        "ChatGPT was logged out with its default model not identified by the interface. Gemini used Flash in temporary chats while signed in. Claude used Sonnet 5.5 Medium in fresh incognito chats while signed in on its free plan. These surfaces are not controlled equivalents.",
         "No traffic, impressions, reach, market share, search volume, persistent ranking or growth is inferred.",
         "No automation is active. Future comparisons must repeat the same prompt set and record surface/mode changes.",
-        "Outputs may contain errors about other businesses. This baseline records Joyleaf presence, not the correctness of each entire answer."
+        "Outputs may contain errors about other businesses. This baseline records Joyleaf presence, not the correctness of each entire answer.",
+        "Claude's three discovery mentions include two qualified mentions where it could not verify Joyleaf's official website; its county query did not confirm independent ownership. Its branded website/address answer was correct but based on secondhand sources."
       ]
     },
     "engines": [
@@ -397,16 +398,66 @@ const DASHBOARD_DATA = {
       {
         "id": "claude",
         "name": "Claude",
-        "status": "blocked",
-        "surface": "Claude web app",
-        "model": null,
-        "discovery_completed": 0,
+        "status": "measured",
+        "surface": "Signed-in Claude web app, fresh incognito chats",
+        "model": "Sonnet 5.5 Medium",
+        "checked_date": "2026-11-11",
         "discovery_planned": 3,
-        "brand_mentions": null,
-        "website_links": null,
-        "branded_accuracy": null,
-        "checks": [],
-        "blocker": "Sign-in required. No prompt submitted, account created, subscription purchased or zero-result measurement inferred."
+        "discovery_completed": 3,
+        "checks": [
+          {
+            "prompt_id": "local_roselle",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "observed_joyleaf_address": "711 E 1st Ave, Roselle, NJ 07203",
+            "summary": "Named Joyleaf and linked joyleaf.com. Explicitly said its website identification was secondhand and that it had not opened Joyleaf's own site. Do not treat its full list as independently verified.",
+            "evidence_basis": "secondhand_sources"
+          },
+          {
+            "prompt_id": "nearby_roselle_park",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": false,
+            "owned_urls": [],
+            "summary": "Mentioned neighboring Roselle has Joyleaf, but said it had not found its official website and could not confirm delivery to Roselle Park. This is a qualified mention, not a confirmed service recommendation.",
+            "mention_qualification": "neighboring_business_service_unconfirmed"
+          },
+          {
+            "prompt_id": "independent_union_county",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": false,
+            "owned_urls": [],
+            "summary": "Listed Joy Leaf (Roselle) under licensed businesses whose ownership and official websites it could not verify, outside the confirmed independent shortlist. This is a qualified mention.",
+            "mention_qualification": "potentially_independent_not_verified"
+          },
+          {
+            "prompt_id": "branded_details",
+            "status": "completed",
+            "brand_mentioned": true,
+            "website_linked": true,
+            "website_correct": true,
+            "address_correct": true,
+            "observed_joyleaf_address": "711 East 1st Avenue, Roselle, NJ 07203",
+            "owned_urls": [
+              "https://joyleaf.com/"
+            ],
+            "summary": "Returned the correct official website and equivalent Roselle street address. Explicitly said it used news coverage/company directories and did not open Joyleaf's site.",
+            "evidence_basis": "secondhand_sources"
+          }
+        ],
+        "brand_mentions": 3,
+        "website_links": 1,
+        "collected_at": "2026-11-11T17:39:14.466Z",
+        "branded_accuracy": {
+          "website_correct": true,
+          "address_correct": true,
+          "note": "Matches the official-site truth source; Claude itself relied on secondhand sources."
+        }
       }
     ],
     "branded_truth_source": {
@@ -419,7 +470,9 @@ const DASHBOARD_DATA = {
       "status": "not_connected",
       "sessions": null,
       "note": "Website visits are separate from answer presence. Joyleaf GA4 property access has not been verified."
-    }
+    },
+    "updated_at": "2026-11-11T17:39:14.466Z",
+    "original_collected_at": "2026-11-11T17:11:30.200Z"
   },
   "rankings": [
     {
