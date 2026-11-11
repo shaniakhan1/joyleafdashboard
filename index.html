@@ -3,1002 +3,240 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Joyleaf Marketing Dashboard | FLP Marketing Group</title>
-<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=DM+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-
-
+<meta name="theme-color" content="#32133e">
+<title>Joyleaf Performance | FLP Marketing Group</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-:root{
-  --purple:#7B2D8B;--purple-dark:#5a1f68;--purple-deep:#2d0f3d;
-  --purple-light:#f5f0fc;--cream:#F5F0E8;--gold:#D4A843;
-  --white:#ffffff;--text:#0a0a0a;--text-soft:#666;
-  --green:#16a34a;--green-light:#dcfce7;--red:#dc2626;
-  --red-light:#fee2e2;--border:#ede8f5;--bg:#f8f5fc;
-  --card-shadow:0 2px 12px rgba(123,45,139,0.06);
-}
-*{margin:0;padding:0;box-sizing:border-box}
-html{scroll-behavior:smooth}
-body{font-family:"DM Sans",sans-serif;background:var(--bg);color:var(--text);min-height:100vh}
-
-/* SIDEBAR */
-.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:var(--purple-deep);display:flex;flex-direction:column;z-index:100}
-.sidebar-logo{padding:1.25rem 1rem;border-bottom:1px solid rgba(255,255,255,0.08);display:flex;align-items:center;gap:0.6rem}
-.sidebar-logo-wordmark{color:white;font-family:"Bebas Neue",sans-serif;font-size:1.3rem;letter-spacing:0.05em;line-height:1}
-.sidebar-logo-sub{color:rgba(255,255,255,0.4);font-size:0.62rem;letter-spacing:0.1em;text-transform:uppercase}
-.sidebar-section{padding:1.25rem 1rem 0.4rem;color:rgba(255,255,255,0.25);font-size:0.62rem;letter-spacing:0.12em;text-transform:uppercase;font-weight:700}
-.sidebar-nav{list-style:none;padding:0 0.6rem}
-.sidebar-nav li a{display:flex;align-items:center;gap:0.6rem;padding:0.55rem 0.7rem;border-radius:8px;color:rgba(255,255,255,0.55);text-decoration:none;font-size:0.8rem;font-weight:500;transition:all 0.15s;margin-bottom:0.1rem}
-.sidebar-nav li a:hover{background:rgba(255,255,255,0.07);color:white}
-.sidebar-nav li a.active{background:var(--purple);color:white}
-.sidebar-nav li a .icon{font-size:0.9rem;width:18px;text-align:center;flex-shrink:0}
-.sidebar-footer{margin-top:auto;padding:1rem;border-top:1px solid rgba(255,255,255,0.08)}
-.sidebar-footer p{color:rgba(255,255,255,0.25);font-size:0.68rem;line-height:1.7}
-.sidebar-footer strong{color:rgba(255,255,255,0.5)}
-
-/* MAIN */
-.main{margin-left:220px;min-height:100vh}
-.topbar{background:white;border-bottom:1px solid var(--border);padding:0 1.75rem;height:60px;display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:50;box-shadow:var(--card-shadow)}
-.topbar-left h1{font-family:"Bebas Neue",sans-serif;font-size:1.45rem;letter-spacing:0.04em;color:var(--text)}
-.topbar-left p{font-size:0.72rem;color:var(--text-soft);margin-top:-2px}
-.topbar-right{display:flex;align-items:center;gap:0.75rem}
-.date-badge{background:var(--purple-light);color:var(--purple);padding:0.35rem 0.85rem;border-radius:50px;font-size:0.75rem;font-weight:600;border:1px solid rgba(123,45,139,0.12)}
-.update-badge{display:flex;align-items:center;gap:0.35rem;background:#f0fdf4;color:var(--green);padding:0.35rem 0.85rem;border-radius:50px;font-size:0.75rem;font-weight:700;border:1px solid #bbf7d0}
-.update-dot{width:6px;height:6px;background:var(--green);border-radius:50%;animation:pulse 2s infinite}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
-
-/* CONTENT */
-.content{padding:1.5rem}
-
-/* SCORECARDS */
-.scorecards{display:grid;grid-template-columns:repeat(6,1fr);gap:0.85rem;margin-bottom:1.5rem}
-.scorecard{background:white;border-radius:14px;padding:1.1rem 1rem 0.9rem;border:1px solid var(--border);box-shadow:var(--card-shadow);transition:transform 0.2s,box-shadow 0.2s;animation:fadeUp 0.4s ease both}
-.scorecard:hover{transform:translateY(-2px);box-shadow:0 8px 20px rgba(123,45,139,0.1)}
-.sc-icon{font-size:1.2rem;margin-bottom:0.5rem;display:block}
-.sc-value{font-family:"Bebas Neue",sans-serif;font-size:1.9rem;letter-spacing:0.02em;line-height:1;margin-bottom:0.2rem}
-.sc-label{font-size:0.67rem;color:var(--text-soft);font-weight:600;text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.4rem}
-.sc-change{font-size:0.72rem;font-weight:700}
-.up{color:var(--green)}.down{color:var(--red)}.neutral{color:var(--gold)}
-
-/* SECTION HEADER */
-.section-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:0.85rem;margin-top:0.5rem}
-.section-header h2{font-family:"Bebas Neue",sans-serif;font-size:1.25rem;letter-spacing:0.04em}
-.section-header p{font-size:0.72rem;color:var(--text-soft)}
-.tag{display:inline-block;padding:0.22rem 0.6rem;border-radius:50px;font-size:0.65rem;font-weight:700;letter-spacing:0.05em;text-transform:uppercase}
-.tag-purple{background:var(--purple-light);color:var(--purple);border:1px solid rgba(123,45,139,0.12)}
-.tag-green{background:var(--green-light);color:var(--green);border:1px solid #bbf7d0}
-.tag-gold{background:#fefce8;color:#92400e;border:1px solid #fde68a}
-.tag-red{background:var(--red-light);color:var(--red);border:1px solid #fecaca}
-
-/* CARDS */
-.card{background:white;border-radius:14px;border:1px solid var(--border);box-shadow:var(--card-shadow);overflow:hidden;animation:fadeUp 0.5s ease both}
-.card-header{padding:1rem 1.25rem 0.75rem;border-bottom:1px solid var(--border);display:flex;align-items:flex-start;justify-content:space-between;gap:0.5rem}
-.card-header h3{font-size:0.85rem;font-weight:700;color:var(--text);line-height:1.3}
-.card-header p{font-size:0.7rem;color:var(--text-soft);margin-top:2px}
-.card-body{padding:1.1rem 1.25rem}
-
-/* GRIDS */
-.grid-2{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1rem}
-.grid-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem;margin-bottom:1rem}
-.grid-4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:1rem;margin-bottom:1rem}
-.grid-13{display:grid;grid-template-columns:1fr 2fr;gap:1rem;margin-bottom:1rem}
-.grid-31{display:grid;grid-template-columns:2fr 1fr;gap:1rem;margin-bottom:1rem}
-.mb{margin-bottom:1rem}
-
-/* STAT ROWS */
-.stat-row{display:flex;align-items:center;justify-content:space-between;padding:0.65rem 0;border-bottom:1px solid var(--border)}
-.stat-row:last-child{border-bottom:none}
-.stat-left{display:flex;align-items:center;gap:0.65rem}
-.stat-dot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
-.stat-name{font-size:0.82rem;font-weight:500}
-.stat-sub{font-size:0.68rem;color:var(--text-soft)}
-.stat-val{font-family:"DM Mono",monospace;font-size:0.88rem;font-weight:600;text-align:right}
-.stat-chg{font-size:0.7rem;font-weight:700;text-align:right}
-
-/* CHART CONTAINERS */
-.chart-wrap{position:relative;height:160px;margin-bottom:0.75rem}
-.chart-wrap-sm{position:relative;height:120px}
-.chart-wrap-lg{position:relative;height:200px}
-
-/* INSIGHT BOXES */
-.insight{padding:0.7rem 0.85rem;border-radius:10px;margin-top:0.75rem}
-.insight p:first-child{font-size:0.75rem;font-weight:700;margin-bottom:0.2rem}
-.insight p:last-child{font-size:0.72rem;line-height:1.55}
-.insight-purple{background:var(--purple-light);border:1px solid rgba(123,45,139,0.15)}
-.insight-purple p:first-child{color:var(--purple)}
-.insight-purple p:last-child{color:#555}
-.insight-green{background:#f0fdf4;border:1px solid #bbf7d0}
-.insight-green p:first-child{color:var(--green)}
-.insight-green p:last-child{color:#166534}
-.insight-gold{background:#fefce8;border:1px solid #fde68a}
-.insight-gold p:first-child{color:#92400e}
-.insight-gold p:last-child{color:#78350f}
-.insight-red{background:var(--red-light);border:1px solid #fecaca}
-.insight-red p:first-child{color:var(--red)}
-.insight-red p:last-child{color:#7f1d1d}
-
-/* PROGRESS BARS */
-.progress-wrap{margin-bottom:0.65rem}
-.progress-label{display:flex;justify-content:space-between;margin-bottom:0.3rem}
-.progress-label span{font-size:0.72rem;color:var(--text-soft)}
-.progress-label strong{font-size:0.72rem;font-weight:700}
-.progress-bar{height:5px;background:var(--border);border-radius:50px;overflow:hidden}
-.progress-fill{height:100%;border-radius:50px;background:linear-gradient(90deg,var(--purple),var(--gold))}
-
-/* TABLES */
-.data-table{width:100%;border-collapse:collapse}
-.data-table th{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-soft);padding:0 0 0.65rem;text-align:left;border-bottom:1px solid var(--border)}
-.data-table th:not(:first-child){text-align:center}
-.data-table td{padding:0.6rem 0;border-bottom:1px solid var(--border);font-size:0.8rem;vertical-align:middle}
-.data-table td:not(:first-child){text-align:center}
-.data-table tr:last-child td{border-bottom:none}
-.rank{display:inline-block;padding:0.18rem 0.5rem;border-radius:50px;font-size:0.68rem;font-weight:700;font-family:"DM Mono",monospace;min-width:32px;text-align:center}
-.rank-1{background:var(--green-light);color:var(--green)}
-.rank-2{background:#fef9c3;color:#ca8a04}
-.rank-3{background:var(--purple-light);color:var(--purple)}
-.rank-x{background:#f1f5f9;color:#64748b}
-.rank-b{background:#f0f4ff;color:#1d4ed8}
-
-/* GRADE CARDS */
-.grade-card{text-align:center;border-radius:12px;padding:1.1rem 0.75rem;border:1px solid}
-.grade-letter{font-family:"Bebas Neue",sans-serif;font-size:3rem;line-height:1}
-.grade-title{font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.07em;margin-top:0.25rem}
-.grade-sub{font-size:0.65rem;color:var(--text-soft);margin-top:0.2rem;line-height:1.4}
-.grade-score{font-family:"DM Mono",monospace;font-size:0.8rem;font-weight:700;margin-top:0.4rem}
-
-/* PLATFORM MINI CARDS */
-.platform-mini{background:var(--purple-light);border-radius:10px;padding:0.85rem;border:1px solid rgba(123,45,139,0.12)}
-.platform-mini h4{font-size:0.72rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.6rem}
-.pm-row{display:flex;justify-content:space-between;margin-bottom:0.3rem}
-.pm-row span{font-size:0.73rem;color:var(--text-soft)}
-.pm-row strong{font-size:0.73rem;font-weight:700;font-family:"DM Mono",monospace}
-.pm-change{font-size:0.67rem;font-weight:700;margin-top:0.35rem}
-
-/* REVIEW BARS */
-.review-big{text-align:center;padding:1.25rem 0 0.75rem}
-.review-num{font-family:"Bebas Neue",sans-serif;font-size:3.5rem;color:var(--purple);line-height:1}
-.review-stars{color:var(--gold);font-size:1.1rem;letter-spacing:0.1em;margin:0.35rem 0}
-.review-label{font-size:0.72rem;color:var(--text-soft);text-transform:uppercase;letter-spacing:0.06em}
-.review-row{display:flex;align-items:center;gap:0.65rem;margin-bottom:0.4rem}
-.review-row .label{font-size:0.7rem;color:var(--text-soft);width:42px;text-align:right;flex-shrink:0}
-.review-bar-wrap{flex:1;height:5px;background:var(--border);border-radius:50px;overflow:hidden}
-.review-bar-fill{height:100%;border-radius:50px;background:var(--gold)}
-.review-row .pct{font-size:0.7rem;font-family:"DM Mono",monospace;font-weight:700;width:28px;flex-shrink:0}
-
-/* LISTING CARDS */
-.listing-card{background:white;border-radius:14px;border:1px solid var(--border);padding:1.1rem;box-shadow:var(--card-shadow);transition:transform 0.2s}
-.listing-card:hover{transform:translateY(-2px)}
-.listing-card-top{display:flex;justify-content:space-between;align-items:center;margin-bottom:0.85rem}
-.listing-card-top h3{font-size:0.88rem;font-weight:700}
-.listing-icon{font-size:1.4rem}
-.listing-stat{display:flex;justify-content:space-between;padding:0.45rem 0;border-bottom:1px solid var(--border);font-size:0.78rem}
-.listing-stat:last-of-type{border-bottom:none}
-.listing-stat span{color:var(--text-soft)}
-.listing-stat strong{font-family:"DM Mono",monospace;font-weight:700}
-
-/* FOOTER */
-.footer-note{text-align:center;padding:1.5rem 0 0.75rem;color:var(--text-soft);font-size:0.7rem}
-.footer-note strong{color:var(--purple)}
-
-/* ANIMATIONS */
-@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
-.scorecard:nth-child(1){animation-delay:.04s}.scorecard:nth-child(2){animation-delay:.08s}
-.scorecard:nth-child(3){animation-delay:.12s}.scorecard:nth-child(4){animation-delay:.16s}
-.scorecard:nth-child(5){animation-delay:.20s}.scorecard:nth-child(6){animation-delay:.24s}
-
-/* MOBILE */
-@media(max-width:1100px){.scorecards{grid-template-columns:repeat(3,1fr)}}
-@media(max-width:900px){
-  .sidebar{display:none}.main{margin-left:0}
-  .grid-2,.grid-3,.grid-4,.grid-13,.grid-31{grid-template-columns:1fr}
-  .scorecards{grid-template-columns:repeat(2,1fr)}
-  .topbar{height:auto;padding:0.85rem 1rem;flex-direction:column;align-items:flex-start;gap:0.5rem}
-  .topbar-right{flex-wrap:wrap}
-  .topbar-left h1{font-size:1.1rem}
-  .content{padding:0.85rem}
-  .data-table{display:none}
-}
-@media(max-width:480px){
-  .scorecards{grid-template-columns:1fr 1fr}
-  .grid-4{grid-template-columns:1fr}
-}
-.freshness-note{font-size:.7rem;line-height:1.5;color:#784e00;background:#fff9e8;padding:.55rem .7rem;border-radius:7px;margin:.4rem;overflow-wrap:anywhere}
-.platform-mini p,.platform-mini summary{font-size:.72rem;line-height:1.6;overflow-wrap:anywhere}
-.listing-stat,.stat-row{flex-wrap:wrap}.listing-stat>.freshness-note,.stat-row>.freshness-note{flex-basis:100%}
-.sc-change{line-height:1.5;overflow-wrap:anywhere}
+:root{--ink:#281b30;--muted:#716878;--purple:#793c8c;--deep:#32133e;--lavender:#f0e9f4;--paper:#faf8f5;--white:#fff;--line:#e9e3eb;--green:#39734e;--green-bg:#edf5ef;--amber:#8a611e;--amber-bg:#faf2df;--radius:18px}
+*{box-sizing:border-box}html{scroll-behavior:smooth;scroll-padding-top:105px}body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.5 'DM Sans',Arial,sans-serif;-webkit-font-smoothing:antialiased}a{color:inherit}button,summary,a{-webkit-tap-highlight-color:transparent}a:focus-visible,summary:focus-visible{outline:3px solid var(--purple);outline-offset:5px}h1,h2,h3,p{margin:0}h1,h2,h3{line-height:1.2}h2{font-size:23px;letter-spacing:-.6px}h3{font-size:16px}button,input{font:inherit}.skip-link{position:fixed;top:-70px;left:20px;z-index:20;padding:12px;background:white}.skip-link:focus{top:15px}
+.topbar{position:sticky;top:0;z-index:10;background:rgba(250,248,245,.97);border-bottom:1px solid var(--line)}.topbar-inner{max-width:1248px;margin:auto;padding:19px 40px;display:flex;align-items:center;justify-content:space-between;gap:20px}.brand{text-decoration:none;display:flex;align-items:center;gap:10px}.brand-mark{width:31px;height:34px;border-radius:17px 4px 17px 4px;background:var(--purple);color:white;display:grid;place-items:center;font-weight:700;font-size:20px}.brand-name{font-weight:700;font-size:25px;letter-spacing:-1px}.brand-divider{width:1px;height:24px;background:var(--line);margin:0 5px}.brand-note{font-size:11px;line-height:1.35;color:var(--muted);letter-spacing:.04em}nav{display:flex;gap:26px}nav a{text-decoration:none;font-size:13px;font-weight:500;color:var(--muted);padding:5px 0}nav a:hover{color:var(--purple)}main{max-width:1248px;margin:auto;padding:42px 40px 28px}.hero{display:flex;align-items:flex-end;justify-content:space-between;gap:28px;margin-bottom:32px}.eyebrow{color:var(--purple);font-size:11px;font-weight:700;letter-spacing:.13em;text-transform:uppercase;margin-bottom:11px}h1{font-size:clamp(34px,4vw,46px);letter-spacing:-1.6px;font-weight:500}.hero-description{color:var(--muted);margin-top:13px;max-width:580px;font-size:14px}.update-note{text-align:right;flex-shrink:0;padding-bottom:3px}.update-note p{color:var(--muted);font-size:11px;margin-top:7px}.pill{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:30px;font-size:10px;font-weight:600;white-space:nowrap;background:var(--lavender);color:var(--purple)}.pill.fresh{background:var(--green-bg);color:var(--green)}.pill.stale{background:var(--amber-bg);color:var(--amber)}.pill-dot{display:inline-block;width:5px;height:5px;border-radius:50%;background:currentColor}.section-heading{display:flex;justify-content:space-between;align-items:baseline;gap:18px;margin:35px 0 17px}.section-heading p{font-size:12px;color:var(--muted)}.kpi-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}.kpi{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:22px;min-width:0}.kpi-label{color:var(--muted);font-size:12px;font-weight:500}.kpi-value{font-size:38px;letter-spacing:-1.5px;line-height:1.1;margin:17px 0 8px;font-weight:500;font-variant-numeric:tabular-nums}.kpi-value small{font-size:19px;letter-spacing:-.5px;color:var(--muted)}.kpi-sub{font-size:12px;color:var(--muted);min-height:18px}.kpi-foot{margin-top:19px;padding-top:12px;border-top:1px solid var(--line);font-size:10px;color:var(--muted);line-height:1.6}.kpi-foot .pill{margin-top:7px}.kpi.accent{background:var(--deep);color:white;border-color:var(--deep)}.kpi.accent .kpi-label,.kpi.accent .kpi-sub,.kpi.accent .kpi-foot{color:#dfcfe4}.kpi.accent .kpi-foot{border-color:#65476e}.kpi.accent .kpi-value small{color:#dfcfe4}.kpi.accent .pill{background:#573260;color:#f3e8f5}.summary-note{font-size:11px;color:var(--muted);margin:15px 1px 0}.channel-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:23px;min-width:0}.card.wide{grid-column:1/-1}.card-top{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;margin-bottom:19px}.channel-name{display:flex;align-items:center;gap:10px}.channel-symbol{width:31px;height:31px;display:grid;place-items:center;border-radius:10px;background:var(--lavender);color:var(--purple);font-size:12px;font-weight:700;flex-shrink:0}.card-period{margin-top:7px;color:var(--muted);font-size:11px}.metric-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}.metric-grid.four{grid-template-columns:repeat(4,minmax(0,1fr))}.metric{min-width:0}.metric-value{font-size:26px;font-weight:500;letter-spacing:-.8px;line-height:1.3;font-variant-numeric:tabular-nums}.metric-label{font-size:11px;color:var(--muted);margin-top:6px}.metric-period{font-size:10px;color:var(--muted);margin-top:5px;line-height:1.5}.small-note{font-size:11px;line-height:1.6;color:var(--muted);margin-top:18px}.status-note{font-size:11px;color:var(--amber);margin-top:7px}.report-card{border-left:3px solid #caa76b}.report-description{font-size:12px;color:var(--muted);margin:17px 0 0}.ai-section{margin-top:36px;padding:27px;border:1px solid #e6dceb;border-radius:var(--radius);background:#f3edf6}.ai-heading{display:flex;justify-content:space-between;align-items:center;gap:15px}.ai-heading p{font-size:12px;color:var(--muted);margin-top:8px}.ai-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:13px;margin-top:23px}.ai-card{padding:18px;border:1px solid #e7dfea;border-radius:12px;background:rgba(255,255,255,.7)}.ai-card h3{font-size:14px}.ai-state{margin-top:11px;color:var(--muted);font-size:13px}.ai-note{font-size:11px;color:var(--muted);margin-top:16px;max-width:880px}.sources{margin-top:30px;border:1px solid var(--line);border-radius:var(--radius);background:var(--white)}summary{cursor:pointer;list-style:none}summary::-webkit-details-marker{display:none}.sources>summary{padding:22px 24px;display:flex;align-items:center;justify-content:space-between;gap:15px}.summary-title{font-size:14px;font-weight:600}.summary-copy{font-size:11px;color:var(--muted);font-weight:400;margin-top:4px}.chevron{font-size:22px;line-height:1;color:var(--purple)}details[open]>.sources-summary .chevron,details[open]>.ai-heading .chevron{transform:rotate(45deg)}.source-content{padding:0 24px 24px}.source-intro{font-size:12px;line-height:1.7;color:var(--muted);padding-bottom:18px}.source-row{border-top:1px solid var(--line);padding:16px 0}.source-row>summary{display:flex;justify-content:space-between;align-items:center;gap:12px}.source-name{font-weight:600;font-size:13px}.source-status{font-size:11px;color:var(--muted)}.source-copy{font-size:12px;color:var(--muted);margin-top:10px;line-height:1.7}.source-field-list{list-style:none;margin:12px 0 0;padding:0;display:grid;gap:10px}.source-field-list li{background:var(--paper);padding:10px 12px;border-radius:8px;font-size:11px;color:var(--muted);overflow-wrap:anywhere}.source-field-list strong{font-weight:600;color:var(--ink);display:block;margin-bottom:2px}.footnote{padding:18px 0 0;border-top:1px solid var(--line);font-size:11px;color:var(--muted);line-height:1.7}.footer{display:flex;justify-content:space-between;gap:20px;border-top:1px solid var(--line);padding:24px 0 0;margin-top:32px;font-size:10px;color:var(--muted)}.footer strong{font-weight:600;color:var(--purple)}.loading,.error-state{padding:70px 25px;text-align:center;border:1px solid var(--line);border-radius:var(--radius);background:white}.error-state p{margin:12px 0 18px;color:var(--muted);font-size:14px}.error-state a{display:inline-block;border-radius:8px;background:var(--purple);color:white;padding:10px 18px;text-decoration:none;font-size:13px}.muted{color:var(--muted)}.content-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}.content-group{padding:23px;background:white;border:1px solid var(--line);border-radius:var(--radius);min-width:0}.content-heading{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:6px}.content-scope{font-size:11px;line-height:1.6;color:var(--muted)}.post-list{list-style:none;margin:19px 0 0;padding:0}.post{display:grid;grid-template-columns:26px minmax(0,1fr) auto;gap:12px;padding:16px 0;border-top:1px solid var(--line);align-items:start}.post-rank{font:11px 'DM Mono',monospace;color:var(--purple);padding-top:3px}.post-title{font-size:13px;font-weight:600;line-height:1.5;display:block;text-decoration:none;overflow-wrap:anywhere}.post-title:hover{color:var(--purple);text-decoration:underline}.post-meta{font-size:10px;color:var(--muted);margin-top:4px}.post-score{text-align:right;min-width:55px}.post-score strong{display:block;font-size:21px;font-weight:500;line-height:1.3;letter-spacing:-.5px}.post-score span{font-size:9px;color:var(--muted)}.post-badge{display:inline-block;margin:7px 5px 0 0;padding:2px 7px;border-radius:20px;font-size:9px;font-weight:600;color:var(--purple);background:var(--lavender)}.post-more{margin-top:6px;font-size:10px;color:var(--muted)}.post-more summary{font-size:10px;color:var(--purple)}.post-extra{margin-top:6px;line-height:1.8}.more-posts>summary{padding-top:12px;border-top:1px solid var(--line);font-size:11px;color:var(--purple);font-weight:500}.more-posts .post-list{margin-top:12px}.content-date{font-size:10px;color:var(--muted);margin-top:13px}.benchmark-card{padding:8px 23px 18px}.benchmark-table{width:100%;border-collapse:collapse;table-layout:fixed}.benchmark-table th{font-size:10px;font-weight:500;color:var(--muted);padding:13px 12px;text-align:right;border-bottom:1px solid var(--line)}.benchmark-table th:first-child{width:45%;text-align:left}.benchmark-table th:nth-child(2){width:20%}.benchmark-table td{padding:13px 12px;border-bottom:1px solid var(--line);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}.benchmark-table td:first-child{text-align:left}.benchmark-table tbody tr:last-child td{border-bottom:0}.benchmark-table a{text-decoration:none;font-weight:500}.benchmark-table a:hover{color:var(--purple);text-decoration:underline}.benchmark-table .own-business td{background:var(--lavender);color:var(--deep);font-weight:700}.benchmark-name{overflow-wrap:anywhere}.benchmark-count{font-weight:600}.benchmark-bar{height:4px;border-radius:10px;background:#f0edf1;margin:7px 0 0 auto;max-width:180px;overflow:hidden}.benchmark-bar span{display:block;height:100%;background:#b4a0bc;border-radius:10px}.own-business .benchmark-bar{background:#e2d5e8}.own-business .benchmark-bar span{background:var(--purple)}.benchmark-note{font-size:10px;line-height:1.7;color:var(--muted);margin:13px 12px 0}.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}.content-grid.single{grid-template-columns:1fr}.content-grid.single .content-group>.post-list{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:23px}.content-grid.single .content-group>.post-list>.post{grid-template-columns:24px minmax(0,1fr)}.content-grid.single .content-group>.post-list>.post>.post-score{grid-column:2;text-align:left}.content-grid.single .content-group>.post-list>.post>.post-score strong{font-size:27px}.content-grid.single .more-posts .post-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px}
+@media(min-width:1500px){main{padding-top:50px}.hero{margin-bottom:38px}.kpi{padding:26px}.kpi-value{font-size:42px}}
+@media(max-width:850px){.topbar-inner{padding:17px 24px}.brand-note,.brand-divider{display:none}main{padding:30px 24px 24px}.hero{align-items:flex-start;flex-direction:column;gap:20px}.update-note{text-align:left}.update-note p{display:inline;margin-left:9px}.kpi-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi-value{font-size:36px}.metric-grid.four{grid-template-columns:repeat(2,minmax(0,1fr))}.section-heading{align-items:flex-start;flex-direction:column;gap:7px}.metric-value{font-size:24px}.card-top{gap:8px}.channel-grid .card-top{flex-wrap:wrap}.card-top .pill{font-size:9px}}
+@media(max-width:560px){html{scroll-padding-top:125px}.topbar-inner{padding:13px 20px 11px;flex-wrap:wrap;gap:10px}.brand-name{font-size:23px}.brand-mark{width:25px;height:28px;font-size:17px}nav{width:100%;justify-content:space-between;gap:15px}nav a{font-size:11px;padding:3px 0}main{padding:27px 18px 20px}.hero{margin-bottom:25px;gap:16px}h1{font-size:36px}.hero-description{font-size:13px}.eyebrow{font-size:10px}.update-note p{display:block;margin-left:0}.kpi-grid{gap:11px}.kpi{padding:17px 15px}.kpi-label{font-size:11px}.kpi-value{font-size:32px;margin-top:15px}.kpi-sub{font-size:10px}.kpi-foot{font-size:9px;margin-top:15px}.kpi-foot .pill{font-size:9px}.channel-grid,.content-grid{grid-template-columns:1fr;gap:12px}.benchmark-card{padding:6px 8px 15px}.benchmark-table td,.benchmark-table th{padding:12px 9px}.benchmark-table td{font-size:11px}.benchmark-table th:first-child{width:45%}.benchmark-table th:nth-child(2){width:22%}.benchmark-note{margin:12px 9px 0}.content-group{padding:20px}.content-grid.single .content-group>.post-list,.content-grid.single .more-posts .post-list{display:block}.content-grid.single .content-group>.post-list>.post{grid-template-columns:20px minmax(0,1fr) auto}.content-grid.single .content-group>.post-list>.post>.post-score{grid-column:auto;text-align:right}.content-grid.single .content-group>.post-list>.post>.post-score strong{font-size:21px}.post{gap:9px;grid-template-columns:20px minmax(0,1fr) auto}.card{padding:20px}.metric-grid{gap:14px}.metric-value{font-size:24px}.metric-label{font-size:10px}.card-top{margin-bottom:20px}.section-heading{margin-top:29px}h2{font-size:22px}.ai-section{padding:21px 18px}.ai-heading{align-items:flex-start;flex-direction:column;gap:9px}.ai-grid{grid-template-columns:1fr;gap:9px;margin-top:18px}.ai-card{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:15px}.ai-state{margin-top:0;font-size:12px}.sources>summary{padding:19px}.source-content{padding:0 19px 20px}.source-row>summary{align-items:flex-start;flex-direction:column;gap:3px}.footer{flex-direction:column;gap:7px;margin-top:26px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+@media print{.topbar{position:static}nav,.sources{display:none}main{padding:20px}.card,.kpi,.ai-section{break-inside:avoid}.footer{margin-top:20px}}
 </style>
 </head>
 <body>
-
-<!-- SIDEBAR -->
-<aside class="sidebar">
-  <div class="sidebar-logo">
-    <div>
-      <div class="sidebar-logo-wordmark">Joyleaf</div>
-      <div class="sidebar-logo-sub">Source Status Dashboard</div>
-    </div>
-  </div>
-  <div class="sidebar-section">Performance</div>
-  <ul class="sidebar-nav">
-    <li><a href="#top" class="active"><span class="icon">📊</span> Overview</a></li>
-    <li><a href="#seo"><span class="icon">🔍</span> Local SEO</a></li>
-    <li><a href="#seograde"><span class="icon">🏆</span> SEO Health Score</a></li>
-    <li><a href="#social"><span class="icon">📱</span> Social Media</a></li>
-    <li><a href="#reviews"><span class="icon">⭐</span> Reviews</a></li>
-    <li><a href="#content"><span class="icon">📝</span> Content Delivery</a></li>
-  </ul>
-  <div class="sidebar-section">Platforms</div>
-  <ul class="sidebar-nav">
-    <li><a href="#listings"><span class="icon">🗺️</span> Google Business</a></li>
-    <li><a href="#listings"><span class="icon">🌿</span> Leafly</a></li>
-    <li><a href="#listings"><span class="icon">💨</span> Weedmaps</a></li>
-    <li><a href="#listings"><span class="icon">⭐</span> Yelp</a></li>
-  </ul>
-  <div class="sidebar-section">Intelligence</div>
-  <ul class="sidebar-nav">
-    <li><a href="#ai"><span class="icon">🤖</span> AI Search</a></li>
-    <li><a href="#competitors"><span class="icon">⚔️</span> Competitors</a></li>
-    <li><a href="#delivery"><span class="icon">🚗</span> Delivery</a></li>
-    <li><a href="#queries"><span class="icon">💬</span> Search Queries</a></li>
-  </ul>
-  <div class="sidebar-footer">
-    <p>Managed by<br><strong>FLP Marketing Group</strong><br>flpmarketinggroup.com</p>
-  </div>
-</aside>
-
-<!-- MAIN -->
-<div class="main" id="top">
-  <div class="topbar">
-    <div class="topbar-left">
-      <h1>Marketing Performance Dashboard</h1>
-      <p id="topbar-meta">Joyleaf Dispensary &middot; 711 E 1st Ave, Roselle NJ &middot; Managed by FLP Marketing Group</p>
-    </div>
-    <div class="topbar-right">
-      <span class="date-badge" id="period-badge">Loading...</span>
-      <span class="update-badge" id="refresh-badge"><span class="update-dot"></span> Loading refresh status...</span>
-    </div>
-  </div>
-
-  <div class="content">
-
-    <!-- SCORECARDS -->
-    <div class="scorecards" id="scorecards-wrap">
-      <div class="scorecard"><span class="sc-icon">🤖</span><div class="sc-value" id="sc-ai">3/4</div><div class="sc-label">AI Platforms Ranking</div><div class="sc-change up" id="sc-ai-sub">Retained manual baseline</div></div>
-      <div class="scorecard"><span class="sc-icon">🔍</span><div class="sc-value" id="sc-searches">--</div><div class="sc-label">Google Profile Impressions</div><div class="sc-change up" id="sc-searches-chg">Loading...</div></div>
-      <div class="scorecard"><span class="sc-icon">❤️</span><div class="sc-value" id="sc-reviews">—</div><div class="sc-label">Google Reviews</div><div class="sc-change up">Management coverage unverified</div></div>
-      <div class="scorecard"><span class="sc-icon">📱</span><div class="sc-value" id="sc-ig-views">--</div><div class="sc-label">Instagram Views</div><div class="sc-change up" id="sc-ig-chg">Loading...</div></div>
-      <div class="scorecard"><span class="sc-icon">📍</span><div class="sc-value" id="sc-directions">--</div><div class="sc-label">Direction Requests</div><div class="sc-change up" id="sc-dir-chg">Loading...</div></div>
-      <div class="scorecard"><span class="sc-icon">📝</span><div class="sc-value" id="sc-posts">--</div><div class="sc-label">Posts Delivered</div><div class="sc-change up" id="sc-posts-sub">Loading...</div></div>
-    </div>
-
-    <div class="card mb" id="generated-insight-card" style="display:none">
-      <div class="card-header"><div><h3 id="generated-insight-title">Dashboard Insight</h3><p id="generated-insight-meta">Evidence-bound automation insight</p></div><span class="tag tag-purple" id="generated-insight-status">Loading</span></div>
-      <div class="card-body"><div class="insight insight-purple" id="generated-insight-body"></div></div>
-    </div>
-
-    <!-- LOCAL SEO -->
-    <div id="seo">
-      <div class="section-header"><div><h2>Local SEO Performance</h2><p>Google Business Profile &middot; Snack Pack Rankings &middot; Search Visibility</p></div></div>
-    </div>
-
-    <div class="grid-31 mb">
-      <div class="card">
-        <div class="card-header"><div><h3>Google Profile Impressions</h3><p>Google Search + Maps impressions over the source reporting window</p></div><span class="tag tag-purple">Google Business</span></div>
-        <div class="card-body">
-          <div class="chart-wrap"><canvas id="chart-searches"></canvas></div>
-          <div style="display:flex;justify-content:space-between;align-items:center;margin-top:0.25rem">
-            <div><span style="font-family:DM Mono,monospace;font-size:1.4rem;font-weight:600;color:var(--purple)" id="searches-big">--</span><span style="font-size:0.75rem;color:var(--text-soft);margin-left:0.4rem">impressions in source period</span></div>
-            <span class="up" style="font-size:0.82rem;font-weight:700" id="searches-chg-big">--</span>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div><h3>Google Actions</h3><p>Reported profile actions; see metric status and source period</p></div></div>
-        <div class="card-body" id="google-actions-wrap"></div>
-      </div>
-    </div>
-
-    <!-- SNACK PACK GRID -->
-    <div class="card mb">
-      <div class="card-header"><div><h3>Google Snack Pack Rankings Grid</h3><p>Green = top 3 (winning). Yellow = 4-7 (visible). Gray = 8+ (not winning). Retained manual baseline; not automatically refreshed.</p></div><span class="tag tag-purple">10 Markets &middot; 5 Keywords</span></div>
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data-table" id="snack-pack-table">
-          <thead><tr><th>Market</th><th>Dispensary</th><th>Near Me</th><th>Weed</th><th>Cannabis</th><th>Open Now</th></tr></thead>
-          <tbody id="snack-pack-body"></tbody>
-        </table>
-        <div class="insight insight-green" style="margin-top:0.85rem">
-          <p>🎯 Priority Targets: Union (58K residents) and Elizabeth (137K residents)</p>
-          <p>Retained planning targets. Current rankings and return on investment require a new audit.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEO HEALTH SCORE -->
-    <div id="seograde">
-      <div class="section-header"><div><h2>SEO Health Score</h2><p>Monthly graded audit across five performance categories &middot; FLP Proprietary</p></div><span class="tag tag-gold">FLP EXCLUSIVE</span></div>
-    </div>
-
-    <div class="card mb">
-      <div class="card-header">
-        <div><h3 id="seo-overall-label">Overall SEO Grade</h3><p id="seo-overall-sub">Historical assessment; a dated audit is required to establish the current score or trend</p></div>
-        <span class="tag tag-purple" id="seo-score-tag">-- / 100</span>
-      </div>
-      <div class="card-body">
-        <div class="grid-3" style="margin-bottom:0.85rem" id="grade-cards-top"></div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:0.85rem" id="grade-cards-bottom"></div>
-        <div class="chart-wrap-sm"><canvas id="chart-seo-score"></canvas></div>
-        <div class="insight insight-purple" style="margin-top:0.75rem">
-          <p>✨ What This Grade Means</p>
-          <p>These are retained manual grades, not a current automated audit. The scoring method and prior trend have not been independently verified.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- LISTING PLATFORMS -->
-    <div id="listings">
-      <div class="section-header"><div><h2>Listing Platform Performance</h2><p>All four platforms managed and maintained by FLP Marketing Group</p></div></div>
-    </div>
-
-    <div class="grid-4 mb" id="listings-grid"></div>
-
-    <!-- SOCIAL MEDIA -->
-    <div id="social">
-      <div class="section-header"><div><h2>Social Media Performance</h2><p>Instagram &middot; Facebook &middot; YouTube &middot; LinkedIn &middot; X &middot; source-specific reporting periods</p></div></div>
-    </div>
-
-    <div class="grid-2 mb">
-      <div class="card">
-        <div class="card-header"><div><h3>Instagram Performance</h3><p id="ig-period-label">Loading...</p></div><span class="tag tag-gold" id="ig-status-tag">Checking source</span></div>
-        <div class="card-body">
-          <div class="chart-wrap"><canvas id="chart-ig-views"></canvas></div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-top:0.75rem" id="ig-stats-grid"></div>
-          <div class="insight insight-green" style="margin-top:0.75rem">
-            <p>Instagram data coverage</p>
-            <p id="ig-insight-text">Loading...</p>
-          </div>
-        </div>
-      </div>
-
-      <div class="card">
-        <div class="card-header"><div><h3>Facebook &middot; YouTube &middot; LinkedIn</h3><p id="social-period-label">Loading...</p></div><span class="tag tag-gold" id="social-status-tag">Checking sources</span></div>
-        <div class="card-body">
-          <div style="margin-bottom:0.85rem">
-            <div style="font-size:0.72rem;font-weight:700;color:#1877f2;margin-bottom:0.5rem">👤 Facebook metrics</div>
-            <div class="chart-wrap-sm"><canvas id="chart-fb-views"></canvas></div>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.65rem;margin-top:0.5rem" id="fb-stats-grid"></div>
-          </div>
-          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.85rem;margin-top:0.5rem" id="yt-li-grid"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- REVIEWS -->
-    <div id="reviews">
-      <div class="section-header"><div><h2>Google Review Management</h2><p>Review management overview &mdash; review reporting coverage shown below</p></div></div>
-    </div>
-
-    <div class="grid-13 mb">
-      <div class="card">
-        <div class="card-header"><div><h3>Review Overview</h3><p>Google Business Profile</p></div><span class="tag tag-purple">FLP Managed</span></div>
-        <div class="card-body">
-          <div class="review-big">
-            <div class="review-num" id="review-rating">--</div>
-
-            <div class="review-label">Overall Rating</div>
-          </div>
-          <div class="review-big">
-            <div class="review-num" id="review-count">--</div>
-            <div class="review-label">Total Google Reviews</div>
-          </div>
-          <div id="review-bars"></div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div><h3>Review Gap Analysis</h3><p>Joyleaf vs competitors &mdash; retained review counts, not a ranking-causality analysis</p></div></div>
-        <div class="card-body">
-          <div class="chart-wrap-lg"><canvas id="chart-reviews"></canvas></div>
-          <div class="insight insight-red" style="margin-top:0.75rem" id="review-gap-insight"></div>
-        </div>
-      </div>
-    </div>
-
-    <!-- AI SEARCH -->
-    <div id="ai">
-      <div class="section-header"><div><h2>AI Search Visibility</h2><p>Historical manual audit: results vary by date, prompt, and location</p></div><span class="tag tag-gold">NEW: FLP EXCLUSIVE</span></div>
-    </div>
-
-    <div class="card mb" id="ai-cards-wrap">
-      <div class="card-header"><div><h3 id="ai-audit-label">AI Search Audit</h3><p>Retained manual audit. No current automated AI-ranking checks.</p></div><span class="tag tag-purple" id="ai-platforms-tag">-- / 4 Platforms</span></div>
-      <div class="card-body">
-        <div class="grid-4 mb" id="ai-platform-cards" style="margin-bottom:0.85rem"></div>
-        <div class="insight insight-purple">
-          <p>📌 What Drives AI Rankings</p>
-          <p>AI responses vary by prompt, location, and date. This retained manual audit does not establish which factors caused a ranking.</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- COMPETITORS -->
-    <div id="competitors">
-      <div class="section-header"><div><h2>Competitor Tracking</h2><p>Joyleaf vs local competitors across all ranking platforms</p></div><span class="tag tag-purple">Manual baseline</span></div>
-    </div>
-
-    <div class="card mb">
-      <div class="card-header"><div><h3>Competitor Overview</h3><p>Review counts, ratings, and AI platform presence</p></div></div>
-      <div class="card-body" style="overflow-x:auto">
-        <table class="data-table">
-          <thead><tr><th>Dispensary</th><th>Location</th><th>Rating</th><th>Reviews</th><th>ChatGPT</th><th>Gemini</th><th>Claude</th><th>Distance</th></tr></thead>
-          <tbody id="competitor-table-body"></tbody>
-        </table>
-        <div class="chart-wrap" style="margin-top:1rem"><canvas id="chart-competitors"></canvas></div>
-        <div class="insight insight-gold" style="margin-top:0.75rem">
-          <p>📈 The Review Gap Strategy</p>
-          <p id="review-gap-strategy">Loading...</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- SEARCH QUERY INTELLIGENCE -->
-    <div id="queries">
-      <div class="section-header"><div><h2>Search Query Intelligence</h2><p>What people type into Google before finding Joyleaf &middot; Source: Google Search Console</p></div><span class="tag tag-red" id="queries-status-tag">Access Pending</span></div>
-    </div>
-
-    <div class="grid-2 mb">
-      <div class="card">
-        <div class="card-header"><div><h3>Search Query Examples</h3><p>Illustrative terms only; actual query clicks are unavailable</p></div></div>
-        <div class="card-body" id="top-queries-wrap">
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--green)"></div><div><div class="stat-name">dispensary roselle nj</div><div class="stat-sub">Home market branded term</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--green)"></div><div><div class="stat-name">joyleaf</div><div class="stat-sub">Direct brand search</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">dispensary near me</div><div class="stat-sub">High purchase intent</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">weed near me</div><div class="stat-sub">Unverified research target</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--gold)"></div><div><div class="stat-name">cannabis dispensary union county</div><div class="stat-sub">Expansion target</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="insight insight-gold" style="margin-top:0.75rem">
-            <p>🔑 Unlock This Section</p>
-            <p>Search Console reporting is not configured. Exact queries and click data remain unavailable until an authorized connection and reporting feed are set up.</p>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div><h3>Opportunity Gap Queries</h3><p>Illustrative targets; not verified Search Console results</p></div></div>
-        <div class="card-body">
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">dispensary cranford nj</div><div class="stat-sub">Unverified research target</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">dispensary elizabeth nj</div><div class="stat-sub">Retained research target</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">cannabis delivery roselle</div><div class="stat-sub">Delivery intent, high value</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">best dispensary new jersey</div><div class="stat-sub">Brand building term</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div><div class="stat-name">weed delivery near me</div><div class="stat-sub">Delivery website opportunity</div></div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="insight insight-purple" style="margin-top:0.75rem">
-            <p>💡 Why This Matters</p>
-            <p>Illustrative research targets only. Search Console data is unavailable, so impressions, clicks, and opportunities are not verified.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- GOOGLE DELIVERY -->
-    <div id="delivery">
-      <div class="section-header"><div><h2>Google Delivery Performance</h2><p>Delivery website tracking &middot; Redirect strategy under evaluation by FLP</p></div><span class="tag tag-gold">Under Review</span></div>
-    </div>
-
-    <div class="grid-2 mb">
-      <div class="card">
-        <div class="card-header"><div><h3>Delivery Website Metrics</h3><p>Google Analytics pending access</p></div></div>
-        <div class="card-body">
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div class="stat-name">Monthly Sessions</div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending access</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--green)"></div><div class="stat-name">Weedmaps Delivery Clicks</div></div><div><div class="stat-val" id="del-wm-clicks">--</div><div class="stat-chg up">Retained metric</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--gold)"></div><div class="stat-name">Organic Rankings</div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Pending Search Console</div></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--red)"></div><div class="stat-name">Backlinks</div></div><div><div class="stat-val">--</div><div class="stat-chg neutral">Audit pending</div></div></div>
-          <div class="insight insight-gold" style="margin-top:0.75rem">
-            <p>📌 Redirect Strategy</p>
-            <p>FLP recommends a 301 redirect once we confirm no organic rankings or high-value backlinks on the delivery site. Data first, decision second.</p>
-          </div>
-        </div>
-      </div>
-      <div class="card">
-        <div class="card-header"><div><h3>Delivery Keyword Targets</h3><p>High-value delivery search terms FLP is targeting</p></div></div>
-        <div class="card-body">
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">cannabis delivery roselle nj</div><div class="stat-sub">Primary delivery term</div></div></div><div><span class="rank rank-b">Building</span></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">weed delivery near me</div><div class="stat-sub">High volume intent</div></div></div><div><span class="rank rank-b">Building</span></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">dispensary delivery union county</div><div class="stat-sub">Regional delivery</div></div></div><div><span class="rank rank-b">Building</span></div></div>
-          <div class="stat-row"><div class="stat-left"><div class="stat-dot" style="background:var(--purple)"></div><div><div class="stat-name">marijuana delivery elizabeth nj</div><div class="stat-sub">Elizabeth market</div></div></div><div><span class="rank rank-b">Building</span></div></div>
-          <div class="insight insight-purple" style="margin-top:0.75rem">
-            <p>💡 FLP Recommendation</p>
-            <p>A consolidated delivery landing page is a planning option. Traffic and ranking data are needed before assessing its impact.</p>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <!-- CONTENT -->
-    <div id="content">
-      <div class="section-header"><div><h2>Content Delivery</h2><p>Posts delivered vs agreed scope</p></div></div>
-    </div>
-
-    <div class="card mb">
-      <div class="card-header"><div><h3 id="content-month-label">Content Delivery</h3><p>Agreed scope vs actual delivery</p></div><span class="tag tag-gold" id="content-tag">Loading...</span></div>
-      <div class="card-body">
-        <div class="grid-3" id="content-bars" style="margin-bottom:0"></div>
-      </div>
-    </div>
-
-    <div class="footer-note">
-      <p>Dashboard built and maintained by <strong>FLP Marketing Group</strong> &middot; Existing dashboard delivery remains unchanged</p>
-      <p style="margin-top:0.3rem;color:#aaa">Sources: Google Business Profile, Meta Business Suite, Leafly Business, Weedmaps, Yelp Business, YouTube Studio, LinkedIn Analytics &middot; Unavailable or failed sources retain their last known values and are marked stale.</p>
-      <p style="margin-top:0.3rem;color:#bbb;font-size:0.65rem">Google, Google Reviews and YouTube refresh daily through GitHub Actions; Instagram, Facebook and LinkedIn refresh daily through the connected Windsor publishing task. Provider data may lag. See source and metric status above.</p>
-    </div>
-
-  </div>
-</div>
-
+<a class="skip-link" href="#main">Skip to results</a>
+<header class="topbar"><div class="topbar-inner">
+<a class="brand" href="#overview" aria-label="Joyleaf dashboard overview"><span class="brand-mark" aria-hidden="true">j</span><span class="brand-name">joyleaf</span><span class="brand-divider"></span><span class="brand-note">MARKETING<br>PERFORMANCE</span></a>
+<nav aria-label="Dashboard sections"><a href="#overview">Overview</a><a href="#channels">Channels</a><a href="#ai-search">AI visibility</a><a href="#sources">Sources</a></nav>
+</div></header>
+<main id="main" tabindex="-1"><div id="dashboard" aria-live="polite" aria-busy="true"><p class="loading">Loading the latest Joyleaf results…</p></div><noscript><p>Enable JavaScript to load the latest verified results. No current metrics are displayed without it.</p></noscript>
+<footer class="footer"><p>Joyleaf Dispensary · Roselle, New Jersey</p><p>Prepared by <strong>FLP Marketing Group</strong></p></footer>
+</main>
 <script>
-// ============================================================
-// DASHBOARD RENDERER
-// All charts and data are driven by data.js
-// ============================================================
-
-async function renderDashboard() {
-// Revalidate the data on every visit. Static Pages caching must not pair new UI with last week's data.
-const response = await fetch(`data.js?refresh=${Date.now()}`, { cache: 'no-store' });
-if (!response.ok) throw new Error('Dashboard data is unavailable.');
-const source = await response.text();
-const assignment = source.match(/const DASHBOARD_DATA\s*=\s*(\{[\s\S]*\});?\s*$/);
-if (!assignment) throw new Error('Dashboard data format is invalid.');
-const D = JSON.parse(assignment[1]);
-const purple = '#7B2D8B';
-const gold = '#D4A843';
-const green = '#16a34a';
-const red = '#dc2626';
-const softBorder = '#ede8f5';
-const automation = D.automation || {};
-const sourceStatuses = automation.source_status || {};
-
+// Data is parsed as JSON, never executed. Only fields with recorded evidence are displayed.
 function escapeHtml(value) {
-  return String(value ?? '').replace(/[&<>"']/g, char => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[char]);
+  return String(value ?? '').replace(/[&<>"']/g, char => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[char]);
 }
-function titleCase(value) {
-  return String(value || '').replace(/_/g, ' ').replace(/\b\w/g, char => char.toUpperCase());
-}
-function sourceFreshness(source) {
-  const meta = sourceStatuses[source] || {};
-  return ageStatus(meta.status, meta.last_success);
-}
-function setSourceTag(elementId, sources) {
-  const element = document.getElementById(elementId);
-  const statuses = sources.map(sourceFreshness);
-  const freshCount = statuses.filter(status => status === 'fresh').length;
-  const partialCount = statuses.filter(status => status === 'partial').length;
-  const allFresh = freshCount === statuses.length;
-  const hasCurrentData = freshCount + partialCount > 0;
-
-  if (allFresh) {
-    element.textContent = 'Recently refreshed';
-    element.className = 'tag tag-green';
-  } else if (hasCurrentData) {
-    element.textContent = 'Partially refreshed';
-    element.className = 'tag tag-gold';
-  } else {
-    element.textContent = 'Retained data';
-    element.className = 'tag tag-red';
-  }
-
-  const attempted = sources
-    .map(source => sourceStatuses[source]?.last_attempt)
-    .filter(Boolean)
-    .sort()
-    .at(-1);
-  element.title = attempted
-    ? `Source status checked ${new Date(attempted).toLocaleString()}`
-    : 'No automated source check recorded';
-}
-
-const chartDefaults = {
-  responsive: true,
-  maintainAspectRatio: false,
-  plugins: { legend: { display: false }, tooltip: { backgroundColor: '#1a1a1a', titleFont: { family: 'DM Sans', size: 11 }, bodyFont: { family: 'DM Mono', size: 12 }, padding: 10, cornerRadius: 8 } },
-  scales: {
-    x: { grid: { display: false }, ticks: { font: { family: 'DM Mono', size: 10 }, color: '#999' }, border: { display: false } },
-    y: { grid: { color: '#f0eaf8' }, ticks: { font: { family: 'DM Mono', size: 10 }, color: '#999' }, border: { display: false } }
-  }
-};
-
-function fmt(n) {
-  if (n >= 1000) return (n/1000).toFixed(1).replace('.0','') + 'K';
-  return n?.toString() || '--';
-}
-function chg(n) { return 'Comparison unavailable'; }
-function chgClass(n) { return 'neutral'; }
-function rankBadge(r) {
-  if (!r || r === 0) return '<span class="rank rank-b">Building</span>';
-  if (r <= 3) return `<span class="rank rank-1">#${r}</span>`;
-  if (r <= 7) return `<span class="rank rank-2">#${r}</span>`;
-  return `<span class="rank rank-x">#${r}</span>`;
-}
-
-// Daily refresh freshness is measured from each source's successful retrieval, never from the global run.
-const sourceKeys = ['google','instagram','facebook','youtube','linkedin','leafly','weedmaps','yelp','reviews'];
-function ageStatus(status, lastSuccess) {
-  const age = Date.now() - Date.parse(lastSuccess);
-  return Number.isFinite(age) && age >= 0 && age <= 36 * 3600000 && ['fresh','partial'].includes(status) ? status : 'stale';
+function ageStatus(status, lastSuccess, now = Date.now()) {
+  const age = now - Date.parse(lastSuccess);
+  return Number.isFinite(age) && age >= 0 && age < 36 * 3600000 && ['fresh','partial'].includes(status) ? status : 'stale';
 }
 function periodText(period) {
   if (!period) return 'Period not recorded';
   if (period.start_date && period.end_date) return `${period.start_date} to ${period.end_date}`;
   return period.label || period.month || 'Period not recorded';
 }
-function sourceText(source) {
-  const meta = sourceStatuses[source] || {};
-  return `${titleCase(source)}${meta.source_label ? ' (' + meta.source_label + ')' : ''}: ${sourceFreshness(source)} · ${periodText(meta.period)} · Last success: ${meta.last_success || 'not recorded'}`;
+function dateText(value) {
+  const date = new Date(value);
+  return value && Number.isFinite(date.getTime()) ? date.toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric',timeZone:'UTC'}) : 'Date not recorded';
 }
-// Legacy storage keys are not always the provider's metric definition.
-function metricLabel(source, key) {
-  const metric = sourceStatuses[source]?.metric_status?.[key];
-  const field = metric?.provider_field;
+function titleCase(value) {
+  return String(value || '').replace(/_/g,' ').replace(/\b\w/g,char => char.toUpperCase());
+}
+function sourceFreshness(source, statuses, now = Date.now()) {
+  const meta = statuses[source] || {};
+  if (meta.manual_import) return 'imported report';
+  return ageStatus(meta.status,meta.last_success,now);
+}
+function metricLabel(source, key, statuses) {
+  const field = statuses[source]?.metric_status?.[key]?.provider_field;
   if (source === 'facebook' && key === 'views') return field === 'page_impressions' ? 'Content impressions' : 'Views (legacy baseline)';
   if (source === 'facebook' && key === 'interactions') return field === 'page_post_engagements' ? 'Post engagements' : 'Interactions (legacy baseline)';
   if (source === 'linkedin' && key === 'reactions') return field === 'account_analytics_like_count' ? 'Likes' : 'Reactions (legacy baseline)';
-  return titleCase(key);
+  const labels = {searches:'Search & Maps impressions',direction_requests:'Direction requests',phone_calls:'Phone calls',website_clicks:'Website clicks',joyleaf_count:'Google reviews',new_follows:'New follows',new_subs:'Subscribers gained',unique_shoppers:'Unique shoppers',orders:'Orders',gmv:'Order GMV',monthly_spend:'Storefront total spend'};
+  return labels[key] || titleCase(key);
 }
-function metricText(source, key) {
-  const meta = sourceStatuses[source] || {};
-  const metric = meta.metric_status?.[key];
-  // Missing field-level evidence must not inherit a source's successful timestamp.
-  if (!metric) return 'Retained / unverified metric · Period not recorded';
-  if (metric.status === 'invalid') return `Unavailable · ${metric.reason || 'Prior value is not valid provider data.'}`;
-  return `${ageStatus(metric.status, metric.last_success)} · ${periodText(metric.period)} · Last success: ${metric.last_success || 'not recorded'}`;
+function metricValue(D, source, key) {
+  const metric = D.automation?.source_status?.[source]?.metric_status?.[key];
+  const value = D[source]?.[key];
+  if (!metric || metric.status === 'invalid' || typeof value !== 'number' || !Number.isFinite(value)) return null;
+  if (periodText(metric.period) === 'Period not recorded') return null;
+  if (metric.collection_method === 'manual-export') return Number.isFinite(Date.parse(metric.imported_at)) ? value : null;
+  return Number.isFinite(Date.parse(metric.last_success)) ? value : null;
 }
-function metricValue(source, key) {
-  return sourceStatuses[source]?.metric_status?.[key]?.status === 'invalid' ? null : D[source]?.[key];
+function metricText(source, key, statuses, now = Date.now()) {
+  const metric = statuses[source]?.metric_status?.[key];
+  if (!metric) return 'Not verified · Period not recorded';
+  if (metric.status === 'invalid') return 'Unavailable · No valid provider measurement';
+  if (metric.collection_method === 'manual-export') return `Imported report · ${periodText(metric.period)} · Imported: ${metric.imported_at || 'not recorded'} · not automatically refreshed`;
+  return `${ageStatus(metric.status,metric.last_success,now) === 'fresh' ? 'Verified' : 'Last recorded'} · ${periodText(metric.period)} · Retrieved: ${metric.last_success || 'not recorded'}`;
 }
-function note(target, message) {
-  if (!target) return;
-  const element = document.createElement('p');
-  element.className = 'freshness-note';
-  element.textContent = message;
-  target.prepend(element);
+function parseDashboardData(source) {
+  const assignment = source.match(/(?:^|\n)const DASHBOARD_DATA\s*=\s*(\{[\s\S]*\});?\s*$/);
+  if (!assignment) throw new Error('Dashboard data format is invalid.');
+  const data = JSON.parse(assignment[1]);
+  if (!data.automation || !data.automation.source_status || Array.isArray(data.automation.source_status) || typeof data.automation.source_status !== 'object') throw new Error('Dashboard source records are missing.');
+  return data;
 }
-const freshSourceCount = sourceKeys.filter(key => sourceFreshness(key) === 'fresh').length;
-const partialSourceCount = sourceKeys.filter(key => sourceFreshness(key) === 'partial').length;
-const refreshBadge = document.getElementById('refresh-badge');
-refreshBadge.textContent = `${freshSourceCount} fresh · ${partialSourceCount} partial · ${sourceKeys.length - freshSourceCount - partialSourceCount} stale`;
-refreshBadge.style.background = '#fefce8';
-refreshBadge.style.color = '#92400e';
-refreshBadge.style.borderColor = '#fde68a';
-document.getElementById('period-badge').textContent = 'Source-specific periods';
-document.getElementById('ig-period-label').textContent = periodText(sourceStatuses.instagram?.period);
-document.getElementById('social-period-label').textContent = 'Each platform has its own period and status';
-const health = document.createElement('section');
-health.className = 'card mb';
-health.id = 'source-health';
-health.innerHTML = `<div class="card-header"><div><h3>Source health and reporting periods</h3><p>Daily feeds expire after 36 hours. Provider reporting may lag; this is not real-time data. Partial sources include retained fields. Refresh date is not the measurement period.</p></div></div><div class="card-body"><p class="freshness-note">Last refresh attempt: ${escapeHtml(automation.last_attempt || 'not recorded')}. Comparisons and historical charts are withheld until dated, comparable observations are available.</p><div class="grid-3">${sourceKeys.map(source => {
-  const meta = sourceStatuses[source] || {};
-  return `<article class="platform-mini"><h4>${escapeHtml(titleCase(source))} · ${sourceFreshness(source)}</h4><p>${escapeHtml(meta.source_label || titleCase(source))}</p><p>${escapeHtml(periodText(meta.period))}</p><p>Last success: ${escapeHtml(meta.last_success || 'not recorded')}</p><p>Last attempt: ${escapeHtml(meta.last_attempt || 'not recorded')}</p><p>${escapeHtml(meta.reason || (sourceFreshness(source) === 'stale' ? 'No recent verified refresh.' : 'See field-level coverage below.'))}</p><details><summary>Metric coverage</summary>${Object.keys(D[source] || {}).filter(key => !Array.isArray(D[source][key])).map(key => `<p><strong>${escapeHtml(metricLabel(source,key))}:</strong> ${escapeHtml(metricText(source,key))}</p>`).join('')}</details></article>`;
-}).join('')}</div></div>`;
-document.querySelector('.content').prepend(health);
-
-setSourceTag('ig-status-tag', ['instagram']);
-setSourceTag('social-status-tag', ['facebook', 'youtube', 'linkedin']);
-
-// ---- SCORECARDS ----
-document.getElementById('sc-searches').textContent = fmt(metricValue('google', 'searches'));
-document.getElementById('sc-searches-chg').textContent = 'Comparison unavailable';
-document.getElementById('sc-ig-views').textContent = fmt(D.instagram.views);
-document.getElementById('sc-ig-chg').textContent = 'Comparison unavailable';
-document.getElementById('sc-directions').textContent = fmt(metricValue('google', 'direction_requests'));
-document.getElementById('sc-dir-chg').textContent = 'Comparison unavailable';
-document.getElementById('sc-posts').textContent = D.content.posts_delivered;
-document.getElementById('sc-posts-sub').textContent = `↑ ${D.content.platforms} platforms managed`;
-
-// ---- GOOGLE SEARCHES CHART ----
-
-document.getElementById('searches-big').textContent = fmt(metricValue('google', 'searches'));
-document.getElementById('searches-chg-big').textContent = 'Comparison unavailable';
-
-// ---- GOOGLE ACTIONS ----
-const googleActions = [
-  { label: 'Direction Requests', val: metricValue('google', 'direction_requests'), chg: D.google.direction_change, color: purple },
-  { label: 'Phone Calls', val: metricValue('google', 'phone_calls'), chg: D.google.phone_change, color: gold },
-  { label: 'Website Clicks', val: metricValue('google', 'website_clicks'), chg: D.google.website_change, color: green },
-  { label: 'Photo Views', val: metricValue('google', 'photo_views'), chg: D.google.photo_change, color: '#e879f9' }
-];
-document.getElementById('google-actions-wrap').innerHTML = googleActions.map(a => `
-  <div class="stat-row">
-    <div class="stat-left"><div class="stat-dot" style="background:${a.color}"></div><div class="stat-name">${a.label}</div></div>
-    <div><div class="stat-val">${fmt(a.val)}</div><div class="stat-chg ${chgClass(a.chg)}">${chg(a.chg)}</div></div>
-  </div>`).join('');
-
-// ---- SNACK PACK TABLE ----
-document.getElementById('snack-pack-body').innerHTML = D.rankings.map(r => `
-  <tr>
-    <td><strong>${r.market}</strong><br><span style="font-size:0.65rem;color:var(--text-soft)">${r.drive} &middot; Pop. ${r.pop}</span></td>
-    <td>${rankBadge(r.dispensary)}</td>
-    <td>${rankBadge(r.near_me)}</td>
-    <td>${rankBadge(r.weed)}</td>
-    <td>${rankBadge(r.cannabis)}</td>
-    <td>${rankBadge(r.open_now)}</td>
-  </tr>`).join('');
-
-// ---- SEO HEALTH GRADES ----
-document.getElementById('seo-overall-label').textContent = `Overall SEO Grade: ${D.seo.overall_grade}`;
-document.getElementById('seo-score-tag').textContent = `${D.seo.overall_score} / 100`;
-const gradeColors = { 'A': {bg:'#f0fdf4',border:'#bbf7d0',text:green}, 'A-': {bg:'#f0fdf4',border:'#bbf7d0',text:green}, 'B+': {bg:'var(--purple-light)',border:'rgba(123,45,139,0.15)',text:purple}, 'B': {bg:'#fefce8',border:'#fde68a',text:'#ca8a04'} };
-const topGrades = [
-  { grade: D.seo.review_authority_grade, score: D.seo.review_authority_score, title: 'Review Authority', sub: 'Historical review authority assessment' },
-  { grade: D.seo.gbp_grade, score: D.seo.gbp_score, title: 'GBP Optimization', sub: 'Weekly posts · active reviews · photos' },
-  { grade: D.seo.onpage_grade, score: D.seo.onpage_score, title: 'On-Page SEO', sub: 'Schema live · Search Console pending' }
-];
-document.getElementById('grade-cards-top').innerHTML = topGrades.map(g => {
-  const c = gradeColors[g.grade] || gradeColors['B'];
-  return `<div class="grade-card" style="background:${c.bg};border-color:${c.border}">
-    <div class="grade-letter" style="color:${c.text}">${g.grade}</div>
-    <div class="grade-title" style="color:${c.text}">${g.title}</div>
-    <div class="grade-sub">${g.sub}</div>
-    <div class="grade-score">${g.score} / 100</div>
-  </div>`;
-}).join('');
-const bottomGrades = [
-  { grade: D.seo.citation_grade, score: D.seo.citation_score, title: 'Citation Consistency', sub: 'NAP consistent across 4 platforms' },
-  { grade: D.seo.ai_visibility_grade, score: D.seo.ai_visibility_score, title: 'AI Search Visibility', sub: 'Primary Roselle option on Claude AI & ChatGPT' }
-];
-document.getElementById('grade-cards-bottom').innerHTML = bottomGrades.map(g => {
-  const c = gradeColors[g.grade] || gradeColors['B'];
-  return `<div class="grade-card" style="background:${c.bg};border-color:${c.border}">
-    <div class="grade-letter" style="color:${c.text}">${g.grade}</div>
-    <div class="grade-title" style="color:${c.text}">${g.title}</div>
-    <div class="grade-sub">${g.sub}</div>
-    <div class="grade-score">${g.score} / 100</div>
-  </div>`;
-}).join('');
-
-// SEO score trend chart
-
-
-// ---- LISTING PLATFORMS ----
-const listings = [
-  {
-    name: 'Google Business', icon: '🗺️', tag: 'FLP Managed', tagClass: 'tag-purple',
-    stats: [
-      ['Profile impressions', fmt(metricValue('google', 'searches'))],
-      ['Direction requests', fmt(metricValue('google', 'direction_requests'))],
-      ['Phone calls', fmt(metricValue('google', 'phone_calls'))],
-      ['Photo views', fmt(metricValue('google', 'photo_views'))],
-      ['Review responses', 'FLP managed']
-    ],
-    insight: { cls: 'insight-purple', title: '📌 FLP Managed', body: 'Hours, posts, closures, photos, and all review responses handled by FLP' }
-  },
-  {
-    name: 'Leafly', icon: '🌿', tag: 'Stale baseline · Aug 1', tagClass: 'tag-gold',
-    stats: [
-      ['Sessions', fmt(D.leafly.sessions) + ' · retained'],
-      ['Reviews', D.leafly.reviews + ' · retained'],
-      ['Orders', D.leafly.orders],
-      ['Orders with deal', D.leafly.deal_orders],
-      ['GMV in import', '$' + D.leafly.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })]
-    ],
-    insight: { cls: 'insight-gold', title: 'Leafly Biz baseline · stale', body: `Validated CSV for Jul 1–Aug 1: ${D.leafly.orders} orders, ${D.leafly.deal_orders} deal orders, and $${D.leafly.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} GMV. Sessions and reviews were not included, so their retained values stay stale until recurring reporting is enabled.` }
-  },
-  {
-    name: 'Weedmaps', icon: '💨', tag: 'Stale baseline · Aug 12', tagClass: 'tag-gold',
-    stats: [
-      ['Dispensary clicks', D.weedmaps.dispensary_clicks + ' · retained'],
-      ['Listing visitors', D.weedmaps.listing_visitors + ' · retained'],
-      ['Delivery clicks', D.weedmaps.delivery_clicks + ' · retained'],
-      ['Contact clicks', D.weedmaps.contact_clicks + ' · retained'],
-      ['GMV in import', '$' + D.weedmaps.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })]
-    ],
-    insight: { cls: 'insight-gold', title: 'Weedmaps Orders baseline · stale', body: `Validated Orders CSV for Aug 6–12: $${D.weedmaps.gmv.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })} subtotal from two Marketplace orders, both still marked In Progress. Retained traffic and click values stay stale until recurring reporting is enabled.` }
-  },
-  {
-    name: 'Yelp', icon: '⭐', tag: 'FLP Managed', tagClass: 'tag-purple',
-    stats: [
-      ['Impressions', fmt(D.yelp.impressions)],
-      ['Page visits', D.yelp.page_visits],
-      ['Total leads', D.yelp.leads],
-      ['Website visits', D.yelp.website_visits],
-      ['Direction views', D.yelp.direction_views]
-    ],
-    insight: { cls: 'insight-purple', title: '📌 FLP Managed', body: 'Built from scratch. Hours, reviews, and listing optimization all maintained by FLP.' }
-  }
-];
-document.getElementById('listings-grid').innerHTML = listings.map(l => `
-  <div class="listing-card">
-    <div class="listing-card-top"><h3>${l.name}</h3><span class="listing-icon">${l.icon}</span></div>
-    ${l.stats.map(s => `<div class="listing-stat"><span>${s[0]}</span><strong>${s[1]}</strong></div>`).join('')}
-    <div class="insight ${l.insight.cls}" style="margin-top:0.75rem">
-      <p>Source coverage</p><p>Values may cover different periods. Consult the per-metric status below.</p>
-    </div>
-  </div>`).join('');
-
-// ---- INSTAGRAM CHART ----
-
-const igStats = [
-  { label: 'Views', val: fmt(D.instagram.views), chg: `+${D.instagram.views_change}%`, cls: 'up' },
-  { label: 'Reach', val: fmt(D.instagram.reach), chg: `+${D.instagram.reach_change}%`, cls: 'up' },
-  { label: 'Interactions', val: fmt(D.instagram.interactions), chg: `+${D.instagram.interactions_change}%`, cls: 'up' },
-  { label: 'New Follows', val: D.instagram.new_follows, chg: `+${D.instagram.follows_change}%`, cls: 'up' }
-];
-document.getElementById('ig-stats-grid').innerHTML = igStats.map(s => `
-  <div style="background:var(--purple-light);border-radius:10px;padding:0.75rem;border:1px solid rgba(123,45,139,0.12)">
-    <div style="font-size:0.65rem;font-weight:700;color:var(--purple);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:0.35rem">${s.label}</div>
-    <div style="font-family:DM Mono,monospace;font-size:1rem;font-weight:700">${s.val}</div>
-    <div style="font-size:0.68rem;font-weight:700;color:var(--green);margin-top:0.2rem">Comparison unavailable</div>
-  </div>`).join('');
-document.getElementById('ig-insight-text').textContent = 'Views and reach do not establish new customer acquisition. Use the source period and field-level status before interpreting these retained values.';
-
-// ---- FACEBOOK CHART ----
-
-document.getElementById('fb-stats-grid').innerHTML = [
-  [metricLabel('facebook','views'), fmt(metricValue('facebook','views')), `+${D.facebook.views_change}%`],
-  ['Page Visits', D.facebook.page_visits, `+${D.facebook.page_visits_change}%`],
-  [metricLabel('facebook','interactions'), fmt(metricValue('facebook','interactions')), `+${D.facebook.interactions_change}%`],
-  ['New Follows', `+${D.facebook.new_follows}`, `+${D.facebook.follows_change}%`]
-].map(s => `
-  <div style="background:#f0f4ff;border-radius:8px;padding:0.6rem;border:1px solid #bfdbfe">
-    <div style="font-size:0.62rem;font-weight:700;color:#1877f2;text-transform:uppercase;letter-spacing:0.06em">${s[0]}</div>
-    <div style="font-family:DM Mono,monospace;font-size:0.9rem;font-weight:700;margin-top:0.2rem">${s[1]}</div>
-    <div style="font-size:0.65rem;color:var(--green);font-weight:700">Comparison unavailable</div>
-  </div>`).join('');
-document.getElementById('yt-li-grid').innerHTML = `
-  <div style="background:#fff8f0;border-radius:10px;padding:0.85rem;border:1px solid #fed7aa">
-    <div style="font-size:0.7rem;font-weight:700;color:#ea580c;margin-bottom:0.5rem">▶ YouTube</div>
-    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Views: <strong>${D.youtube.views}</strong></div>
-    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Subscribers: <strong>${D.youtube.subscribers}</strong></div>
-    <div style="font-size:0.75rem;color:var(--text-soft)">New subs: <strong>+${D.youtube.new_subs}</strong></div>
-    <p style="font-size:0.65rem;color:#92400e;margin-top:0.5rem;font-style:italic">Cannabis restrictions limit algorithmic reach</p>
-  </div>
-  <div style="background:#f0f4ff;border-radius:10px;padding:0.85rem;border:1px solid #bfdbfe">
-    <div style="font-size:0.7rem;font-weight:700;color:#1d4ed8;margin-bottom:0.5rem">👥 LinkedIn</div>
-    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">Impressions: <strong>${D.linkedin.impressions}</strong></div>
-    <div style="font-size:0.75rem;color:var(--text-soft);margin-bottom:0.3rem">${escapeHtml(metricLabel('linkedin','reactions'))}: <strong>${fmt(metricValue('linkedin','reactions'))}</strong></div>
-    <div style="font-size:0.75rem;color:var(--text-soft)">Followers: <strong>${D.linkedin.followers}</strong></div>
-    <p style="font-size:0.65rem;color:#1e40af;margin-top:0.5rem;font-style:italic">B2B audience. Cannabis restrictions apply.</p>
-  </div>`;
-
-// ---- REVIEWS ----
-const reviewRating = metricValue('reviews','rating');
-const reviewCount = metricValue('reviews','joyleaf_count');
-const reviewRatingDisplay = typeof reviewRating === 'number' && Number.isFinite(reviewRating) ? reviewRating.toFixed(1) : '—';
-document.getElementById('review-rating').textContent = reviewRatingDisplay;
-document.getElementById('review-count').textContent = typeof reviewCount === 'number' ? reviewCount.toLocaleString('en-US') : '—';
-document.getElementById('review-bars').innerHTML = [
-  ['5 star', D.reviews.five_star_pct, gold],
-  ['4 star', D.reviews.four_star_pct, purple],
-  ['3 star', D.reviews.three_star_pct, '#9ca3af'],
-  ['1-2 star', D.reviews.one_two_star_pct, red]
-].map(r => `
-  <div class="review-row">
-    <span class="label">${r[0]}</span>
-    <div class="review-bar-wrap"><div class="review-bar-fill" style="width:${r[1]}%;background:${r[2]}"></div></div>
-    <span class="pct">${r[1]}%</span>
-  </div>`).join('');
-
-// review gap chart
-
-const gap = D.reviews.budzooka_count - D.reviews.joyleaf_count;
-document.getElementById('review-gap-insight').textContent = 'Retained review counts may have different collection dates. They do not establish why a competitor ranks higher or predict when a gap will close.';
-
-// ---- AI SEARCH ----
-document.getElementById('ai-audit-label').textContent = `AI Search Audit — ${D.ai_search.audit_month}`;
-document.getElementById('ai-platforms-tag').textContent = `${D.ai_search.platforms_ranking} / ${D.ai_search.platforms_total} Platforms`;
-const aiPlatforms = [
-  { name: 'ChatGPT', icon: '🤖', color: '#10a37f', result: D.ai_search.chatgpt_result, rank: D.ai_search.chatgpt_rank },
-  { name: 'Gemini', icon: '✨', color: '#1a73e8', result: D.ai_search.gemini_result, rank: D.ai_search.gemini_rank },
-  { name: 'Claude AI', icon: '🧠', color: purple, result: D.ai_search.claude_result, rank: D.ai_search.claude_rank },
-  { name: 'Manus', icon: '⚡', color: '#f59e0b', result: D.ai_search.manus_result, rank: D.ai_search.manus_rank }
-];
-document.getElementById('ai-platform-cards').innerHTML = aiPlatforms.map(p => `
-  <div style="background:white;border-radius:12px;border:1px solid var(--border);padding:1rem;box-shadow:var(--card-shadow)">
-    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:0.6rem">
-      <div style="display:flex;align-items:center;gap:0.4rem">
-        <span style="font-size:1rem">${p.icon}</span>
-        <span style="font-size:0.78rem;font-weight:700;color:${p.color}">${p.name}</span>
-      </div>
-      <span style="font-size:0.65rem;font-weight:700;padding:0.15rem 0.5rem;border-radius:50px;background:${p.rank==='Pending'?'#f1f5f9':'var(--green-light)'};color:${p.rank==='Pending'?'#64748b':green}">${p.rank}</span>
-    </div>
-    <p style="font-size:0.72rem;color:var(--text-soft);line-height:1.5">${p.result}</p>
-  </div>`).join('');
-
-// ---- COMPETITORS ----
-const competitors = [
-  { name: 'Joyleaf ⭐', location: 'Roselle, NJ', rating: reviewRatingDisplay, reviews: typeof reviewCount === 'number' ? reviewCount.toLocaleString('en-US') : '—', chatgpt: 'Mentioned', gemini: 'Mentioned', claude: '#1', distance: 'Home', highlight: true },
-  { name: 'Budzooka', location: 'Union County', rating: '5.0', reviews: D.reviews.budzooka_count.toLocaleString(), chatgpt: '#1', gemini: '#1', claude: 'Mentioned', distance: '5 mi', highlight: false },
-  { name: 'Breakwater', location: 'Roselle Park', rating: '4.8', reviews: D.reviews.breakwater_count.toLocaleString(), chatgpt: 'Mentioned', gemini: 'Mentioned', claude: 'Mentioned', distance: '1 mi', highlight: false },
-  { name: 'Botera', location: 'Union, NJ', rating: '4.7', reviews: D.reviews.botera_count.toLocaleString(), chatgpt: '--', gemini: '--', claude: 'Mentioned', distance: '4 mi', highlight: false },
-  { name: 'Ayr', location: 'Union, NJ', rating: '4.6', reviews: D.reviews.ayr_count.toLocaleString(), chatgpt: '--', gemini: '--', claude: '--', distance: '4 mi', highlight: false }
-];
-document.getElementById('competitor-table-body').innerHTML = competitors.map(c => `
-  <tr style="${c.highlight ? 'background:var(--purple-light)' : ''}">
-    <td><strong>${c.name}</strong></td>
-    <td>${c.location}</td>
-    <td>⭐ ${c.rating}${c.highlight ? `<div class="freshness-note">${escapeHtml(metricText('reviews','rating'))}</div>` : ''}</td>
-    <td style="font-family:DM Mono,monospace;font-weight:600">${c.reviews}${c.highlight ? `<div class="freshness-note">${escapeHtml(metricText('reviews','joyleaf_count'))}</div>` : ''}</td>
-    <td>${c.chatgpt}</td>
-    <td>${c.gemini}</td>
-    <td>${c.claude}</td>
-    <td>${c.distance}</td>
-  </tr>`).join('');
-
-
-document.getElementById('review-gap-strategy').textContent = 'Current competitor rankings require a new manual audit. No causal relationship or catch-up forecast is verified.';
-
-// ---- WEEDMAPS DELIVERY ----
-document.getElementById('del-wm-clicks').textContent = D.weedmaps.delivery_clicks;
-
-// ---- CONTENT ----
-document.getElementById('content-month-label').textContent = 'Content Delivery · retained manual baseline';
-document.getElementById('content-tag').textContent = 'Baseline date unverified';
-document.getElementById('content-bars').innerHTML = [
-  { label: `Social posts (agreed: ${D.content.posts_agreed}/mo)`, delivered: D.content.posts_delivered, agreed: D.content.posts_agreed, note: `${Math.round(D.content.posts_delivered/D.content.posts_agreed*100)}% of agreed scope` },
-  { label: `Platforms (agreed: ${D.content.platforms})`, delivered: D.content.platforms, agreed: D.content.platforms, note: 'Instagram, Facebook, YouTube, LinkedIn, X' },
-  { label: 'Google Business posts', delivered: 'Unverified', agreed: 4, note: 'No dated delivery evidence available' }
-].map(c => `
-  <div>
-    <div class="progress-wrap">
-      <div class="progress-label"><span>${c.label}</span><strong>${c.delivered} delivered</strong></div>
-      <div class="progress-bar"><div class="progress-fill" style="width:100%"></div></div>
-    </div>
-    <p style="font-size:0.7rem;color:var(--green);font-weight:700;margin-top:0.3rem">↑ ${c.note}</p>
-  </div>`).join('');
-
-// Apply visible context to every source-dependent card and individual metric.
-const manualBaseline = 'Retained manual baseline · not automatically refreshed · baseline date unverified';
-const sourceCards = {
-  'searches-big':'google', 'google-actions-wrap':'google', 'ig-stats-grid':'instagram',
-  'fb-stats-grid':'facebook', 'review-rating':'reviews', 'chart-reviews':'reviews', 'del-wm-clicks':'weedmaps'
-};
-Object.entries(sourceCards).forEach(([id,source]) => note(document.getElementById(id)?.closest('.card'),sourceText(source)));
-['snack-pack-body','grade-cards-top','ai-platform-cards','content-bars'].forEach(id => note(document.getElementById(id)?.closest('.card'),manualBaseline));
-const scores = [
- ['sc-ai',manualBaseline], ['sc-searches',metricText('google','searches')],
- ['sc-reviews',metricText('reviews','joyleaf_count')],
- ['sc-ig-views',metricText('instagram','views')], ['sc-directions',metricText('google','direction_requests')],
- ['sc-posts',manualBaseline]
-];
-scores.forEach(([id,message]) => {
- const card=document.getElementById(id).closest('.scorecard');
- const label=card.querySelector('.sc-change'); label.textContent=message; label.className='sc-change neutral';
-});
-document.getElementById('sc-reviews').textContent = typeof reviewCount === 'number' ? reviewCount.toLocaleString('en-US') : '—';
-// No comparable prior-period provenance is available for the legacy percentage fields.
-document.querySelectorAll('.stat-chg').forEach(el => { if (el.classList.contains('up') || el.classList.contains('down')) { el.textContent='Comparison unavailable'; el.className='stat-chg neutral'; } });
-document.getElementById('searches-chg-big').textContent='Comparison unavailable';
-['chart-searches','chart-seo-score','chart-ig-views','chart-fb-views','chart-reviews','chart-competitors'].forEach(id => {
- const wrap=document.getElementById(id).parentElement;
- wrap.style.height='auto';
- wrap.textContent='Chart withheld: dated, comparable observations are not verified. Legacy baselines may use different metric definitions.';
- wrap.classList.add('freshness-note');
-});
-function labelRows(id,source,keys) {
- const parent=document.getElementById(id);
- Array.from(parent.children).forEach((row,i) => { if(keys[i]) note(row,metricText(source,keys[i])); });
+function safeContentUrl(value, platform) {
+  try {
+    const url = new URL(value);
+    const hosts = platform === 'instagram' ? ['instagram.com','www.instagram.com'] : platform === 'facebook' ? ['facebook.com','www.facebook.com','m.facebook.com','fb.watch'] : [];
+    if (url.protocol !== 'https:' || url.username || url.password || !hosts.includes(url.hostname) || /\/l\.php$/.test(url.pathname)) return '';
+    return url.href;
+  } catch { return ''; }
 }
-labelRows('google-actions-wrap','google',['direction_requests','phone_calls','website_clicks','photo_views']);
-labelRows('ig-stats-grid','instagram',['views','reach','interactions','new_follows']);
-labelRows('fb-stats-grid','facebook',['views','page_visits','interactions','new_follows']);
-note(document.getElementById('fb-stats-grid').parentElement, 'Content impressions and post engagements use provider definitions. Earlier views and interactions baselines are not comparable.');
-['ig-stats-grid','fb-stats-grid'].forEach(id => Array.from(document.getElementById(id).children).forEach(row => {row.lastElementChild.textContent='Comparison unavailable';row.lastElementChild.style.color='#666';}));
-const listingSources=['google','leafly','weedmaps','yelp'];
-const listingKeys=[['searches','direction_requests','phone_calls','photo_views',null],['sessions','reviews','orders','deal_orders','gmv'],['dispensary_clicks','listing_visitors','delivery_clicks','contact_clicks','gmv'],['impressions','page_visits','leads','website_visits','direction_views']];
-Array.from(document.getElementById('listings-grid').children).forEach((card,i)=>{
- note(card,sourceText(listingSources[i]));
- card.querySelectorAll('.listing-stat').forEach((row,j)=>note(row,listingKeys[i][j] ? metricText(listingSources[i],listingKeys[i][j]) : 'Management coverage unverified'));
-});
-Array.from(document.getElementById('yt-li-grid').children).forEach((card,i)=>{
- const source=i===0?'youtube':'linkedin'; note(card,sourceText(source));
- if (source === 'linkedin') note(card,'Likes count likes only, not all reaction types. Earlier reactions baselines are not comparable.');
- const keys=i===0?['views','subscribers','new_subs']:['impressions','reactions','followers'];
- Array.from(card.querySelectorAll('div')).filter(el=>el.querySelector('strong')).forEach((row,j)=>note(row,metricText(source,keys[j])));
-});
-note(document.getElementById('del-wm-clicks').closest('.stat-row'),metricText('weedmaps','delivery_clicks'));
-note(document.getElementById('review-bars'),'Rating distribution: retained baseline; per-field coverage in source health.');
-note(document.getElementById('review-rating').parentElement,metricText('reviews','rating'));
-note(document.getElementById('review-count').parentElement,metricText('reviews','joyleaf_count'));
-note(document.getElementById('competitor-table-body').closest('.card'),'Joyleaf rating and review count follow their source timestamps. Competitor figures and all AI rankings are retained manual baselines.');
-document.querySelectorAll('#content-bars .progress-bar').forEach(el=>el.hidden=true);
-
+function renderTopContent(content, now = Date.now()) {
+  if (!Array.isArray(content?.groups) || !Number.isFinite(Date.parse(content.collected_at))) return '';
+  const current = ageStatus(content.status,content.collected_at,now) === 'fresh';
+  const groups = content.groups.filter(group => group && ['instagram','facebook'].includes(String(group.platform).toLowerCase()) && Array.isArray(group.items) && group.items.length).map(group => ({...group,platform:String(group.platform).toLowerCase()}));
+  if (!groups.length) return '';
+  const renderGroup = group => {
+    const items = group.items.slice(0,5);
+    const renderPost = (item,index) => {
+      const url = safeContentUrl(item.url,group.platform);
+      const title = String(item.title || item.caption || 'View post').trim().slice(0,110);
+      const metrics = Array.isArray(item.metrics) ? item.metrics.filter(metric => typeof metric.value === 'number' && Number.isFinite(metric.value) && typeof metric.label === 'string') : [];
+      const primary = metrics[0];
+      const secondary = metrics.slice(1);
+      const badges = Array.isArray(item.badges) ? item.badges.filter(badge => ['Top reel','Most shared'].includes(badge)).slice(0,2) : [];
+      return `<li class="post"><span class="post-rank">${String(index+1).padStart(2,'0')}</span><div>${url ? `<a class="post-title" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">${escapeHtml(title)} <span aria-hidden="true">↗</span></a>` : `<span class="post-title">${escapeHtml(title)}</span>`}<p class="post-meta">${escapeHtml(item.format || 'Post')} · ${escapeHtml(dateText(item.published_at))}</p>${badges.map(badge=>`<span class="post-badge">${escapeHtml(badge)}</span>`).join('')}${secondary.length ? `<details class="post-more"><summary>More results</summary><p class="post-extra">${secondary.map(metric=>`${escapeHtml(metric.label)}: ${metric.value.toLocaleString('en-US')}`).join('<br>')}</p></details>` : ''}</div>${primary ? `<div class="post-score"><strong>${primary.value.toLocaleString('en-US')}</strong><span>${escapeHtml(primary.label)}</span></div>` : ''}</li>`;
+    };
+    const scope = typeof group.scope === 'string' ? group.scope : '';
+    const coverage = typeof group.coverage === 'string' ? group.coverage : '';
+    return `<article class="content-group"><div class="content-heading"><h3>${escapeHtml(group.label || titleCase(group.platform))}</h3></div><p class="content-scope">${escapeHtml(scope)}</p><ol class="post-list">${items.slice(0,3).map(renderPost).join('')}</ol>${items.length>3 ? `<details class="more-posts"><summary>See all ${items.length} posts</summary><ol class="post-list" start="4">${items.slice(3).map((item,index)=>renderPost(item,index+3)).join('')}</ol></details>` : ''}${coverage ? `<p class="content-date">${escapeHtml(coverage)}</p>` : ''}</article>`;
+  };
+  return `<section id="top-content" aria-labelledby="content-title"><div class="section-heading"><h2 id="content-title">${current ? 'Top-performing content' : 'Content performance snapshot'}</h2><p>${current ? 'The posts getting attention' : 'Previously verified results'}</p></div><div class="content-grid${groups.length === 1 ? ' single' : ''}">${groups.map(renderGroup).join('')}</div><p class="summary-note">Ranked within each platform’s available posts. ${current ? 'Metrics retrieved ' : 'Snapshot from '}${escapeHtml(dateText(content.collected_at))}.${current ? '' : ' These results have not refreshed.'}</p></section>`;
 }
+function safeReviewUrl(value) {
+  try {
+    const url = new URL(value);
+    if (url.protocol !== 'https:' || url.hostname !== 'maps.google.com' || url.port || url.username || url.password || url.pathname !== '/' || url.hash || !/^\d+$/.test(url.searchParams.get('cid') || '') || url.searchParams.getAll('cid').length !== 1 || [...url.searchParams.keys()].some(key=>key !== 'cid')) return '';
+    return url.href;
+  } catch { return ''; }
+}
+function renderReviewBenchmark(D, now = Date.now()) {
+  const benchmark = D.review_benchmark;
+  const rating = metricValue(D,'reviews','rating');
+  const count = metricValue(D,'reviews','joyleaf_count');
+  if (!benchmark || !Number.isFinite(Date.parse(benchmark.collected_at)) || !Array.isArray(benchmark.peers) || rating === null || rating < 1 || rating > 5 || !Number.isSafeInteger(count) || count < 0) return '';
+  const seen = new Set();
+  const peers = benchmark.peers.filter(peer => {
+    if (!peer || typeof peer.name !== 'string' || !peer.name.trim() || typeof peer.rating !== 'number' || !Number.isFinite(peer.rating) || peer.rating < 1 || peer.rating > 5 || !Number.isSafeInteger(peer.review_count) || peer.review_count < 0 || !safeReviewUrl(peer.url) || seen.has(peer.url)) return false;
+    seen.add(peer.url); return true;
+  }).slice(0,8);
+  if (!peers.length) return '';
+  const rows = [...peers,{name:'Joyleaf · Roselle',rating,review_count:count,own:true}].sort((a,b)=>b.review_count-a.review_count);
+  const maximum = Math.max(...rows.map(row=>row.review_count),1);
+  const ownMeta = D.automation.source_status.reviews.metric_status;
+  const delayed = ['rating','joyleaf_count'].some(key=>ageStatus(ownMeta[key].status,ownMeta[key].last_success,now) !== 'fresh');
+  const ratingDate = dateText(ownMeta.rating.last_success);
+  const countDate = dateText(ownMeta.joyleaf_count.last_success);
+  const ownDate = ratingDate === countDate ? countDate : `rating ${ratingDate}, review count ${countDate}`;
+  return `<section id="review-benchmark" aria-labelledby="benchmark-title"><div class="section-heading"><h2 id="benchmark-title">Google review benchmark</h2><p>Selected nearby dispensaries</p></div><div class="card benchmark-card"><table class="benchmark-table"><caption class="sr-only">Google ratings and total review counts for Joyleaf and selected nearby dispensaries</caption><thead><tr><th scope="col">Business</th><th scope="col">Rating</th><th scope="col">Total reviews</th></tr></thead><tbody>${rows.map(row=>`<tr${row.own ? ' class="own-business"' : ''}><td class="benchmark-name">${row.own ? escapeHtml(row.name) : `<a href="${escapeHtml(safeReviewUrl(row.url))}" target="_blank" rel="noopener noreferrer">${escapeHtml(row.name)} <span aria-hidden="true">↗</span></a>`}</td><td>${row.rating.toFixed(1)}<span class="sr-only"> out of 5</span></td><td><span class="benchmark-count">${row.review_count.toLocaleString('en-US')}</span><div class="benchmark-bar" aria-hidden="true"><span style="width:${(row.review_count/maximum*100).toFixed(2)}%"></span></div></td></tr>`).join('')}</tbody></table><p class="benchmark-note">Peer snapshots: ${escapeHtml(dateText(benchmark.collected_at))}. Joyleaf: ${escapeHtml(ownDate)}${delayed ? ' (last verified)' : ' · updated daily'}.<br>Peer figures are a dated check, not a daily feed. This compares review totals, not Google search rankings.</p></div></section>`;
+}
+function createDashboard(D, now = Date.now()) {
+  const statuses = D.automation.source_status;
+  const names = {google:'Google Business Profile',instagram:'Instagram',facebook:'Facebook',youtube:'YouTube',linkedin:'LinkedIn',reviews:'Google Reviews',weedmaps:'Weedmaps',leafly:'Leafly',yelp:'Yelp'};
+  const shownKeys = {google:['searches','website_clicks','direction_requests','phone_calls'],instagram:['views','interactions','new_follows'],facebook:['views','page_visits','interactions','new_follows'],youtube:['views','new_subs','subscribers'],linkedin:['impressions','reactions','followers'],reviews:['rating','joyleaf_count'],weedmaps:['unique_shoppers','orders','gmv','monthly_spend']};
+  const automaticSources = ['google','instagram','facebook','youtube','linkedin','reviews'];
+  const value = (source,key) => metricValue(D,source,key);
+  const number = (source,key) => { const v = value(source,key); return v === null ? '—' : v.toLocaleString('en-US'); };
+  const period = source => periodText(statuses[source]?.period);
+  const fieldPeriod = (source,key) => periodText(statuses[source]?.metric_status?.[key]?.period);
+  const fieldState = (source,key) => {
+    if (value(source,key) === null) return 'unavailable';
+    const metric = statuses[source].metric_status[key];
+    if (metric.collection_method === 'manual-export') return 'imported';
+    return ageStatus(metric.status,metric.last_success,now);
+  };
+  const displayedState = source => {
+    const states = (shownKeys[source] || []).map(key => fieldState(source,key));
+    if (states.every(state => state === 'fresh')) return 'fresh';
+    if (states.some(state => state === 'fresh')) return 'partial';
+    return states.some(state => state === 'stale') ? 'stale' : 'unavailable';
+  };
+  const pill = (text,state='') => `<span class="pill ${state}"><span class="pill-dot" aria-hidden="true"></span>${escapeHtml(text)}</span>`;
+  const statusPill = source => {
+    const state = displayedState(source);
+    return pill(state === 'fresh' ? 'Updated daily' : state === 'partial' ? 'Some updates delayed' : state === 'stale' ? 'Update delayed' : 'Data unavailable',state === 'fresh' ? 'fresh' : 'stale');
+  };
+  const metric = (source,key,label=metricLabel(source,key,statuses)) => {
+    const state = fieldState(source,key);
+    const ownPeriod = fieldPeriod(source,key);
+    const caption = ownPeriod !== period(source) ? ownPeriod : '';
+    let display = number(source,key);
+    if (source === 'weedmaps' && ['gmv','monthly_spend'].includes(key) && value(source,key) !== null) display = value(source,key).toLocaleString('en-US',{style:'currency',currency:'USD'});
+    return `<div class="metric" data-metric="${source}.${key}"><div class="metric-value">${display}</div><div class="metric-label">${escapeHtml(label)}</div>${caption ? `<div class="metric-period">${escapeHtml(caption)}</div>` : ''}${['stale','unavailable'].includes(state) ? `<p class="status-note">${state === 'stale' ? 'Last verified value' : 'Not available'}</p>` : ''}</div>`;
+  };
+  const kpi = (source,key,label,sub,accent=false) => {
+    const state = fieldState(source,key);
+    const rating = value('reviews','rating');
+    const display = key === 'rating' ? (rating === null ? '—' : rating.toFixed(1) + '<small> / 5</small>') : number(source,key);
+    return `<article class="kpi${accent ? ' accent' : ''}" data-kpi="${source}.${key}"><p class="kpi-label">${escapeHtml(label)}</p><div class="kpi-value">${display}</div><p class="kpi-sub">${escapeHtml(sub)}</p><div class="kpi-foot">${escapeHtml(fieldPeriod(source,key))}${state !== 'fresh' ? '<br>' + pill(state === 'stale' ? 'Last verified value' : 'Not available','stale') : ''}</div></article>`;
+  };
+  const channel = (source,symbol,keys,note='') => `<article class="card${source === 'google' ? ' wide' : ''}"><div class="card-top"><div><div class="channel-name"><span class="channel-symbol" aria-hidden="true">${symbol}</span><h3>${names[source]}</h3></div><p class="card-period">${escapeHtml(period(source))}</p></div>${statusPill(source)}</div><div class="metric-grid${keys.length === 4 ? ' four' : ''}">${keys.map(key=>metric(source,key)).join('')}</div>${note ? `<p class="small-note">${escapeHtml(note)}</p>` : ''}</article>`;
+  const currentSources = automaticSources.filter(source => displayedState(source) === 'fresh').length;
+  const successful = automaticSources.map(source=>statuses[source]?.last_success).filter(time=>Number.isFinite(Date.parse(time)) && Date.parse(time) <= now).sort();
+  const latest = successful.at(-1);
+  const reviewCount = value('reviews','joyleaf_count');
+  let reviewSub = reviewCount === null ? 'Review count not available' : `${reviewCount.toLocaleString('en-US')} Google reviews`;
+  if (reviewCount !== null && fieldState('reviews','joyleaf_count') !== 'fresh') reviewSub += ' · last recorded';
+  if (reviewCount !== null && fieldPeriod('reviews','joyleaf_count') !== fieldPeriod('reviews','rating')) reviewSub += ' · ' + fieldPeriod('reviews','joyleaf_count');
+  const manual = statuses.weedmaps?.manual_import;
+  const importedReport = manual ? `<section aria-labelledby="report-title"><div class="section-heading"><h2 id="report-title">Imported report</h2><p>A dated report, separate from daily feeds</p></div><article class="card report-card"><div class="card-top"><div><h3>Weedmaps storefront</h3><p class="card-period">${escapeHtml(periodText(manual.period))} · Imported ${escapeHtml(dateText(manual.imported_at))}</p></div>${pill('Imported report')}</div><div class="metric-grid four">${shownKeys.weedmaps.map(key=>metric('weedmaps',key)).join('')}</div><p class="report-description">Storefront only. This report does not update automatically.</p></article></section>` : '';
+  const detailCopy = {
+    google:'Search & Maps impressions count profile appearances, not unique people. Google reports a rolling 28-day period ending three days before collection. Photo views are not available from this source.',
+    instagram:'Views, interactions and new follows refresh daily for the displayed period. Unique reach is not available and is not estimated by adding daily reach.',
+    facebook:'Content impressions and post engagements use provider definitions. Earlier views and interactions baselines are not comparable.',
+    youtube:'Views and subscribers gained use the displayed reporting period. Total subscribers are a dated snapshot, not a period total.',
+    linkedin:'Likes count likes only, not all reaction types. Total followers are a dated snapshot. Earlier reactions baselines are not comparable.',
+    reviews:'Joyleaf’s Google rating and review count are dated snapshots, refreshed daily. Competitor counts are shown separately as dated checks. Star distributions are not included.',
+    weedmaps:manual ? 'Manual CSV report. The reporting month comes from the export filename. Unique shoppers is the provider’s label, not listing visitors. Storefront total spend excludes delivery. Modeled opportunity GMV is excluded.' : 'An automatic feed is not connected. No verified report is shown here.',
+    leafly:'Reporting is not yet verified. Publishing is on hold while provider publishing rights are confirmed.',
+    yelp:'Not connected. Provider API restrictions must be resolved before reporting can be shown.'
+  };
+  const sourceDetail = source => {
+    const state = sourceFreshness(source,statuses,now);
+    const label = source === 'leafly' ? 'Not yet verified' : source === 'yelp' ? 'Not connected' : state === 'imported report' ? 'Imported report' : !automaticSources.includes(source) ? 'Not connected' : state === 'fresh' ? 'Connected · daily' : state === 'partial' ? 'Connected · limited coverage' : 'Update delayed';
+    const keys = shownKeys[source] || [];
+    return `<details class="source-row"><summary><span class="source-name">${names[source]}</span><span class="source-status">${label} <span aria-hidden="true">+</span></span></summary><p class="source-copy">${escapeHtml(detailCopy[source])}</p>${automaticSources.includes(source) ? `<p class="source-copy">Last successful refresh: ${escapeHtml(statuses[source]?.last_success || 'Not recorded')}<br>Last refresh attempt: ${escapeHtml(statuses[source]?.last_attempt || 'Not recorded')}</p>` : ''}${keys.length && (automaticSources.includes(source) || manual && source === 'weedmaps') ? `<ul class="source-field-list">${keys.map(key=>`<li><strong>${escapeHtml(metricLabel(source,key,statuses))}</strong>${escapeHtml(metricText(source,key,statuses,now))}</li>`).join('')}</ul>` : ''}</details>`;
+  };
+  return `<section id="overview" aria-labelledby="page-title"><div class="hero"><div><p class="eyebrow">Joyleaf · Roselle, NJ</p><h1 id="page-title">Your marketing, at a glance.</h1><p class="hero-description">How people discover Joyleaf, engage with your content, and review their experience.</p></div><div class="update-note">${pill(currentSources === automaticSources.length ? 'Daily reporting' : 'Some updates need attention',currentSources === automaticSources.length ? 'fresh' : 'stale')}<p>${latest ? 'Latest successful refresh: ' + escapeHtml(dateText(latest)) : 'No successful refresh recorded'}</p></div></div><div class="kpi-grid">${kpi('google','searches','Google visibility','Search & Maps impressions',true)}${kpi('google','direction_requests','Direction requests','From your Google profile')}${kpi('instagram','views','Instagram views','Content views')}${kpi('reviews','rating','Google rating',reviewSub)}</div><p class="summary-note">Daily updates, not real-time. Each metric uses the reporting dates shown.</p></section>
+  ${renderTopContent(D.top_content,now)}
+  ${renderReviewBenchmark(D,now)}
+  <section id="channels" aria-labelledby="channels-title"><div class="section-heading"><h2 id="channels-title">Channel performance</h2><p>Latest available reporting period by platform</p></div><div class="channel-grid">${channel('google','G',['website_clicks','direction_requests','phone_calls'])}${channel('instagram','IG',['views','interactions','new_follows'])}${channel('facebook','f',['views','page_visits','interactions','new_follows'])}${channel('youtube','YT',['views','new_subs','subscribers'])}${channel('linkedin','in',['impressions','reactions','followers'])}</div></section>
+  ${importedReport}
+  <details class="ai-section" id="ai-search"><summary class="ai-heading"><div><h2>AI visibility</h2><p>ChatGPT, Claude and Gemini · Not yet measured</p></div><span class="chevron" aria-hidden="true">+</span></summary><div class="ai-grid">${['ChatGPT','Claude','Gemini'].map(name=>`<article class="ai-card"><h3>${name}</h3><p class="ai-state">Not yet measured</p></article>`).join('')}</div><p class="ai-note">Current answers have not been verified. The April 2026 notes are historical, so they are not shown as current rankings. These platforms are not part of the daily feeds.</p></details>
+  <details class="sources" id="sources"><summary class="sources-summary"><div><div class="summary-title">Sources & reporting details</div><p class="summary-copy">Connections, exact dates, and metric definitions</p></div><span class="chevron" aria-hidden="true">+</span></summary><div class="source-content"><p class="source-intro">Google Business Profile, Google Reviews, Instagram, Facebook, YouTube and LinkedIn refresh daily. Automatic updates older than 36 hours are marked delayed. Social and YouTube activity cover a rolling 28-day period ending the day before collection. Snapshot dates are shown separately.</p>${['google','reviews','instagram','facebook','youtube','linkedin','weedmaps','leafly','yelp'].map(sourceDetail).join('')}<p class="footnote">Growth comparisons and charts will appear only when comparable reporting periods are verified. Historical SEO grades, local search rankings, unverified competitor figures and content-delivery estimates are excluded from this view.</p></div></details>`;
+}
+async function renderDashboard() {
+  // A new request on every visit prevents cached data from being paired with a newer page.
+  const response = await fetch(`data.js?refresh=${Date.now()}`,{cache: 'no-store'});
+  if (!response.ok) throw new Error('Dashboard data is unavailable.');
+  const data = parseDashboardData(await response.text());
+  const root = document.getElementById('dashboard');
+  root.innerHTML = createDashboard(data);
+  root.setAttribute('aria-busy','false');
+  // Old bookmarks still land on the relevant section without restoring the old clutter.
+  const aliases = {'#social':'channels','#seo':'channels','#reviews':'overview','#listings':'sources','#ai':'ai-search'};
+  const target = document.getElementById(aliases[location.hash] || location.hash.slice(1));
+  if (target) { if (target.tagName === 'DETAILS') target.open = true; target.scrollIntoView(); }
+}
+// Bootstrap is kept separate so the pure renderer can be regression-tested without a browser.
 renderDashboard().catch(() => {
-  document.getElementById('refresh-badge').textContent = 'Data unavailable';
-  document.getElementById('period-badge').textContent = 'No verified data loaded';
-  document.querySelector('.content').textContent = 'Dashboard data could not be loaded. Please reload this page. No current metrics can be verified until the data loads.';
+  const root = document.getElementById('dashboard');
+  root.setAttribute('aria-busy','false');
+  root.innerHTML = '<section class="error-state" role="alert"><h1>Data unavailable</h1><p>The latest results could not be loaded. No current metrics can be verified.</p><a href="">Reload dashboard</a></section>';
 });
+document.querySelectorAll('nav a').forEach(link => link.addEventListener('click',() => {
+  const details = document.getElementById(link.getAttribute('href').slice(1));
+  if (details?.tagName === 'DETAILS') details.open = true;
+}));
 </script>
 </body>
 </html>

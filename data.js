@@ -165,10 +165,12 @@ const DASHBOARD_DATA = {
     "delivery_clicks": 164,
     "listing_visitors": 134,
     "contact_clicks": 17,
-    "monthly_spend": 408,
+    "monthly_spend": 595,
     "dispensary_spend": 376,
     "delivery_spend": 31,
-    "gmv": 28
+    "gmv": 30.41,
+    "unique_shoppers": 315,
+    "orders": 1
   },
   "yelp": {
     "impressions": 1400,
@@ -227,17 +229,13 @@ const DASHBOARD_DATA = {
     "google_posts": "Weekly"
   },
   "ai_search": {
-    "platforms_ranking": 3,
-    "platforms_total": 4,
-    "audit_month": "April 2026",
-    "chatgpt_result": "Joyleaf listed as dispensary in Roselle NJ. Noted for in-store experience and product variety.",
-    "chatgpt_rank": "Mentioned",
-    "gemini_result": "Joyleaf appears in local results for Roselle NJ dispensary searches.",
-    "gemini_rank": "Mentioned",
-    "claude_result": "Joyleaf listed as primary in-Roselle option. Breakwater noted for craft/medical consistency.",
-    "claude_rank": "Mentioned",
-    "manus_result": "Pending audit",
-    "manus_rank": "Pending"
+    "platforms": [
+      "ChatGPT",
+      "Claude",
+      "Gemini"
+    ],
+    "status": "awaiting_verified_audit",
+    "method": "Repeatable checks with recorded prompts, dates, location and answer evidence. Not part of the daily analytics feeds."
   },
   "rankings": [
     {
@@ -928,7 +926,14 @@ const DASHBOARD_DATA = {
             "status": "stale"
           },
           "monthly_spend": {
-            "status": "stale"
+            "status": "stale",
+            "collection_method": "manual-export",
+            "imported_at": "2026-11-11T16:32:57.284Z",
+            "period": {
+              "start_date": "2026-10-01",
+              "end_date": "2026-10-31"
+            },
+            "provider_field": "Total spend"
           },
           "dispensary_spend": {
             "status": "stale"
@@ -938,16 +943,58 @@ const DASHBOARD_DATA = {
           },
           "gmv": {
             "status": "stale",
+            "collection_method": "manual-export",
+            "imported_at": "2026-11-11T16:32:57.284Z",
             "period": {
-              "start_date": "2026-08-06",
-              "end_date": "2026-08-12",
-              "label": "Aug 6 – Aug 12, 2026"
-            }
+              "start_date": "2026-10-01",
+              "end_date": "2026-10-31"
+            },
+            "provider_field": "Order GMV"
+          },
+          "unique_shoppers": {
+            "status": "stale",
+            "collection_method": "manual-export",
+            "imported_at": "2026-11-11T16:32:57.284Z",
+            "period": {
+              "start_date": "2026-10-01",
+              "end_date": "2026-10-31"
+            },
+            "provider_field": "Unique shoppers"
+          },
+          "orders": {
+            "status": "stale",
+            "collection_method": "manual-export",
+            "imported_at": "2026-11-11T16:32:57.284Z",
+            "period": {
+              "start_date": "2026-10-01",
+              "end_date": "2026-10-31"
+            },
+            "provider_field": "Orders"
           }
         },
         "updated_metrics": [],
         "authorization_blocked": false,
-        "reason": "No source endpoint configuration was supplied."
+        "reason": "Dated manual report only; no automatic Weedmaps feed. Legacy click and delivery metrics remain historical.",
+        "source_label": "Weedmaps · Joyleaf Weed Dispensary · imported CSV",
+        "period": {
+          "start_date": "2026-10-01",
+          "end_date": "2026-10-31"
+        },
+        "manual_import": {
+          "imported_at": "2026-11-11T16:32:57.284Z",
+          "period": {
+            "start_date": "2026-10-01",
+            "end_date": "2026-10-31"
+          },
+          "listing": "Joyleaf Weed Dispensary",
+          "period_basis": "Report filename",
+          "metrics": {
+            "unique_shoppers": 315,
+            "orders": 1,
+            "gmv": 30.41,
+            "monthly_spend": 595
+          }
+        }
       },
       "yelp": {
         "status": "stale",
@@ -1041,5 +1088,182 @@ const DASHBOARD_DATA = {
       "status": "stale",
       "generated_at": "2026-11-09T18:38:00.933Z"
     }
+  },
+  "top_content": {
+    "status": "fresh",
+    "source": "Windsor.ai · Joyleaf Instagram",
+    "collected_at": "2026-11-11T16:38:41.000Z",
+    "publication_period": {
+      "start_date": "2026-10-14",
+      "end_date": "2026-11-10",
+      "label": "Oct 14 – Nov 10, 2026",
+      "month": "November 2026"
+    },
+    "groups": [
+      {
+        "platform": "Instagram",
+        "label": "Top Instagram content",
+        "scope": "Published 2026-10-14 to 2026-11-10 · Ranked by lifetime views",
+        "coverage": "Top 5 of 20 owned posts returned. Older posts have had longer to accumulate views.",
+        "ranking_metric": "media_views",
+        "corpus_size": 20,
+        "items": [
+          {
+            "id": "18359006449247404",
+            "title": "Shots fired by the Joyleaf team!",
+            "caption": "Shots fired by the Joyleaf team! Abraham is a new hire and apparently not getting along with anybody 💀 #retailhumor #workhumor #retaillife #joyleaf",
+            "url": "https://www.instagram.com/reel/DeuEziKKFyY/",
+            "published_at": "2026-10-20T14:44:04.000Z",
+            "format": "Reel",
+            "badges": [
+              "Top reel"
+            ],
+            "metrics": [
+              {
+                "label": "Lifetime views",
+                "value": 3970
+              },
+              {
+                "label": "Engagements",
+                "value": 102
+              },
+              {
+                "label": "Shares",
+                "value": 12
+              }
+            ],
+            "provider_fetched_at": "2026-11-11T16:38:41.000Z"
+          },
+          {
+            "id": "18091887572229964",
+            "title": "Came to Joyleaf to work.",
+            "caption": "Came to Joyleaf to work. Ended up playing mini golf all day. ⛳️😂 Games are back tonight! Come hang with us, bring a friend, and challenge the team. Clearly, we’ve been practicing. #Joyleaf #FridayGameNight #RoselleNJ #Go",
+            "url": "https://www.instagram.com/reel/De10qwCq6xi/",
+            "published_at": "2026-10-23T14:57:08.000Z",
+            "format": "Reel",
+            "badges": [],
+            "metrics": [
+              {
+                "label": "Lifetime views",
+                "value": 2514
+              },
+              {
+                "label": "Engagements",
+                "value": 55
+              },
+              {
+                "label": "Shares",
+                "value": 0
+              }
+            ],
+            "provider_fetched_at": "2026-11-11T16:38:41.000Z"
+          },
+          {
+            "id": "18376120981246472",
+            "title": "October’s Joyleaf camera roll is mostly dogs.",
+            "caption": "October’s Joyleaf camera roll is mostly dogs. We stand by our editorial decisions. 🐾 Meet a few of the pups who stopped by last month. We’d recognize those faces anywhere. Their humans might have to remind us of their na",
+            "url": "https://www.instagram.com/p/DfZ_0u1FX41/",
+            "published_at": "2026-11-06T16:06:38.000Z",
+            "format": "Carousel",
+            "badges": [],
+            "metrics": [
+              {
+                "label": "Lifetime views",
+                "value": 1410
+              },
+              {
+                "label": "Engagements",
+                "value": 36
+              },
+              {
+                "label": "Shares",
+                "value": 4
+              }
+            ],
+            "provider_fetched_at": "2026-11-11T16:38:41.000Z"
+          },
+          {
+            "id": "18013935824766930",
+            "title": "The group chat finally has a Friday plan.",
+            "caption": "The group chat finally has a Friday plan. 💜🚚 Food Truck Fridays are back at Joyleaf! Good food, familiar faces, and a reason to turn “we should hang out” into an actual evening. Catch the lineup above, Fridays from 5–8 P",
+            "url": "https://www.instagram.com/p/DfUyz9fqvWV/",
+            "published_at": "2026-11-04T15:37:05.000Z",
+            "format": "Image",
+            "badges": [
+              "Most shared"
+            ],
+            "metrics": [
+              {
+                "label": "Lifetime views",
+                "value": 1281
+              },
+              {
+                "label": "Engagements",
+                "value": 77
+              },
+              {
+                "label": "Shares",
+                "value": 26
+              }
+            ],
+            "provider_fetched_at": "2026-11-11T16:38:41.000Z"
+          },
+          {
+            "id": "18082192490373965",
+            "title": "Your ex was scary enough.",
+            "caption": "Your ex was scary enough. Please wear an actual costume. 💀💜 Joy’s expecting a little chaos this Halloween weekend. 👻 🎃 Friday & Saturday | 5–8 PM 🎧 DJ bringing the energy 🎲 Games, laughs & questionable dance moves 🥘 Food",
+            "url": "https://www.instagram.com/p/DfH0zIlKCO0/",
+            "published_at": "2026-10-30T14:44:53.000Z",
+            "format": "Image",
+            "badges": [],
+            "metrics": [
+              {
+                "label": "Lifetime views",
+                "value": 1230
+              },
+              {
+                "label": "Engagements",
+                "value": 37
+              },
+              {
+                "label": "Shares",
+                "value": 7
+              }
+            ],
+            "provider_fetched_at": "2026-11-11T16:38:41.000Z"
+          }
+        ]
+      }
+    ],
+    "imported_at": "2026-11-11T16:48:12.956Z"
+  },
+  "review_benchmark": {
+    "collected_at": "2026-11-11T16:44:40Z",
+    "peers": [
+      {
+        "name": "Budzooka · Elizabeth",
+        "rating": 5,
+        "review_count": 6447,
+        "url": "https://maps.google.com/?cid=10489408539509163036"
+      },
+      {
+        "name": "Ayr · Union",
+        "rating": 4.7,
+        "review_count": 1440,
+        "url": "https://maps.google.com/?cid=4572311775065296294"
+      },
+      {
+        "name": "Botera · Union",
+        "rating": 4.9,
+        "review_count": 1213,
+        "url": "https://maps.google.com/?cid=12045809006380092120"
+      },
+      {
+        "name": "Breakwater · Roselle Park",
+        "rating": 4.8,
+        "review_count": 478,
+        "url": "https://maps.google.com/?cid=13732885580366226478"
+      }
+    ]
   }
 };

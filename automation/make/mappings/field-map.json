@@ -85,7 +85,9 @@
         "monthly_spend",
         "dispensary_spend",
         "delivery_spend",
-        "gmv"
+        "gmv",
+        "unique_shoppers",
+        "orders"
       ]
     },
     "yelp": {
