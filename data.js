@@ -38,13 +38,13 @@ const DASHBOARD_DATA = {
     ]
   },
   "instagram": {
-    "views": 29779,
+    "views": 30434,
     "views_change": null,
     "reach": 3300,
     "reach_change": null,
-    "interactions": 821,
+    "interactions": 839,
     "interactions_change": null,
-    "new_follows": 69,
+    "new_follows": 68,
     "follows_change": null,
     "non_follower_reach": 2267,
     "non_follower_change": null,
@@ -74,11 +74,11 @@ const DASHBOARD_DATA = {
     ]
   },
   "facebook": {
-    "views": 5320,
+    "views": 5495,
     "views_change": null,
-    "interactions": 126,
+    "interactions": 134,
     "interactions_change": null,
-    "page_visits": 478,
+    "page_visits": 465,
     "page_visits_change": null,
     "new_follows": 2,
     "follows_change": null,
@@ -121,9 +121,9 @@ const DASHBOARD_DATA = {
     ]
   },
   "linkedin": {
-    "impressions": 929,
-    "reactions": 36,
-    "followers": 705
+    "impressions": 967,
+    "reactions": 33,
+    "followers": 706
   },
   "leafly": {
     "sessions": 298,
@@ -580,14 +580,14 @@ const DASHBOARD_DATA = {
     "version": 2,
     "cadence": "daily",
     "stale_after_hours": 36,
-    "last_attempt": "2026-11-13T20:29:30.998Z",
-    "last_success": "2026-11-13T20:29:30.998Z",
+    "last_attempt": "2026-11-14T14:28:37.324Z",
+    "last_success": "2026-11-14T14:28:37.324Z",
     "trigger": "daily",
-    "metrics_updated": 9,
+    "metrics_updated": 10,
     "updated_sources": [
-      "google",
-      "youtube",
-      "reviews"
+      "instagram",
+      "facebook",
+      "linkedin"
     ],
     "stale_sources": [
       "leafly",
@@ -754,7 +754,7 @@ const DASHBOARD_DATA = {
       },
       "instagram": {
         "status": "partial",
-        "last_attempt": "2026-11-13T14:43:43.262Z",
+        "last_attempt": "2026-11-14T14:28:37.324Z",
         "updated_metrics": [
           "views",
           "interactions",
@@ -763,11 +763,11 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "views": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "views"
@@ -777,22 +777,22 @@ const DASHBOARD_DATA = {
           },
           "interactions": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "total_interactions"
           },
           "new_follows": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "follower_count_1d"
@@ -877,13 +877,33 @@ const DASHBOARD_DATA = {
               "interactions": 821,
               "new_follows": 69
             }
+          },
+          {
+            "collected_at": "2026-11-14T14:28:37.324Z",
+            "period": {
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
+              "month": "November 2026"
+            },
+            "metric_periods": {},
+            "metric_fields": {
+              "views": "views",
+              "interactions": "total_interactions",
+              "new_follows": "follower_count_1d"
+            },
+            "metrics": {
+              "views": 30434,
+              "interactions": 839,
+              "new_follows": 68
+            }
           }
         ],
-        "last_success": "2026-11-13T14:43:43.262Z",
+        "last_success": "2026-11-14T14:28:37.324Z",
         "period": {
-          "start_date": "2026-10-16",
-          "end_date": "2026-11-12",
-          "label": "Oct 16 – Nov 12, 2026",
+          "start_date": "2026-10-17",
+          "end_date": "2026-11-13",
+          "label": "Oct 17 – Nov 13, 2026",
           "month": "November 2026"
         },
         "source_label": "Windsor.ai · Joyleaf Instagram",
@@ -892,7 +912,7 @@ const DASHBOARD_DATA = {
       },
       "facebook": {
         "status": "fresh",
-        "last_attempt": "2026-11-13T14:43:43.262Z",
+        "last_attempt": "2026-11-14T14:28:37.324Z",
         "updated_metrics": [
           "views",
           "interactions",
@@ -902,44 +922,44 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "views": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "page_impressions"
           },
           "interactions": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "page_post_engagements"
           },
           "page_visits": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "page_views_total"
           },
           "new_follows": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "page_daily_follows"
@@ -1024,13 +1044,35 @@ const DASHBOARD_DATA = {
               "page_visits": 478,
               "new_follows": 2
             }
+          },
+          {
+            "collected_at": "2026-11-14T14:28:37.324Z",
+            "period": {
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
+              "month": "November 2026"
+            },
+            "metric_periods": {},
+            "metric_fields": {
+              "views": "page_impressions",
+              "interactions": "page_post_engagements",
+              "page_visits": "page_views_total",
+              "new_follows": "page_daily_follows"
+            },
+            "metrics": {
+              "views": 5495,
+              "interactions": 134,
+              "page_visits": 465,
+              "new_follows": 2
+            }
           }
         ],
-        "last_success": "2026-11-13T14:43:43.262Z",
+        "last_success": "2026-11-14T14:28:37.324Z",
         "period": {
-          "start_date": "2026-10-16",
-          "end_date": "2026-11-12",
-          "label": "Oct 16 – Nov 12, 2026",
+          "start_date": "2026-10-17",
+          "end_date": "2026-11-13",
+          "label": "Oct 17 – Nov 13, 2026",
           "month": "November 2026"
         },
         "source_label": "Windsor.ai · Joy Leaf Facebook",
@@ -1172,7 +1214,7 @@ const DASHBOARD_DATA = {
       },
       "linkedin": {
         "status": "fresh",
-        "last_attempt": "2026-11-13T14:43:43.262Z",
+        "last_attempt": "2026-11-14T14:28:37.324Z",
         "updated_metrics": [
           "impressions",
           "reactions",
@@ -1181,31 +1223,31 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "impressions": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "account_analytics_impression_count"
           },
           "reactions": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             },
             "provider_field": "account_analytics_like_count"
           },
           "followers": {
             "status": "fresh",
-            "last_success": "2026-11-13T14:43:43.262Z",
+            "last_success": "2026-11-14T14:28:37.324Z",
             "period": {
-              "label": "Current snapshot 2026-11-13"
+              "label": "Current snapshot 2026-11-14"
             },
             "provider_field": "organization_follower_count"
           }
@@ -1283,13 +1325,37 @@ const DASHBOARD_DATA = {
               "reactions": 36,
               "followers": 705
             }
+          },
+          {
+            "collected_at": "2026-11-14T14:28:37.324Z",
+            "period": {
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
+              "month": "November 2026"
+            },
+            "metric_periods": {
+              "followers": {
+                "label": "Current snapshot 2026-11-14"
+              }
+            },
+            "metric_fields": {
+              "impressions": "account_analytics_impression_count",
+              "reactions": "account_analytics_like_count",
+              "followers": "organization_follower_count"
+            },
+            "metrics": {
+              "impressions": 967,
+              "reactions": 33,
+              "followers": 706
+            }
           }
         ],
-        "last_success": "2026-11-13T14:43:43.262Z",
+        "last_success": "2026-11-14T14:28:37.324Z",
         "period": {
-          "start_date": "2026-10-16",
-          "end_date": "2026-11-12",
-          "label": "Oct 16 – Nov 12, 2026",
+          "start_date": "2026-10-17",
+          "end_date": "2026-11-13",
+          "label": "Oct 17 – Nov 13, 2026",
           "month": "November 2026"
         },
         "source_label": "Windsor.ai · JoyLeaf LinkedIn",
@@ -1607,21 +1673,21 @@ const DASHBOARD_DATA = {
     }
   },
   "top_content": {
-    "status": "stale",
+    "status": "fresh",
     "source": "Windsor.ai · Joyleaf Instagram",
-    "collected_at": "2026-11-12T14:33:35.000Z",
-    "imported_at": "2026-11-12T14:36:10.841Z",
+    "collected_at": "2026-11-14T14:28:26.000Z",
+    "imported_at": "2026-11-14T14:28:37.324Z",
     "publication_period": {
-      "start_date": "2026-10-15",
-      "end_date": "2026-11-11",
-      "label": "Oct 15 – Nov 11, 2026",
+      "start_date": "2026-10-17",
+      "end_date": "2026-11-13",
+      "label": "Oct 17 – Nov 13, 2026",
       "month": "November 2026"
     },
     "groups": [
       {
         "platform": "Instagram",
         "label": "Top Instagram content",
-        "scope": "Published 2026-10-15 to 2026-11-11 · Ranked by lifetime views",
+        "scope": "Published 2026-10-17 to 2026-11-13 · Ranked by lifetime views",
         "coverage": "Top 5 of 20 owned posts returned. Older posts have had longer to accumulate views.",
         "ranking_metric": "media_views",
         "corpus_size": 20,
@@ -1639,7 +1705,7 @@ const DASHBOARD_DATA = {
             "metrics": [
               {
                 "label": "Lifetime views",
-                "value": 3977
+                "value": 3985
               },
               {
                 "label": "Engagements",
@@ -1650,7 +1716,7 @@ const DASHBOARD_DATA = {
                 "value": 12
               }
             ],
-            "provider_fetched_at": "2026-11-12T14:33:35.000Z"
+            "provider_fetched_at": "2026-11-14T14:28:26.000Z"
           },
           {
             "id": "18091887572229964",
@@ -1663,7 +1729,7 @@ const DASHBOARD_DATA = {
             "metrics": [
               {
                 "label": "Lifetime views",
-                "value": 2516
+                "value": 2520
               },
               {
                 "label": "Engagements",
@@ -1674,31 +1740,31 @@ const DASHBOARD_DATA = {
                 "value": 0
               }
             ],
-            "provider_fetched_at": "2026-11-12T14:33:35.000Z"
+            "provider_fetched_at": "2026-11-14T14:28:26.000Z"
           },
           {
-            "id": "18376120981246472",
-            "title": "October’s Joyleaf camera roll is mostly dogs.",
-            "caption": "October’s Joyleaf camera roll is mostly dogs. We stand by our editorial decisions. 🐾 Meet a few of the pups who stopped by last month. We’d recognize those faces anywhere. Their humans might have to remind us of their na",
-            "url": "https://www.instagram.com/p/DfZ_0u1FX41/",
-            "published_at": "2026-11-06T16:06:38.000Z",
-            "format": "Carousel",
+            "id": "17889683361485767",
+            "title": "We checked the back.",
+            "caption": "We checked the back. And the back of the back. 😭 #Joyleaf #RetailHumor #RetailLife #CustomerService",
+            "url": "https://www.instagram.com/reel/DfpWPvgKZIO/",
+            "published_at": "2026-11-12T15:11:30.000Z",
+            "format": "Reel",
             "badges": [],
             "metrics": [
               {
                 "label": "Lifetime views",
-                "value": 1431
+                "value": 2364
               },
               {
                 "label": "Engagements",
-                "value": 36
+                "value": 45
               },
               {
                 "label": "Shares",
-                "value": 4
+                "value": 0
               }
             ],
-            "provider_fetched_at": "2026-11-12T14:33:35.000Z"
+            "provider_fetched_at": "2026-11-14T14:28:26.000Z"
           },
           {
             "id": "18013935824766930",
@@ -1713,48 +1779,46 @@ const DASHBOARD_DATA = {
             "metrics": [
               {
                 "label": "Lifetime views",
-                "value": 1376
+                "value": 1567
               },
               {
                 "label": "Engagements",
-                "value": 77
+                "value": 80
               },
               {
                 "label": "Shares",
-                "value": 26
+                "value": 27
               }
             ],
-            "provider_fetched_at": "2026-11-12T14:33:35.000Z"
+            "provider_fetched_at": "2026-11-14T14:28:26.000Z"
           },
           {
-            "id": "18082192490373965",
-            "title": "Your ex was scary enough.",
-            "caption": "Your ex was scary enough. Please wear an actual costume. 💀💜 Joy’s expecting a little chaos this Halloween weekend. 👻 🎃 Friday & Saturday | 5–8 PM 🎧 DJ bringing the energy 🎲 Games, laughs & questionable dance moves 🥘 Food",
-            "url": "https://www.instagram.com/p/DfH0zIlKCO0/",
-            "published_at": "2026-10-30T14:44:53.000Z",
-            "format": "Image",
+            "id": "18376120981246472",
+            "title": "October’s Joyleaf camera roll is mostly dogs.",
+            "caption": "October’s Joyleaf camera roll is mostly dogs. We stand by our editorial decisions. 🐾 Meet a few of the pups who stopped by last month. We’d recognize those faces anywhere. Their humans might have to remind us of their na",
+            "url": "https://www.instagram.com/p/DfZ_0u1FX41/",
+            "published_at": "2026-11-06T16:06:38.000Z",
+            "format": "Carousel",
             "badges": [],
             "metrics": [
               {
                 "label": "Lifetime views",
-                "value": 1236
+                "value": 1453
               },
               {
                 "label": "Engagements",
-                "value": 37
+                "value": 36
               },
               {
                 "label": "Shares",
-                "value": 7
+                "value": 4
               }
             ],
-            "provider_fetched_at": "2026-11-12T14:33:35.000Z"
+            "provider_fetched_at": "2026-11-14T14:28:26.000Z"
           }
         ]
       }
-    ],
-    "last_attempt": "2026-11-13T14:44:43.619Z",
-    "reason": "Windsor returned cached content dated November 12; on-demand refresh is unavailable on the connected plan. Last verified content retained."
+    ]
   },
   "review_benchmark": {
     "collected_at": "2026-11-11T16:44:40Z",
