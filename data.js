@@ -6,17 +6,17 @@
 
 const DASHBOARD_DATA = {
   "period": {
-    "label": "Oct 18 – Nov 14, 2026",
+    "label": "Oct 19 – Nov 15, 2026",
     "month": "November 2026"
   },
   "google": {
-    "searches": 20282,
+    "searches": 20325,
     "searches_change": null,
-    "direction_requests": 1450,
+    "direction_requests": 1456,
     "direction_change": null,
-    "phone_calls": 216,
+    "phone_calls": 220,
     "phone_change": null,
-    "website_clicks": 5194,
+    "website_clicks": 5393,
     "website_change": null,
     "photo_views": 8400,
     "photo_change": null,
@@ -100,7 +100,7 @@ const DASHBOARD_DATA = {
     ]
   },
   "youtube": {
-    "views": 5173,
+    "views": 5903,
     "subscribers": 44,
     "new_subs": 3,
     "views_history": [
@@ -186,7 +186,7 @@ const DASHBOARD_DATA = {
     "four_star_pct": 14,
     "three_star_pct": 5,
     "one_two_star_pct": 3,
-    "joyleaf_count": 3249,
+    "joyleaf_count": 3258,
     "budzooka_count": 4627,
     "breakwater_count": 400,
     "botera_count": 180,
@@ -580,14 +580,14 @@ const DASHBOARD_DATA = {
     "version": 2,
     "cadence": "daily",
     "stale_after_hours": 36,
-    "last_attempt": "2026-11-16T14:46:28.436Z",
-    "last_success": "2026-11-16T14:46:28.436Z",
+    "last_attempt": "2026-11-16T22:54:14.310Z",
+    "last_success": "2026-11-16T22:54:14.310Z",
     "trigger": "daily",
-    "metrics_updated": 10,
+    "metrics_updated": 9,
     "updated_sources": [
-      "instagram",
-      "facebook",
-      "linkedin"
+      "google",
+      "youtube",
+      "reviews"
     ],
     "stale_sources": [
       "leafly",
@@ -597,45 +597,45 @@ const DASHBOARD_DATA = {
     "source_status": {
       "google": {
         "status": "partial",
-        "last_attempt": "2026-11-15T19:22:38.806Z",
+        "last_attempt": "2026-11-16T22:54:14.310Z",
         "metric_status": {
           "searches": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             }
           },
           "direction_requests": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             }
           },
           "phone_calls": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             }
           },
           "website_clicks": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "start_date": "2026-10-16",
-              "end_date": "2026-11-12",
-              "label": "Oct 16 – Nov 12, 2026",
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
               "month": "November 2026"
             }
           },
@@ -763,13 +763,28 @@ const DASHBOARD_DATA = {
               "phone_calls": 216,
               "website_clicks": 5194
             }
+          },
+          {
+            "collected_at": "2026-11-16T22:54:14.310Z",
+            "period": {
+              "start_date": "2026-10-17",
+              "end_date": "2026-11-13",
+              "label": "Oct 17 – Nov 13, 2026",
+              "month": "November 2026"
+            },
+            "metrics": {
+              "searches": 20325,
+              "direction_requests": 1456,
+              "phone_calls": 220,
+              "website_clicks": 5393
+            }
           }
         ],
-        "last_success": "2026-11-15T19:22:38.806Z",
+        "last_success": "2026-11-16T22:54:14.310Z",
         "period": {
-          "start_date": "2026-10-16",
-          "end_date": "2026-11-12",
-          "label": "Oct 16 – Nov 12, 2026",
+          "start_date": "2026-10-17",
+          "end_date": "2026-11-13",
+          "label": "Oct 17 – Nov 13, 2026",
           "month": "November 2026"
         },
         "source_label": "Joyleaf Weed Dispensary",
@@ -1194,8 +1209,8 @@ const DASHBOARD_DATA = {
       },
       "youtube": {
         "status": "fresh",
-        "last_attempt": "2026-11-15T19:22:38.806Z",
-        "last_success": "2026-11-15T19:22:38.806Z",
+        "last_attempt": "2026-11-16T22:54:14.310Z",
+        "last_success": "2026-11-16T22:54:14.310Z",
         "snapshots": [
           {
             "collected_at": "2026-11-09T18:40:56.471Z",
@@ -1319,12 +1334,31 @@ const DASHBOARD_DATA = {
               "subscribers": 44,
               "new_subs": 3
             }
+          },
+          {
+            "collected_at": "2026-11-16T22:54:14.310Z",
+            "period": {
+              "start_date": "2026-10-19",
+              "end_date": "2026-11-15",
+              "label": "Oct 19 – Nov 15, 2026",
+              "month": "November 2026"
+            },
+            "metric_periods": {
+              "subscribers": {
+                "label": "Current snapshot 2026-11-16"
+              }
+            },
+            "metrics": {
+              "views": 5903,
+              "subscribers": 44,
+              "new_subs": 3
+            }
           }
         ],
         "period": {
-          "start_date": "2026-10-18",
-          "end_date": "2026-11-14",
-          "label": "Oct 18 – Nov 14, 2026",
+          "start_date": "2026-10-19",
+          "end_date": "2026-11-15",
+          "label": "Oct 19 – Nov 15, 2026",
           "month": "November 2026"
         },
         "source_label": "Joyleaf YouTube channel",
@@ -1336,28 +1370,28 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "views": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "start_date": "2026-10-18",
-              "end_date": "2026-11-14",
-              "label": "Oct 18 – Nov 14, 2026",
+              "start_date": "2026-10-19",
+              "end_date": "2026-11-15",
+              "label": "Oct 19 – Nov 15, 2026",
               "month": "November 2026"
             }
           },
           "subscribers": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "label": "Current snapshot 2026-11-15"
+              "label": "Current snapshot 2026-11-16"
             }
           },
           "new_subs": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "start_date": "2026-10-18",
-              "end_date": "2026-11-14",
-              "label": "Oct 18 – Nov 14, 2026",
+              "start_date": "2026-10-19",
+              "end_date": "2026-11-15",
+              "label": "Oct 19 – Nov 15, 2026",
               "month": "November 2026"
             }
           }
@@ -1563,7 +1597,7 @@ const DASHBOARD_DATA = {
       },
       "leafly": {
         "status": "stale",
-        "last_attempt": "2026-11-15T19:22:38.806Z",
+        "last_attempt": "2026-11-16T22:54:14.310Z",
         "metric_status": {
           "sessions": {
             "status": "stale"
@@ -1614,7 +1648,7 @@ const DASHBOARD_DATA = {
       },
       "weedmaps": {
         "status": "stale",
-        "last_attempt": "2026-11-15T19:22:38.806Z",
+        "last_attempt": "2026-11-16T22:54:14.310Z",
         "metric_status": {
           "dispensary_clicks": {
             "status": "stale"
@@ -1701,7 +1735,7 @@ const DASHBOARD_DATA = {
       },
       "yelp": {
         "status": "stale",
-        "last_attempt": "2026-11-15T19:22:38.806Z",
+        "last_attempt": "2026-11-16T22:54:14.310Z",
         "updated_metrics": [],
         "metric_status": {
           "impressions": {
@@ -1728,7 +1762,7 @@ const DASHBOARD_DATA = {
       },
       "reviews": {
         "status": "partial",
-        "last_attempt": "2026-11-15T19:22:38.806Z",
+        "last_attempt": "2026-11-16T22:54:14.310Z",
         "updated_metrics": [
           "rating",
           "joyleaf_count"
@@ -1736,16 +1770,16 @@ const DASHBOARD_DATA = {
         "metric_status": {
           "rating": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "label": "Snapshot 2026-11-15"
+              "label": "Snapshot 2026-11-16"
             }
           },
           "joyleaf_count": {
             "status": "fresh",
-            "last_success": "2026-11-15T19:22:38.806Z",
+            "last_success": "2026-11-16T22:54:14.310Z",
             "period": {
-              "label": "Snapshot 2026-11-15"
+              "label": "Snapshot 2026-11-16"
             }
           }
         },
@@ -1870,26 +1904,37 @@ const DASHBOARD_DATA = {
               "rating": 4.900000095367432,
               "joyleaf_count": 3249
             }
+          },
+          {
+            "collected_at": "2026-11-16T22:54:14.310Z",
+            "period": {
+              "label": "Snapshot 2026-11-16"
+            },
+            "metrics": {
+              "rating": 4.900000095367432,
+              "joyleaf_count": 3258
+            }
           }
         ],
-        "last_success": "2026-11-15T19:22:38.806Z",
+        "last_success": "2026-11-16T22:54:14.310Z",
         "period": {
-          "label": "Snapshot 2026-11-15"
+          "label": "Snapshot 2026-11-16"
         },
         "source_label": "Google Business Profile · Joyleaf Weed Dispensary",
         "reason": "Joyleaf Google rating/count only. Competitor counts and star distribution remain historical, not refreshed."
       }
     },
     "generated_insight": {
-      "title": "Google Search and YouTube Engagement Snapshot",
-      "body": "In the latest period, Joyleaf recorded 19,228 searches and 4,878 website clicks from Google, alongside 6,407 views and 44 subscribers on YouTube. However, data from Instagram, Facebook, LinkedIn, Leafly, Weedmaps, Yelp, and reviews are unavailable or failed.",
+      "title": "Joyleaf Online Engagement Snapshot",
+      "body": "In the latest period, Joyleaf recorded a total of 20,325 searches and 5,393 website clicks from Google, alongside 5,903 views and 44 subscribers on YouTube. Additionally, Joyleaf has accumulated 3,258 reviews with an average rating of 4.9.",
       "tone": "gold",
       "source_keys": [
         "google",
-        "youtube"
+        "youtube",
+        "reviews"
       ],
-      "status": "stale",
-      "generated_at": "2026-11-09T18:38:00.933Z"
+      "status": "partial",
+      "generated_at": "2026-11-16T22:54:14.310Z"
     }
   },
   "top_content": {
