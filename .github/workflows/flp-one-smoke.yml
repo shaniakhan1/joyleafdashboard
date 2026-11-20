@@ -1,0 +1,26 @@
+name: FLP ONE smoke tests
+on:
+  pull_request:
+    paths:
+      - 'index.html'
+      - 'flp-one.js'
+      - 'tests/flp-one-smoke.cjs'
+      - '.github/workflows/flp-one-smoke.yml'
+  push:
+    branches: [main]
+    paths:
+      - 'index.html'
+      - 'flp-one.js'
+      - 'tests/flp-one-smoke.cjs'
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - name: Syntax
+        run: node --check flp-one.js
+      - name: Smoke
+        run: node tests/flp-one-smoke.cjs
