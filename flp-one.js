@@ -6,6 +6,14 @@ const html = value => String(value == null ? '' : value).replace(/[&<>"']/g, x =
 const date = value => { const d = new Date(value); return Number.isFinite(d.getTime()) ? d.toLocaleDateString('en-US',{year:'numeric',month:'short',day:'numeric',timeZone:'UTC'}) : 'Not recorded'; };
 const period = value => value && (value.start_date && value.end_date ? value.start_date + ' to ' + value.end_date : value.label) || 'Period unknown';
 const number = v => typeof v === 'number' && Number.isFinite(v) ? v.toLocaleString('en-US') : 'Unavailable';
+function metricLabel(D, source, key) {
+  const field = D.automation?.source_status?.[source]?.metric_status?.[key]?.provider_field;
+  if (source === 'google' && key === 'searches') return 'Search & Maps impressions';
+  if (source === 'facebook' && key === 'views') return field === 'page_impressions' ? 'Content impressions' : 'Views (legacy baseline)';
+  if (source === 'facebook' && key === 'interactions') return field === 'page_post_engagements' ? 'Post engagements' : 'Interactions (legacy baseline)';
+  if (source === 'reviews' && key === 'rating') return 'Google rating';
+  return key.replace(/_/g, ' ');
+}
 function evidence(D, source, key, now) {
   const info = D.automation && D.automation.source_status && D.automation.source_status[source] && D.automation.source_status[source].metric_status && D.automation.source_status[source].metric_status[key];
   const raw = D[source] && D[source][key];
@@ -39,9 +47,9 @@ function find(D, now) {
     'Rating and review count are useful snapshots. Without a matched earlier snapshot, their change cannot be established.',
     'Check recent public feedback for recurring service issues, verify the source and prepare thoughtful owner responses for approval.',
     'New verified reviews, response coverage and recurring service themes');
-  add('facebook-touchpoints',4,'Understand Facebook activity beyond views',
+  add('facebook-touchpoints',4,'Understand Facebook content and page activity',
     [['facebook','views'],['facebook','page_visits'],['facebook','interactions']],
-    'Views and page visits measure different behaviors; their totals are not a customer conversion funnel.',
+    'Content impressions and page visits measure different behaviors; legacy view totals may use a different definition. These totals are not a customer conversion funnel.',
     'Compare consistent reporting windows and investigate which content leads to genuine page activity.',
     'Verified weekly page visits and post interactions');
   return out;
@@ -52,7 +60,7 @@ function render(D,now=Date.now()) {
   const signals=find(D,now), saved=load();
   const cards=signals.map(s=>{
     const record=saved[s.key] || {}, state=['To review','Approved','In progress','Completed'].includes(record.status)?record.status:'To review';
-    const ev=s.metrics.map(m=>'<div class="flp-evidence"><strong>'+html(number(m.value))+'</strong><span>'+html(m.source==='reviews' && m.key==='rating' ? 'Google rating':m.key.replace(/_/g,' '))+'</span><small>'+html(m.label)+' · '+html(date(m.date))+'</small></div>').join('');
+    const ev=s.metrics.map(m=>'<div class="flp-evidence"><strong>'+html(number(m.value))+'</strong><span>'+html(metricLabel(D,m.source,m.key))+'</span><small>'+html(m.label)+' · '+html(date(m.date))+'</small></div>').join('');
     return '<article class="flp-card"><div class="flp-card-top"><div><span class="flp-eyebrow">INVESTIGATION '+String(s.priority).padStart(2,'0')+'</span><h3>'+html(s.title)+'</h3></div><span class="flp-chip '+(s.status==='ready'?'is-current':'is-review')+'">'+(s.status==='ready'?'Recently retrieved':'Check source dates')+'</span></div><div class="flp-metrics">'+ev+'</div><p>'+html(s.insight)+'</p><div class="flp-action"><b>Next action</b><p>'+html(s.action)+'</p><small><b>Measure:</b> '+html(s.measure)+'</small></div><div class="flp-controls"><label for="flp-status-'+html(s.key)+'">Your local review status</label><select id="flp-status-'+html(s.key)+'" data-flp-status="'+html(s.key)+'"><option'+(state==='To review'?' selected':'')+'>To review</option><option'+(state==='Approved'?' selected':'')+'>Approved</option><option'+(state==='In progress'?' selected':'')+'>In progress</option><option'+(state==='Completed'?' selected':'')+'>Completed</option></select><label for="flp-note-'+html(s.key)+'">Outcome notes</label><textarea id="flp-note-'+html(s.key)+'" data-flp-note="'+html(s.key)+'" maxlength="500" placeholder="Who acted? When? What changed?">'+html(record.note||'')+'</textarea><button type="button" data-flp-save="'+html(s.key)+'">Save on this device</button><span class="flp-saved" data-flp-saved="'+html(s.key)+'" aria-live="polite"></span></div></article>';
   }).join('');
   return '<section id="flp-one" class="flp-section" aria-labelledby="flp-one-title"><div class="section-heading flp-heading"><div><span class="flp-eyebrow">FLP MARKETING GROUP / INTELLIGENCE ENGINE</span><h2 id="flp-one-title">FLP ONE</h2><p>From recorded performance to the next decision.</p></div><span class="pill">Pilot · Source-aware</span></div><div class="flp-intro"><strong>'+signals.length+' grounded investigations</strong><p>Built from the latest available dashboard data. Not a generative AI diagnosis. Each metric shows its own reporting period and collection date; older information is never described as a current result. These opportunities are starting points for a person to investigate, not evidence of causation.</p></div><div class="flp-grid">'+(cards || '<p class="flp-empty">Not enough verified data to form an investigation. No results have been invented.</p>')+'</div><div class="flp-footer"><div><b>Keep a record of what actually worked.</b><p>Review statuses and notes remain on this device only. They are not shared with Joyleaf or FLP staff, and do not approve publishing, advertising or any changes to external accounts.</p></div><button type="button" id="flp-export">Export local action log</button></div></section>';

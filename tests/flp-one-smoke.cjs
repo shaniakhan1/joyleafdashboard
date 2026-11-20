@@ -18,6 +18,8 @@ const data={automation:{source_status:{
  reviews:{metric_status:{rating:valid(),joyleaf_count:valid()}},
  facebook:{metric_status:{views:valid(),page_visits:valid(),interactions:valid()}}
 }},google:{searches:19848,website_clicks:5338,direction_requests:1462,phone_calls:215},instagram:{views:27732,interactions:845,new_follows:61},reviews:{rating:4.9,joyleaf_count:3265},facebook:{views:4880,page_visits:479,interactions:128}};
+data.automation.source_status.facebook.metric_status.views.provider_field='page_impressions';
+data.automation.source_status.facebook.metric_status.interactions.provider_field='page_post_engagements';
 const now=Date.parse('2026-11-19T18:00:00Z');
 const findings=window.FLPOne.find(data,now);
 assert.equal(findings.length,4);
@@ -28,4 +30,21 @@ data.automation.source_status.google.metric_status.searches=valid('stale','2026-
 assert.equal(window.FLPOne.find(data,now)[0].status,'verify');
 data.google.searches=null;
 assert.equal(window.FLPOne.find(data,now)[0].status,'verify');
+
+
+data.google.searches=19848;
+// Provider names are evidence labels, never rewritten metric values.
+const rendered=window.FLPOne.render(data,now);
+assert.ok(rendered.includes('Search &amp; Maps impressions'));
+assert.ok(rendered.includes('Content impressions'));
+assert.ok(rendered.includes('Post engagements'));
+assert.equal((rendered.match(/<span>views<\/span>/g)||[]).length,1,'Instagram views retain their correct label');
+assert.ok(!rendered.includes('<span>searches</span>'));
+delete data.automation.source_status.facebook.metric_status.views.provider_field;
+assert.ok(window.FLPOne.render(data,now).includes('Views (legacy baseline)'));
+// The browser integration still renders FLP ONE with the actual plugin loaded.
+const dashboardScript=html.match(/<script>([\s\S]*?)<\/script>/)[1].split('// Bootstrap is kept separate')[0];
+vm.runInContext(dashboardScript,context);
+assert.ok(context.createDashboard(data,now).includes('id="flp-one"'));
+
 console.log('FLP ONE smoke tests passed');

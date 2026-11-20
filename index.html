@@ -243,7 +243,7 @@ function createDashboard(D, now = Date.now()) {
   <section id="channels" aria-labelledby="channels-title"><div class="section-heading"><h2 id="channels-title">Channel performance</h2><p>Latest available reporting period by platform</p></div><div class="channel-grid">${channel('google','G',['website_clicks','direction_requests','phone_calls'],'Profile actions show customer interest. They are not confirmed store visits or sales.')}${channel('instagram','IG',['views','interactions','new_follows'])}${channel('facebook','f',['views','page_visits','interactions','new_follows'])}${channel('youtube','YT',['views','new_subs','subscribers'])}${channel('linkedin','in',['impressions','reactions','followers'])}</div></section>
   ${importedReport}
   ${renderAiBaseline(D.ai_search,now)}
-  ${window.FLPOne ? window.FLPOne.render(D,now) : ''}
+  ${typeof window !== 'undefined' && window.FLPOne ? window.FLPOne.render(D,now) : ''}
   <p class="reporting-note">Dates are shown beside each measure. Daily feeds may lag; imported reports and AI checks are dated snapshots.</p>`;
 }
 async function renderDashboard() {
@@ -253,7 +253,7 @@ async function renderDashboard() {
   const data = parseDashboardData(await response.text());
   const root = document.getElementById('dashboard');
   root.innerHTML = createDashboard(data);
-  if (window.FLPOne) window.FLPOne.attach(root);
+  if (typeof window !== 'undefined' && window.FLPOne) window.FLPOne.attach(root);
   root.setAttribute('aria-busy','false');
   // Old bookmarks still land on the relevant section without restoring the old clutter.
   const aliases = {'#social':'channels','#seo':'channels','#reviews':'review-benchmark','#listings':'channels','#sources':'channels','#ai':'ai-search'};
